@@ -45,6 +45,11 @@
 				</a>
 			</li>
 <?php } ?>
+		<li>
+			<a href="<?php echo base_url() . 'admin/keluarga_ctrl' ?>" <?php if (isset($current_context) && $current_context == '/admin/keluarga_ctrl') echo 'class="current"' ?>>
+				<i class='fa fa-history'></i>&nbsp;KELUARGA
+			</a>
+		</li>
 
 		</ul>
 

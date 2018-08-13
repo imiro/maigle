@@ -158,7 +158,7 @@ document.onkeypress = stopRKey;
 	<div class="clear " id="notif-holder"></div>
 	<p class="notif success " style="display:none"><strong>Input Sukses</strong>. Data POI berhasil disimpan.</p>
 	
-	<p class="tit-form">Daftar Kostan <a href="#" id="filtering-form">Table Filter <img src="<?php echo base_url() ?>assets/html/img/arrow-down-black.png" /></a></p>
+	<p class="tit-form">Daftar Keluarga <a href="#" id="filtering-form">Table Filter <img src="<?php echo base_url() ?>assets/html/img/arrow-down-black.png" /></a></p>
 	<div class="filtering" style="display: none;">
 		<form action="<?php echo current_url() ?>" method="post" id="form_search_filter">
 			<ul class="filter-form">
@@ -180,29 +180,28 @@ document.onkeypress = stopRKey;
 		<thead>
 			<tr class="tittab">
 				<td class="header" style="width: 20px;">No</th>                     
-				<td class="header">Nama Kostan</td>
+				<td class="header">No KK</td>
 				<td class="header">Alamat</td>
-<!-- 				<td class="header">Lokasi</td>
-				<td class="header">Detail</td> -->
+				<td class="header">Lat</td>
+				<td class="header">Lon</td>
 				<td class="header delete" style="width: 52px;">Aksi</td>
 			</tr>
 		</thead>
 		<tbody>
 			<?php 
 				$count=1;
-				if(!empty($kosts)){
-					foreach($kosts as $kosan) {
-						// $deskripsi = $kosan['properties']; 
-						?>
+				if(!empty($keluargas)){
+					foreach($keluargas as $kel) {
+			?>
 						<tr class="<?php echo alternator("row-two", "row-one"); ?>">
-							<td><?php echo ($count++); ?></td>
-							<td><?php echo $kosan->nama_kosan ?></td>
-							<td><?php echo $kosan->alamat ?></td>
-<!-- 							<td><?php echo $deskripsi['lokasi'] ?></td>
-							<td><?php echo $deskripsi['desclok'] ?></td> -->
+							<td><?php echo ($count++) ?></td>
+							<td><?php echo $kel->no_kk ?></td>
+							<td><?php echo $kel->alamat ?></td>
+							<td><?php echo $kel->lat ?></td>
+							<td><?php echo $kel->lon ?></td>
 							<td class="action">
-								<a href="<?php echo base_url();?>admin/kost_ctrl/edit/<?php echo $kosan->id_kosan ?>"><div class="tab-edit"></div></a>
-								<a href="<?php echo base_url();?>admin/kost_ctrl/delete/<?php echo $kosan->id_kosan ?>" class="delete-tab"><div class="tab-delete"></div></a>
+								<a href="<?php echo base_url();?>admin/keluarga_ctrl/edit/<?php echo $kel->id_keluarga ?>"><div class="tab-edit"></div></a>
+								<a href="<?php echo base_url();?>admin/keluarga_ctrl/delete/<?php echo $kel->id_keluarga ?>" class="delete-tab"><div class="tab-delete"></div></a>
 							</td>
 						</tr>
 			<?php 	}
@@ -212,83 +211,33 @@ document.onkeypress = stopRKey;
 	</table>
 	<br />  
 
-	<p class="tit-form"><?php if ($obj) echo "Edit Kostan"; else echo "Tambah Kostan Baru"; ?></p>
-	<form action="<?php if ($obj) echo base_url() . 'admin/kost_ctrl/edit_kosan'; else echo base_url() . 'admin/kost_ctrl/add_kosan'; ?>" method="post" >
-		<div class="baris">
-			<div class="kolom" id="ffform">
-				<ul class="form-admin">
-					<input type="hidden" name="user_id" value="<?php echo $user_id; ?>" />
-					<?php if ($obj) { ?>
-						<input type="hidden" name="id_kosan" value="<?php echo $obj->id_kosan ?>" >
-					<?php } ?>
-					<li>
-						<label>Judul</label>
-						<input class="form-admin" name="judul_kosan" id="judul_kosan" type="text" class="text-medium" value="<?php if ($obj) echo $obj->nama_kosan ?>" >
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Alamat</label>
-						<input class="form-admin" name="alamat_kosan" id="alamat_kosan" type="text" class="text-medium" value="<?php if ($obj) echo $obj->alamat ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Deskripsi</label>
-						<input class="form-admin" name="desk_kosan" id="desk_kosan" type="text" class="text-medium" value="<?php if ($obj) echo $obj->deskripsi ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Fasilitas Umum</label>
-						<input class="form-admin" name="fasum" id="fasum" type="text" class="text-medium" value="<?php if ($obj) echo $obj->fasum ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Deskripsi Lokasi</label>
-						<input class="form-admin" name="desk_lokasi" id="desk_lokasi" type="text" class="text-medium" value="<?php if ($obj) echo $obj->deskripsilokasi ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Link Lokasi</label>
-						<input class="form-admin" name="lokasi" id="lokasi" type="text" class="text-medium" value="<?php if ($obj) echo $obj->lokasi ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Kamar Mandi</label>
-						<input class="form-admin" name="kamarmandi" id="kamarmandi" type="text" class="text-medium" value="<?php if ($obj) echo $obj->kamarmandi ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Kontak</label>
-						<input class="form-admin" name="kontak" id="kontak" type="text" class="text-medium" value="<?php if ($obj) echo $obj->kontak ?>" >	
-						<div class="clear"></div>
-					</li>
-				</ul>
-			</div>
-			<div class="kolom" id="fffooto">
-				<ul class="form-admin">
-					<li>
-						<label>Foto1</label>
-						<input name="fotokost1" id="fotokost1" type="file" class="text-medium" value="<?php if ($obj) echo $obj->foto ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Foto2</label>
-						<input name="fotokost2" id="fotokost2" type="file" class="text-medium" value="<?php if ($obj) echo $obj->foto ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Foto3</label>
-						<input name="fotokost3" id="fotokost3" type="file" class="text-medium" value="<?php if ($obj) echo $obj->foto ?>" >	
-						<div class="clear"></div>
-					</li>
-					<li>
-						<label>Lokasi</label>
-						<div id=map></div>	
-						<div class="clear"></div>
-					</li>
-				</ul>
-			</div>
-		</div>
-
+	<p class="tit-form"><?php if ($obj) echo "Edit Keluarga"; else echo "Tambah Keluarga Baru"; ?></p>
+	<form action="<?php if ($obj) echo base_url() . 'admin/keluarga_ctrl/edit_keluarga'; else echo base_url() . 'admin/keluarga_ctrl/add_keluarga'; ?>" method="post" >
+		<ul class="form-admin">
+			<!-- <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" /> -->
+			<?php if ($obj) { ?>
+				<input type="hidden" name="id_keluarga" value="<?php echo $obj->id_keluarga ?>" >
+			<?php } ?>
+			<li>
+				<label>No KK</label>
+				<input class="form-admin" name="no_kk" id="no_kk" type="text" class="text-medium" value="<?php if ($obj) echo $obj->no_kk ?>" >
+				<div class="clear"></div>
+			</li>
+			<li>
+				<label>Alamat</label>
+				<input class="form-admin" name="alamat" id="alamat" type="text" class="text-medium" value="<?php if ($obj) echo $obj->alamat ?>" >	
+				<div class="clear"></div>
+			</li>
+			<li>
+				<label>Latitude</label>
+				<input class="form-admin" name="lat" id="lat" type="text" class="text-medium" value="<?php if ($obj) echo $obj->lat ?>" >	
+				<div class="clear"></div>
+			</li>
+			<li>
+				<label>Longitude</label>
+				<input class="form-admin" name="lon" id="lon" type="text" class="text-medium" value="<?php if ($obj) echo $obj->lon ?>" >	
+				<div class="clear"></div>
+			</li>
 		<p class="tit-form"></p>
 		<label>&nbsp;</label>
 		<input class="button-form" type="submit" value="<?php if ($obj) echo 'Ubah'; else echo 'Tambah'; ?>">
