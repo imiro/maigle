@@ -1,0 +1,368 @@
+html, body, #container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+body {
+  padding-top: 50px;
+}
+input[type="radio"], input[type="checkbox"] {
+  margin: 0;
+}
+#sidebar {
+  top: 50px;
+  display: block;
+  /*width: 300px;*/
+  width: 250px;
+  height: 100%;
+  max-width: 100%;
+  float: left;
+  z-index: 999;
+}
+#map {
+  /*top: 50px;*/
+  width: auto;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+#loading {
+  position: absolute;
+  width: 220px;
+  height: 19px;
+  top: 50%;
+  left: 50%;
+  margin: -10px 0 0 -110px;
+  z-index: 20001;
+}
+#features {
+  margin: 0px;
+  border: none;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+    box-shadow: none;
+}
+#sidebar-hide-btn {
+  margin-top: -2px;
+}
+#rightbar-hide-btn {
+  margin-top: -2px;
+}
+#aboutTabsContent {
+  padding-top: 10px;
+}
+.progress-bar-full {
+  width: 100%;
+}
+.white {
+  color: #FFFFFF;
+}
+.panel-heading{
+   /*width: 300px;*/
+   width: 250px;
+}
+.panel-body{
+  /*width: 300px;*/
+  width: 250px;
+}
+.feature-row {
+  cursor: pointer;
+  /*width: 300px;*/
+  width: 250px;
+}
+.sidebar-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.sidebar-table {
+  position: absolute;
+  width: 100%;
+  /*top: 103px;*/
+  top: 3px;
+  bottom: 0px;
+  overflow: auto;
+}
+.rightbar-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.rightbar-table {
+  /*position: absolute;*/
+  position: relative;
+  width: 100%;
+  top: 0px;
+  bottom: 0px;
+  overflow: auto;
+}
+.leaflet-control-layers {
+  overflow: auto;
+}
+.leaflet-control-layers label {
+  font-weight: normal;
+  margin-bottom: 0px;
+}
+.leaflet-control-layers-list input[type="radio"], input[type="checkbox"] {
+  margin: 2px;
+}
+.table {
+  margin-bottom: 0px;
+}
+.navbar .navbar-brand {
+  font-weight: bold;
+  font-size: 25px;
+  color: #FFFFFF;
+}
+.navbar-collapse.in {
+  overflow-y: hidden;
+}
+.navbar-header .navbar-icon-container {
+  margin-right: 15px;
+}
+.navbar-header .navbar-icon {
+  line-height: 50px;
+  height: 50px;
+  /*line-height: 5%;*/
+  /*height: 5%;*/
+}
+.navbar-header a.navbar-icon {
+  margin-left: 25px;
+}
+.typeahead {
+  background-color: #FFFFFF;
+}
+.tt-dropdown-menu {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px 4px 4px 4px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 4px;
+  padding: 4px 0;
+  width: 100%;
+  max-height: 300px;
+  overflow: auto;
+}
+.tt-suggestion {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 3px 10px;
+}
+.tt-suggestion.tt-cursor {
+  background-color: #0097CF;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+.tt-suggestion p {
+  margin: 0;
+}
+.tt-suggestion + .tt-suggestion {
+  border-top: 1px solid #ccc;
+}
+.typeahead-header {
+  margin: 0 5px 5px 5px;
+  padding: 3px 0;
+  border-bottom: 2px solid #333;
+}
+.has-feedback .form-control-feedback {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+}
+@media (max-width: 992px) {
+  .navbar .navbar-brand {
+    font-size: 18px;
+  }
+}
+@media (max-width: 767px){
+  #sidebar {
+    display: none;
+  }
+  #rightbar {
+    display: none;
+  }
+  .url-break {
+    word-break: break-all;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+      hyphens: auto;
+  }
+  .dropdown-menu a i{
+    color: #FFFFFF;
+  }
+}
+/* Print Handling */
+@media print {
+  .navbar {
+    display: none !important;
+  }
+  .leaflet-control-container {
+    display: none !important;
+  }
+}
+
+
+
+/*RIGHTBAR TAMBAHAN*/
+#rightbar {
+  top: 50px;
+  display: block;
+  /*width: 250px;*/
+  width: 500px;
+  height: 100%;
+  max-width: 100%;
+  float: right;
+  z-index: 999;
+}
+.right-panel-heading{
+   width: 500px;
+   /*width: 250px;*/
+}
+.right-panel-body{
+  width: 500px;
+  /*width: 250px;*/
+}
+.right-feature-row {
+  cursor: pointer;
+  width: 500px;
+  /*width: 250px;*/
+}
+
+/*PANEL BODY & HEADING*/
+.right-panel-body{
+    /*padding:15px*/
+    padding:15px 20px 15px 15px; 
+    /*yg kanan yg beda sendiri gr2 ada scroll*/
+    /*top right bottom left */
+}
+.panel>.right-panel-body+.table,.panel>.right-panel-body+.table-responsive,.panel>.table+.right-panel-body,.panel>.table-responsive+.right-panel-body{
+    border-top:1px solid #ddd
+}
+.panel-group .panel-footer+.panel-collapse .right-panel-body{
+    border-bottom:1px solid #ddd
+}
+.panel-default>.panel-footer+.panel-collapse>.right-panel-body{
+    border-bottom-color:#ddd
+}
+.panel-primary>.panel-footer+.panel-collapse>.right-panel-body{
+    border-bottom-color:#337ab7
+}
+.panel-success>.panel-footer+.panel-collapse>.right-panel-body{
+    border-bottom-color:#d6e9c6
+}
+.panel-info>.panel-footer+.panel-collapse>.right-panel-body{
+    border-bottom-color:#bce8f1
+}
+.panel-warning>.panel-footer+.panel-collapse>.right-panel-body{
+    border-bottom-color:#faebcc
+}
+.panel-danger>.panel-footer+.panel-collapse>.right-panel-body{
+    border-bottom-color:#ebccd1
+}
+.btn-group-vertical>.btn-group:after,.btn-group-vertical>.btn-group:before,.btn-toolbar:after,.btn-toolbar:before,.clearfix:after,.clearfix:before,.container-fluid:after,.container-fluid:before,.container:after,.container:before,.dl-horizontal dd:after,.dl-horizontal dd:before,.form-horizontal .form-group:after,.form-horizontal .form-group:before,.modal-footer:after,.modal-footer:before,.nav:after,.nav:before,.navbar-collapse:after,.navbar-collapse:before,.navbar-header:after,.navbar-header:before,.navbar:after,.navbar:before,.pager:after,.pager:before,.right-panel-body:after,.right-panel-body:before,.row:after,.row:before{
+    display:table;
+    content:" "
+}
+.btn-group-vertical>.btn-group:after,.btn-toolbar:after,.clearfix:after,.container-fluid:after,.container:after,.dl-horizontal dd:after,.form-horizontal .form-group:after,.modal-footer:after,.nav:after,.navbar-collapse:after,.navbar-header:after,.navbar:after,.pager:after,.right-panel-body:after,.row:after{
+    clear:both
+}
+
+
+.right-panel-heading{
+    padding:10px 15px;
+    border-bottom:1px solid transparent;
+    border-top-left-radius:3px;
+    border-top-right-radius:3px
+}
+.right-panel-heading>.dropdown .dropdown-toggle{
+    color:inherit
+}
+.panel>.right-panel-heading+.panel-collapse>.list-group .list-group-item:first-child{
+    border-top-left-radius:0;
+    border-top-right-radius:0
+}
+.right-panel-heading+.list-group .list-group-item:first-child{
+    border-top-width:0
+}
+.panel-group .right-panel-heading{
+    border-bottom:0
+}
+.panel-group .right-panel-heading+.panel-collapse>.list-group,.panel-group .right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top:1px solid #ddd
+}
+.panel-default>.right-panel-heading{
+    color:#333;
+    background-color:#f5f5f5;
+    border-color:#ddd
+}
+.panel-default>.right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top-color:#ddd
+}
+.panel-default>.right-panel-heading .badge{
+    color:#f5f5f5;
+    background-color:#333
+}
+.panel-primary>.right-panel-heading{
+    color:#fff;
+    background-color:#337ab7;
+    border-color:#337ab7
+}
+.panel-primary>.right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top-color:#337ab7
+}
+.panel-primary>.right-panel-heading .badge{
+    color:#337ab7;
+    background-color:#fff
+}
+.panel-success>.right-panel-heading{
+    color:#3c763d;
+    background-color:#dff0d8;
+    border-color:#d6e9c6
+}
+.panel-success>.right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top-color:#d6e9c6
+}
+.panel-success>.right-panel-heading .badge{
+    color:#dff0d8;
+    background-color:#3c763d
+}
+.panel-info>.right-panel-heading{
+    color:#31708f;
+    background-color:#d9edf7;
+    border-color:#bce8f1
+}
+.panel-info>.right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top-color:#bce8f1
+}
+.panel-info>.right-panel-heading .badge{
+    color:#d9edf7;
+    background-color:#31708f
+}
+.panel-warning>.right-panel-heading{
+    color:#8a6d3b;
+    background-color:#fcf8e3;
+    border-color:#faebcc
+}
+.panel-warning>.right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top-color:#faebcc
+}
+.panel-warning>.right-panel-heading .badge{
+    color:#fcf8e3;
+    background-color:#8a6d3b
+}
+.panel-danger>.right-panel-heading{
+    color:#a94442;
+    background-color:#f2dede;
+    border-color:#ebccd1
+}
+.panel-danger>.right-panel-heading+.panel-collapse>.right-panel-body{
+    border-top-color:#ebccd1
+}
+.panel-danger>.right-panel-heading .badge{
+    color:#f2dede;
+    background-color:#a94442
+}
