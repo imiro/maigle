@@ -233,9 +233,8 @@ if ($objkel) {
 		<div class="baris">
 			<div class="kolom" id="ffform">
 				<p class="tit-form"><?php if ($objanggota) echo 'Ubah Anggota'; else echo 'Input Anggota Baru' ?></p>
-				<input type="hidden" name="id_keluarga" value="<?php echo $objkel->id_keluarga ?>" />
 <?php if ($objanggota) { ?>
-				<input type="hidden" name="id_kamar" value="<?php echo $objanggota->id_kamar ?>" />
+				<input type="hidden" name="id_individu" value="<?php echo $objanggota->id_individu ?>" />
 <?php } ?>
 				<ul class="form-admin">
 					<li>
@@ -256,9 +255,8 @@ if ($objkel) {
 					<li>
 						<label>Jenis Kelamin </label>
 						<div class="form-admin-radio">
-							<label><input type="radio" name="jk" value="L" <?php if (!empty($objanggota) && $objobjanggota->jk) echo 'checked'; ?> > L</label>
-							<div class="clear"></div>
-							<label><input type="radio" name="jk" value="P" <?php if (empty($objanggota) || !$objanggota->jk) echo 'checked'; ?>> P</label>
+							<label><input type="radio" name="jk" value="L" <?php if ($objanggota->kelamin == 'L') echo 'checked'; ?> > L</label>
+							<label><input type="radio" name="jk" value="P" <?php if ($objanggota->kelamin == 'P') echo 'checked'; ?>> P</label>
 						</div>
 						<div class="clear"></div>
 					</li>
@@ -334,16 +332,16 @@ if ($objkel) {
 						<input class="form-admin" id="gula_darah" name="gula_darah" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->gula_darah ?>" >
 						<div class="clear"></div>
 					</li>
-					<li>
-						<label>Penyakit Saat Ini</label>
-						<textarea rows="1" cols="1" name="penyakit_saat_ini" class="form-admin"><?php if (!empty($objanggota)) echo $objanggota->penyakit_saat_ini; ?></textarea>
-						<div class="clear"></div>
-					</li>
 				</ul>
 			</div>
 			<div class="kolom" id="fffooto">
 				<p class="tit-form">Data Penyakit</p>
 				<ul class="form-admin">
+					<li>
+						<label>Penyakit Saat Ini</label>
+						<textarea rows="1" cols="1" name="penyakit_saat_ini" class="form-admin"><?php if (!empty($objanggota)) echo $objanggota->penyakit_saat_ini; ?></textarea>
+						<div class="clear"></div>
+					</li>
 					<li>
 						<label>Diabetes Melitus</label>
 						<select name="dm" class="form-admin">

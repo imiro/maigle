@@ -52,9 +52,13 @@ class individu_dao extends Generic_dao  {
 		return $this->insert($obj);
 	}
 
-	// function editPenghuni($id, $obj) {
-	// 	return $this->update($obj, array('id_penghuni' => $id));
-	// }
+	function getInfoIndividu($id_individu) {
+		return $this->by_id(array('id_individu' => $id_individu));
+	}
+
+	function editIndividu($id, $obj) {
+		return $this->update($obj, array('id_individu' => $id));
+	}
 }
 
 ?>

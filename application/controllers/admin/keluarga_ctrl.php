@@ -59,23 +59,24 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->view('template/template_footer');
 	}
 
-	public function edit($id_keluarga, $id_kamar = null){
+	public function edit($id_keluarga, $id_anggota = null){
 		$this->preload();
+		$user_url = self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga;
 
 		if ($id_keluarga == null) {
 			$this->load_view('admin/list_keluarga');
-		} else {
-			// $this->data['obj'] = $this->Kosts->getInfoKosan($this->data['user_id'], urldecode($kosan_judul));
+		} 
+		else {
 			$this->data['objkel'] = $this->keluarga_dao->getInfoKeluarga($id_keluarga);
-			// $this->data['kamars'] = $this->kamar_dao->getDaftarKamar($id_kosan);
 			$this->data['individus'] = $this->individu_dao->getDaftarAnggotaKeluarga($id_keluarga);
 
 			// ambil daftar2 opsi
 			$this->data['agama'] = $this->daftar_agama_dao->getDaftarAgama();
-			$this->session->set_userdata('user_url', self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga);
-			if ($id_kamar) {
-				$this->data['objkamar'] = $this->kamar_dao->getInfoKamar($id_kamar);
-				$this->data['penghuni'] = $this->penghuni_dao->getPenghuniKamar($id_kamar);
+			$this->session->set_userdata('user_url', $user_url);
+
+			if ($id_anggota) {
+				$this->data['objanggota'] = $this->individu_dao->getInfoIndividu($id_anggota);
+				$this->session->set_userdata('user_url', $user_url . '/' . $id_anggota);
 			}
 
 			$this->load_view('admin/list_keluarga', $this->data);
@@ -190,19 +191,20 @@ class keluarga_ctrl extends CI_Controller{
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
-	public function edit_kamar() {
+	public function edit_anggota() {
 		$infoSession = ''; // added by SKM17
 
-		$objkamar = $this->fetch_input_anggota();
-		$id_kamar = $this->input->post('id_kamar');
+		$objindiv = $this->fetch_input_anggota();
+		$id_indiv = $this->input->post('id_individu');
 		
-		if ($this->kamar_dao->editKamar($id_kamar, $objkamar))
-			$infoSession .= "Data Kamar berhasil diubah. ";
+		if ($this->individu_dao->editIndividu($id_indiv, $objindiv))
+			$infoSession .= "Data Individu berhasil diubah. ";
 		else
-			$infoSession .= "<font color='red'>Data Kamar gagal diubah. </font>";
+			$infoSession .= "<font color='red'>Data Individu gagal diubah. </font>";
 
 		$this->session->set_flashdata("info", $infoSession);
 		redirect($this->session->userdata('user_url'));
+		// redirect(self::$CURRENT_CONTEXT);
 	}
 
 	private function fetch_input_penghuni(){
