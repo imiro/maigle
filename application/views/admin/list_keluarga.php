@@ -135,7 +135,7 @@ document.onkeypress = stopRKey;
 		<tbody>
 			<?php 
 				$count=1;
-				if(!empty($keluargas)){
+				if($keluargas){
 					foreach($keluargas as $kel) {
 			?>
 						<tr class="<?php echo alternator("row-two", "row-one"); ?>">
@@ -233,6 +233,7 @@ if ($objkel) {
 		<div class="baris">
 			<div class="kolom" id="ffform">
 				<p class="tit-form"><?php if ($objanggota) echo 'Ubah Anggota'; else echo 'Input Anggota Baru' ?></p>
+				<input type="hidden" name="id_keluarga" value="<?php echo $objkel->id_keluarga ?>" />
 <?php if ($objanggota) { ?>
 				<input type="hidden" name="id_individu" value="<?php echo $objanggota->id_individu ?>" />
 <?php } ?>
@@ -255,8 +256,8 @@ if ($objkel) {
 					<li>
 						<label>Jenis Kelamin </label>
 						<div class="form-admin-radio">
-							<label><input type="radio" name="jk" value="L" <?php if ($objanggota->kelamin == 'L') echo 'checked'; ?> > L</label>
-							<label><input type="radio" name="jk" value="P" <?php if ($objanggota->kelamin == 'P') echo 'checked'; ?>> P</label>
+							<input type="radio" name="jk" value="L" <?php if ($objanggota && $objanggota->kelamin == 'L') echo 'checked'; ?> > L
+							<input type="radio" name="jk" value="P" <?php if ($objanggota && $objanggota->kelamin == 'P') echo 'checked'; ?> > P
 						</div>
 						<div class="clear"></div>
 					</li>
@@ -268,9 +269,9 @@ if ($objkel) {
 					<li>
 						<label>Agama</label>
 						<select name="agama" class="form-admin">
-							<option value="" selected>-Pilih Agama-</option>
+							<option value="0" selected>-Pilih Agama-</option>
 							<?php foreach ($agama as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->agama == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->agama == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -282,9 +283,9 @@ if ($objkel) {
 					<li>
 						<label>Pendidikan</label>
 						<select name="pendidikan" class="form-admin">
-							<option value="" selected>-Pilih Pendidikan-</option>
+							<option value="0" selected>-Pilih Pendidikan-</option>
 							<?php foreach ($pendidikan as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->pendidikan == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->pendidikan == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -296,9 +297,9 @@ if ($objkel) {
 					<li>
 						<label>Pekerjaan</label>
 						<select name="pekerjaan" class="form-admin">
-							<option value="" selected>-Pilih Pekerjaan-</option>
+							<option value="0" selected>-Pilih Pekerjaan-</option>
 							<?php foreach ($pekerjaan as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->pekerjaan == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->pekerjaan == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -339,15 +340,15 @@ if ($objkel) {
 				<ul class="form-admin">
 					<li>
 						<label>Penyakit Saat Ini</label>
-						<textarea rows="1" cols="1" name="penyakit_saat_ini" class="form-admin"><?php if (!empty($objanggota)) echo $objanggota->penyakit_saat_ini; ?></textarea>
+						<textarea rows="1" cols="1" name="penyakit_saat_ini" class="form-admin"><?php if ($objanggota) echo $objanggota->penyakit_saat_ini; ?></textarea>
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Diabetes Melitus</label>
 						<select name="dm" class="form-admin">
-							<option value="" selected>-Pilih Status DM-</option>
+							<option value="0" selected>-Pilih Status DM-</option>
 							<?php foreach ($dm as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->dm == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->dm == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -359,9 +360,9 @@ if ($objkel) {
 					<li>
 						<label>Hipertensi</label>
 						<select name="hipertensi" class="form-admin">
-							<option value="" selected>-Pilih Status Hipertensi-</option>
+							<option value="0" selected>-Pilih Status Hipertensi-</option>
 							<?php foreach ($hipertensi as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->hipertensi == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->hipertensi == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -373,9 +374,9 @@ if ($objkel) {
 					<li>
 						<label>TBC</label>
 						<select name="tbc" class="form-admin">
-							<option value="" selected>-Pilih Status TBC-</option>
+							<option value="0" selected>-Pilih Status TBC-</option>
 							<?php foreach ($tbc as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->tbc == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->tbc == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -387,36 +388,34 @@ if ($objkel) {
 					<li>
 						<label>DBD </label>
 						<div class="form-admin-radio">
-							<label><input type="radio" name="dbd" value="TRUE" <?php if (!empty($objanggota) && $objanggota->dbd) echo 'checked'; ?> > Ya</label>
-							<div class="clear"></div>
-							<label><input type="radio" name="dbd" value="FALSE" <?php if (empty($objanggota) || !$objanggota->dbd) echo 'checked'; ?>> Tidak</label>
+							<input type="radio" name="dbd" value="FALSE" <?php if (!$objanggota || !$objanggota->dbd) echo 'checked'; ?>> Tidak
+							<input type="radio" name="dbd" value="TRUE" <?php if ($objanggota && $objanggota->dbd) echo 'checked'; ?> > Ya
 						</div>
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>HIV </label>
 						<div class="form-admin-radio">
-							<label><input type="radio" name="hiv" value="TRUE" <?php if (!empty($objanggota) && $objanggota->hiv) echo 'checked'; ?> > Ya</label>
-							<div class="clear"></div>
-							<label><input type="radio" name="hiv" value="FALSE" <?php if (empty($objanggota) || !$objanggota->hiv) echo 'checked'; ?>> Tidak</label>
+							<input type="radio" name="hiv" value="FALSE" <?php if (!$objanggota || !$objanggota->hiv) echo 'checked'; ?>> Tidak
+							<input type="radio" name="hiv" value="TRUE" <?php if ($objanggota && $objanggota->hiv) echo 'checked'; ?> > Ya
 						</div>
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>TB HIV </label>
 						<div class="form-admin-radio">
-							<label><input type="radio" name="tb_hiv" value="TRUE" <?php if (!empty($objanggota) && $objanggota->tb_hiv) echo 'checked'; ?> > Ya</label>
+							<input type="radio" name="tb_hiv" value="FALSE" <?php if (!$objanggota || !$objanggota->tb_hiv) echo 'checked'; ?>> Tidak
+							<input type="radio" name="tb_hiv" value="TRUE" <?php if ($objanggota && $objanggota->tb_hiv) echo 'checked'; ?> > Ya
 							<div class="clear"></div>
-							<label><input type="radio" name="tb_hiv" value="FALSE" <?php if (empty($objanggota) || !$objanggota->tb_hiv) echo 'checked'; ?>> Tidak</label>
 						</div>
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Imunisasi</label>
 						<select name="tbc" class="form-admin">
-							<option value="" selected>-Pilih Status Imunisasi-</option>
+							<option value="0" selected>-Pilih Status Imunisasi-</option>
 							<?php foreach ($imunisasi as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->imunisasi == $row->id) { ?>
+								<?php if ($objanggota && $objanggota->imunisasi == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -428,9 +427,9 @@ if ($objkel) {
 					<li>
 						<label>Kehamilan</label>
 						<select name="tbc" class="form-admin">
-							<option value="" selected>-Pilih Status Kehamilan-</option>
-							<?php foreach ($kehamilan as $row) { ?>
-								<?php if ((!empty($objanggota)) && $objanggota->kehamilan == $row->id) { ?>
+							<option value="0" selected>-Pilih Status Kehamilan-</option>
+							<?php foreach ($hamil as $row) { ?>
+								<?php if ($objanggota && $objanggota->kehamilan == $row->id) { ?>
 									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
 								<?php } else { ?>
 									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
@@ -448,8 +447,6 @@ if ($objkel) {
 		<input class="button-form" type="reset" onclick="redirect()" value="Batal">
 		<div class="clear"></div>
 	</form>
-
-<?php 
-} ?>
+<?php } ?>
 </div> <!-- div main -->
 <div class="clear"></div>

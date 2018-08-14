@@ -26,6 +26,13 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->library('dao/keluarga_dao');
 		$this->load->library('dao/individu_dao');
 		$this->load->library('dao/daftar_agama_dao');
+		$this->load->library('dao/daftar_pekerjaan_dao');
+		$this->load->library('dao/daftar_pendidikan_dao');
+		$this->load->library('dao/status_dm_dao');
+		$this->load->library('dao/status_hamil_dao');
+		$this->load->library('dao/status_hipertensi_dao');
+		$this->load->library('dao/status_imunisasi_dao');
+		$this->load->library('dao/status_tbc_dao');
 		$this->load->model('Kosts','',TRUE);
 
 		$this->logged_in();
@@ -71,7 +78,14 @@ class keluarga_ctrl extends CI_Controller{
 			$this->data['individus'] = $this->individu_dao->getDaftarAnggotaKeluarga($id_keluarga);
 
 			// ambil daftar2 opsi
-			$this->data['agama'] = $this->daftar_agama_dao->getDaftarAgama();
+			$this->data['agama'] = $this->daftar_agama_dao->getDaftar();
+			$this->data['pekerjaan'] = $this->daftar_pekerjaan_dao->getDaftar();
+			$this->data['pendidikan'] = $this->daftar_pendidikan_dao->getDaftar();
+			$this->data['dm'] = $this->status_dm_dao->getDaftar();
+			$this->data['hamil'] = $this->status_hamil_dao->getDaftar();
+			$this->data['hipertensi'] = $this->status_hipertensi_dao->getDaftar();
+			$this->data['imunisasi'] = $this->status_imunisasi_dao->getDaftar();
+			$this->data['tbc'] = $this->status_tbc_dao->getDaftar();
 			$this->session->set_userdata('user_url', $user_url);
 
 			if ($id_anggota) {
@@ -152,7 +166,7 @@ class keluarga_ctrl extends CI_Controller{
 			'nik' => $this->input->post('nik'),
 			'bpjs' => $this->input->post('bpjs'),
 			'kelamin' => $this->input->post('jk'),
-			'ttl' => $this->input->post('ttl'),
+			// 'ttl' => $this->input->post('ttl'),
 			'agama' => $this->input->post('agama'),
 			'pendidikan' => $this->input->post('pendidikan'),
 			'pekerjaan' => $this->input->post('pekerjaan'),

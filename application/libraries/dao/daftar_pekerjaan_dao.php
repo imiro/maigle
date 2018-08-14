@@ -2,10 +2,10 @@
 
 require_once('generic_dao.php');
 
-class daftar_agama_dao extends Generic_dao  {
+class daftar_pekerjaan_dao extends Generic_dao  {
 	
 	public function table_name(){
-		return 'daftar_agama';
+		return 'daftar_pekerjaan';
 	}
 
 	public function field_map() {
