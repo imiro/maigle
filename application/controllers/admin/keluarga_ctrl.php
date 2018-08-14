@@ -117,39 +117,33 @@ class keluarga_ctrl extends CI_Controller{
 	}
 
 	public function add_keluarga() {
-		$infoSession = ''; // added by SKM17
-
 		$obj = $this->fetch_input();
 		
 		if ($this->keluarga_dao->saveNewKeluarga($obj))
-			$infoSession .= "Keluarga baru berhasil disimpan. ";
+			$this->session->set_flashdata("success", "Data keluarga baru berhasil disimpan.");
 		else
-			$infoSession .= "<font color='red'>Keluarga baru gagal disimpan. </font>";
+			$this->session->set_flashdata("failed", "Data keluarga baru gagal disimpan.");
 
-		$this->session->set_flashdata("info", $infoSession);
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
 	public function edit_keluarga() {
-		$infoSession = ''; // added by SKM17
-
 		$obj = $this->fetch_input();
 		$id_keluarga = $this->input->post('id_keluarga');
 
 		if ($this->keluarga_dao->editKeluarga($id_keluarga, $obj))
-			$infoSession .= "Data Keluarga berhasil diubah. ";
+			$this->session->set_flashdata("success", "Data keluarga baru berhasil diubah.");
 		else
-			$infoSession .= "<font color='red'>Data Keluarga gagal diubah. </font>";
+			$this->session->set_flashdata("failed", "Data keluarga baru gagal diubah.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		redirect(self::$CURRENT_CONTEXT);
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga);
 	}
 
 	public function delete($id_keluarga = null){
 		$obj_id = array('id_keluarga' => $id_keluarga);
 
 		if ($this->keluarga_dao->delete($obj_id))
-			$this->session->set_flashdata("success", "Hapus Keluarga berhasil!");
+			$this->session->set_flashdata("success", "Hapus Keluarga berhasil.");
 		else
 			$this->session->set_flashdata("failed", "Hapus Keluarga gagal! Cek apakah data keluarga memiliki data anggota yang terhubung.");
 
@@ -188,33 +182,26 @@ class keluarga_ctrl extends CI_Controller{
 	}
 
 	public function add_anggota() {
-		$infoSession = ''; // added by SKM17
-
 		$objindiv = $this->fetch_input_anggota();
 
 		if ($this->individu_dao->saveNewIndividu($objindiv))
-			$infoSession .= "Individu baru berhasil disimpan. ";
+			$this->session->set_flashdata("success", "Data individu baru berhasil disimpan.");
 		else
-			$infoSession .= "<font color='red'>Individu baru gagal disimpan. </font>";
+			$this->session->set_flashdata("failed", "Data individu baru gagal disimpan.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		// redirect($this->session->userdata('user_url'));
-		redirect(self::$CURRENT_CONTEXT);
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $objindiv['id_rumah']);
 	}
 
 	public function edit_anggota() {
-		$infoSession = ''; // added by SKM17
-
 		$objindiv = $this->fetch_input_anggota();
 		$id_indiv = $this->input->post('id_individu');
 		
 		if ($this->individu_dao->editIndividu($id_indiv, $objindiv))
-			$infoSession .= "Data Individu berhasil diubah. ";
+			$this->session->set_flashdata("success", "Data individu baru berhasil diubah.");
 		else
-			$infoSession .= "<font color='red'>Data Individu gagal diubah. </font>";
+			$this->session->set_flashdata("failed", "Data individu baru gagal diubah.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $objindiv['id_rumah'] . '/' . $id_indiv);
 	}
 
 	public function del_anggota($id_anggota, $id_keluarga = null){

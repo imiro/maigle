@@ -9,11 +9,16 @@
 
 <script>
 	$(document).ready(function(){
-		<?php if ($this->session->flashdata('info')) { ?>
-			$('.success').html("<strong> <?php echo $this->session->flashdata('info'); ?>");
-			$('.success').attr('style','');
-			$('.success').delay(10000).fadeOut('slow');
-		<?php } ?>
+		
+<?php if ($this->session->flashdata('success')) { ?>
+		$('.success').html("<strong> <?php echo $this->session->flashdata('success'); ?>");
+		$('.success').attr('style','');
+		$('.success').delay(10000).fadeOut('slow');
+<?php } else if ($this->session->flashdata('failed')) { ?>
+		$('.error').html("<strong> <?php echo $this->session->flashdata('failed'); ?>");
+		$('.error').attr('style','');
+		$('.error').delay(10000).fadeOut('slow');
+<?php } ?>
 
 		$("#ttl").datepicker({dateFormat: 'yy-mm-dd'});
 		$("#tgl_periksa").datepicker({dateFormat: 'yy-mm-dd'});
@@ -104,7 +109,8 @@ document.onkeypress = stopRKey;
 
 <div id="main">
 	<div class="clear " id="notif-holder"></div>
-	<p class="notif success " style="display:none"><strong>Input Sukses</strong>. Data POI berhasil disimpan.</p>
+	<p class="notif success " style="display:none"></p>
+	<p class="notif error " style="display:none"></p>
 	
 	<p class="tit-form">Daftar Keluarga <a href="#" id="filtering-form">Table Filter <img src="<?php echo base_url() ?>assets/html/img/arrow-down-black.png" /></a></p>
 	<div class="filtering" style="display: none;">
