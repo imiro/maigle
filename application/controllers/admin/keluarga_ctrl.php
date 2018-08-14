@@ -24,6 +24,8 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->library('upload');
 		$this->load->library('image_lib');
 		$this->load->library('dao/keluarga_dao');
+		$this->load->library('dao/individu_dao');
+		$this->load->library('dao/daftar_agama_dao');
 		$this->load->model('Kosts','',TRUE);
 
 		$this->logged_in();
@@ -43,13 +45,10 @@ class keluarga_ctrl extends CI_Controller{
 	public function preload(){
 		$this->data['current_context'] = self::$CURRENT_CONTEXT;
 		$this->data['title'] = self::$TITLE;
-
-		$this->data['obj'] = null;
+		$this->data['objkel'] = null;
 		// $this->data['kamars'] = null;
-		// $this->data['objkamar'] = null;
-		// $this->data['kosts'] = $this->Kosts->getDaftarKosan($this->data['user_id']);
+		$this->data['objanggota'] = null;
 		$this->data['keluargas'] = $this->keluarga_dao->getDaftarKeluarga();
-		// $this->data['kosts'] = $this->kosan_dao->getDaftarKosan(1);
 	}
 
 	public function load_view($page, $data = null){
@@ -59,16 +58,20 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->view('template/template_footer');
 	}
 
-	public function edit($id_kosan, $id_kamar = null){
+	public function edit($id_keluarga, $id_kamar = null){
 		$this->preload();
 
-		if ($id_kosan == null) {
+		if ($id_keluarga == null) {
 			$this->load_view('admin/list_keluarga');
 		} else {
 			// $this->data['obj'] = $this->Kosts->getInfoKosan($this->data['user_id'], urldecode($kosan_judul));
-			$this->data['obj'] = $this->kosan_dao->getInfoKosan($id_kosan);
-			$this->data['kamars'] = $this->kamar_dao->getDaftarKamar($id_kosan);
-			$this->session->set_userdata('user_url', self::$CURRENT_CONTEXT . '/edit/' . $id_kosan);
+			$this->data['objkel'] = $this->keluarga_dao->getInfoKeluarga($id_keluarga);
+			// $this->data['kamars'] = $this->kamar_dao->getDaftarKamar($id_kosan);
+			$this->data['individus'] = $this->individu_dao->getDaftarAnggotaKeluarga($id_keluarga);
+
+			// ambil daftar2 opsi
+			$this->data['agama'] = $this->daftar_agama_dao->getDaftarAgama();
+			$this->session->set_userdata('user_url', self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga);
 			if ($id_kamar) {
 				$this->data['objkamar'] = $this->kamar_dao->getInfoKamar($id_kamar);
 				$this->data['penghuni'] = $this->penghuni_dao->getPenghuniKamar($id_kamar);
@@ -141,38 +144,38 @@ class keluarga_ctrl extends CI_Controller{
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
-	private function fetch_input_kamar(){
-		$data = null;
-		$data = array(
-			'nama_kamar' => $this->input->post('nama_kmr'),
-			'luas' => $this->input->post('luas_kmr'),
-			'fasilitas' => $this->input->post('fasilitas_kmr'),
-			'hargath' => $this->input->post('harga_kmr'),
-			'terisi' => $this->input->post('terisi_kmr')
+	private function fetch_input_anggota(){
+		$data = array (
+			'nama' => $this->input->post('nama'),
+			'nik' => $this->input->post('nik'),
+			'bpjs' => $this->input->post('bpjs'),
+			'kelamin' => $this->input->post('jk'),
+			'agama' => $this->input->post('agama'),
+			'id_rumah' => $this->input->post('id_keluarga')
 		);
 
 		return $data;
 	}
 
-	public function add_kamar() {
+	public function add_anggota() {
 		$infoSession = ''; // added by SKM17
 
-		$objkamar = $this->fetch_input_kamar();
-		$objkamar['id_kosan'] = $this->input->post('id_kosan');
+		$objindiv = $this->fetch_input_anggota();
 
-		if ($this->kamar_dao->saveNewKamar($objkamar))
-			$infoSession .= "Kamar baru berhasil disimpan. ";
+		if ($this->individu_dao->saveNewIndividu($objindiv))
+			$infoSession .= "Individu baru berhasil disimpan. ";
 		else
-			$infoSession .= "<font color='red'>Kamar baru gagal disimpan. </font>";
+			$infoSession .= "<font color='red'>Individu baru gagal disimpan. </font>";
 
 		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
+		// redirect($this->session->userdata('user_url'));
+		redirect(self::$CURRENT_CONTEXT);
 	}
 
 	public function edit_kamar() {
 		$infoSession = ''; // added by SKM17
 
-		$objkamar = $this->fetch_input_kamar();
+		$objkamar = $this->fetch_input_anggota();
 		$id_kamar = $this->input->post('id_kamar');
 		
 		if ($this->kamar_dao->editKamar($id_kamar, $objkamar))

@@ -32,9 +32,9 @@ class keluarga_dao extends Generic_dao  {
 		return $this->insert($obj);
 	}
 
-	// function getInfoKamar($id_kamar) {
-	// 	return $this->by_id(array('id_kamar' => $id_kamar));
-	// }
+	function getInfoKeluarga($id_keluarga) {
+		return $this->by_id(array('id_keluarga' => $id_keluarga));
+	}
 
 	// function editKamar($id, $obj) {
 	// 	return $this->update($obj, array('id_kamar' => $id));
