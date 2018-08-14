@@ -216,7 +216,7 @@ document.onkeypress = stopRKey;
 			<td><?php echo $anggota->penyakit_saat_ini ?></td>
 			<td class="action">
 				<a href="<?php echo base_url();?>admin/keluarga_ctrl/edit/<?php echo $anggota->id_rumah . '/' . $anggota->id_individu ?>"><div class="tab-edit"></div></a>
-				<a href="<?php echo base_url();?>admin/keluarga_ctrl/del_kmr/<?php echo $anggota->id_individu ?>" class="delete-tab"><div class="tab-delete"></div></a>
+				<a href="<?php echo base_url();?>admin/keluarga_ctrl/del_anggota/<?php echo $anggota->id_individu . '/' . $anggota->id_rumah ?>" class="delete-tab"><div class="tab-delete"></div></a>
 			</td>
 		</tr>
 <?php
@@ -310,27 +310,27 @@ if ($objkel) {
 					</li>
 					<li>
 						<label>Berat Badan (gram) </label>
-						<input class="form-admin" id="bb" name="bb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bb ?>" >
+						<input class="form-admin" id="bb" name="bb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bb; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Tinggi Badan (cm) </label>
-						<input class="form-admin" id="tb" name="tb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tb ?>" >
+						<input class="form-admin" id="tb" name="tb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tb; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Sistole </label>
-						<input class="form-admin" id="tensi_sistol" name="tensi_sistol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_sistol ?>" >
+						<input class="form-admin" id="tensi_sistol" name="tensi_sistol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_sistol; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Diastole </label>
-						<input class="form-admin" id="tensi_diastol" name="tensi_diastol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_diastol ?>" >
+						<input class="form-admin" id="tensi_diastol" name="tensi_diastol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_diastol; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Gula Darah </label>
-						<input class="form-admin" id="gula_darah" name="gula_darah" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->gula_darah ?>" >
+						<input class="form-admin" id="gula_darah" name="gula_darah" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->gula_darah; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 				</ul>

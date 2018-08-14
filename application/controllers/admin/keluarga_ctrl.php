@@ -218,52 +218,17 @@ class keluarga_ctrl extends CI_Controller{
 
 		$this->session->set_flashdata("info", $infoSession);
 		redirect($this->session->userdata('user_url'));
-		// redirect(self::$CURRENT_CONTEXT);
 	}
 
-	private function fetch_input_penghuni(){
-		$data = null;
-		$data = array(
-			'nama_penghuni' => $this->input->post('nama_penghuni'),
-			'no_ktp' => $this->input->post('noktp'),
-			'alamat' => $this->input->post('alamat'),
-			'hp' => $this->input->post('hp'),
-			// 'tglmasuk' => $this->input->post('tglmasuk'),
-			// 'tglkeluar' => $this->input->post('tglkeluar'),
-			'hpdarurat' => $this->input->post('hpdarurat')
-		);
+	public function del_anggota($id_anggota, $id_keluarga = null){
+		$obj_id = array('id_individu' => $id_anggota);
 
-		return $data;
-	}
-
-	public function add_penghuni() {
-		$infoSession = ''; // added by SKM17
-
-		$objpenghuni = $this->fetch_input_penghuni();
-		$objpenghuni['id_kamar'] = $this->input->post('id_kamar');
-
-		if ($this->penghuni_dao->saveNewPenghuni($objpenghuni))
-			$infoSession .= "Penghuni baru berhasil disimpan. ";
+		if ($this->individu_dao->delete($obj_id))
+			$this->session->set_flashdata("success", "Hapus Anggota berhasil!");
 		else
-			$infoSession .= "<font color='red'>Penghuni baru gagal disimpan. </font>";
+			$this->session->set_flashdata("failed", "Hapus Anggota gagal! Cek apakah data keluarga memiliki data anggota yang terhubung.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
-	}
-
-	public function edit_penghuni() {
-		$infoSession = ''; // added by SKM17
-
-		$objpenghuni = $this->fetch_input_penghuni();
-		$id_penghuni = $this->input->post('id_penghuni');
-		
-		if ($this->penghuni_dao->editPenghuni($id_penghuni, $objpenghuni))
-			$infoSession .= "Data Penghuni berhasil diubah. ";
-		else
-			$infoSession .= "<font color='red'>Data Penghuni gagal diubah. </font>";
-
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga);
 	}
 	
 	function role_user() {
