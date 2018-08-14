@@ -17,8 +17,8 @@
 
 		$('.delete-tab').click(function(){
 			var page = $(this).attr("href");
-			var $dialog = $('<div title="Hapus Kosan"></div>')
-			.html('Semua informasi kosan akan ikut dihapus! Hapus kosan? <div class="clear"></div>').dialog({
+			var $dialog = $('<div title="Hapus Keluarga"></div>')
+			.html('Semua informasi keluarga akan ikut dihapus! Hapus keluarga? <div class="clear"></div>').dialog({
 				autoOpen: false,
 				width: 280,
 				show: "fade",
@@ -38,62 +38,7 @@
 			$dialog.dialog('open');
 			return false;
 		});
-
-		var rowTotalKmr = <?php if ($obj) 
-									// echo sizeof($obj['kamar']);
-									echo '0;';
-								else echo '0;';
-						?>
-
-		$("#addKmr").click(function() {
-			var namaKmr = $('#nama_kmr').val();
-			var kmrFilled = $('#terisi_kmr').val();
-
-			if ($('#editNumberKmr').val() != "") {
-				var editNumberKmr = $('#editNumberKmr').val();
-				$('#kmr_' + editNumberKmr + '').val(namaKmr);
-				$('#kmr_td_' + editNumberKmr + '').text(namaKmr);
-				$('#filledKmr_' + editNumberKmr + '').val(kmrFilled);
-				$('#filledKmr_td_' + editNumberKmr + '').text(kmrFilled);
-			} else {
-				var rowCount = $('#tableKmr').find('tr').size();
-				var tableClass = (rowCount % 2 == 0) ? 'row-two' : 'row-one';
-				if (kmrFilled != '') {
-					rowTotalKmr = rowTotalKmr + 1;
-					$("#totalRowKmr").val(rowTotalKmr);
-
-					var row1 = '<tr class=' + tableClass + '><td>' + rowCount + '</td>';
-					var row2 = '<td id=kmr_td_' + rowTotalKmr + '>' + namaKmr + '</td>' + '<input type="hidden" name="kmr_' + rowTotalKmr + '" id="kmr_' + rowTotalKmr + '" value="' + namaKmr + '" />';
-					var row3 = '<input type="hidden" name="kmr_' + rowTotalKmr + '" id="kmr_' + rowTotalKmr + '" value="' + namaKmr + '" />';
-					var row4 = '<td id=filledKmr_td_' + rowTotalKmr + '>' + kmrFilled + '</td>' + '<input type="hidden" name="filledKmr_' + rowTotalKmr + '" id="filledKmr_' + rowTotalKmr + '" value="' + kmrFilled + '" />';
-					var action = '<td class="action"><a href="javascript:void(0);" onClick="editKmr(\'' + rowTotalKmr + '\',\'' + namaKmr + '\',\'' + kmrFilled + '\')" id="editKmr" ><div class="tab-edit"></div></a> <a href="javascript:void(0);" id="deleteKmr"><div class="tab-delete"></div></a></td></tr>';
-
-					$("#tableKmr").append(row1 + row2 + row3 + row4 + action);
-					$('#nama_kmr').val('');
-					$('#terisi_kmr').val('');
-				}
-			}
-		});
-
-		$("#tableKmr").on('click', '#deleteKmr', function() {
-			$(this).parent().parent().remove();
-			rowTotalKmr = rowTotalKmr - 1;
-			$("#totalRowKmr").val(rowTotalKmr);
-		});
-
-		$("#cancelKmr").click(function() {
-			$('#nama_kmr').val('');
-			$('#terisi_kmr').val('');
-			$("#addKmr").val('Tambah Kamar');
-		});
 	});
-
-	function editKmr(noKmr, namaKmr, filledKmr) {
-		$('#editNumberKmr').val(noKmr);
-		$('#nama_kmr').val(namaKmr);
-		$('#terisi_kmr').val(filledKmr);
-		$("#addKmr").val('Ubah');
-	}
 
 	function isNumberKey(evt)
 	{

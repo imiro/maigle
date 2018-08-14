@@ -134,10 +134,13 @@ class keluarga_ctrl extends CI_Controller{
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
-	public function delete($kosan_judul = null){
-		$id_user = $this->data['user_id'];
-		$this->Kosts->deleteKosan($id_user, urldecode($kosan_judul));
-		$this->session->set_flashdata("info", "Hapus Data Kosan berhasil!");
+	public function delete($id_keluarga = null){
+		$obj_id = array('id_keluarga' => $id_keluarga);
+
+		if ($this->keluarga_dao->delete($obj_id))
+			$this->session->set_flashdata("success", "Hapus Keluarga berhasil!");
+		else
+			$this->session->set_flashdata("failed", "Hapus Keluarga gagal! Cek apakah data keluarga memiliki data anggota yang terhubung.");
 
 		redirect(self::$CURRENT_CONTEXT);
 	}
@@ -148,7 +151,24 @@ class keluarga_ctrl extends CI_Controller{
 			'nik' => $this->input->post('nik'),
 			'bpjs' => $this->input->post('bpjs'),
 			'kelamin' => $this->input->post('jk'),
+			'ttl' => $this->input->post('ttl'),
 			'agama' => $this->input->post('agama'),
+			'pendidikan' => $this->input->post('pendidikan'),
+			'pekerjaan' => $this->input->post('pekerjaan'),
+			'bb' => $this->input->post('bb'),
+			'tb' => $this->input->post('tb'),
+			'tensi_sistol' => $this->input->post('tensi_sistol'),
+			'tensi_diastol' => $this->input->post('tensi_diastol'),
+			'gula_darah' => $this->input->post('gula_darah'),
+			'penyakit_saat_ini' => $this->input->post('penyakit_saat_ini'),
+			'dm' => $this->input->post('dm'),
+			'hipertensi' => $this->input->post('hipertensi'),
+			'tbc' => $this->input->post('tbc'),
+			'dbd' => $this->input->post('dbd'),
+			'hiv' => $this->input->post('hiv'),
+			'tb_hiv' => $this->input->post('tb_hiv'),
+			'imunisasi' => $this->input->post('imunisasi'),
+			'kehamilan' => $this->input->post('kehamilan'),
 			'id_rumah' => $this->input->post('id_keluarga')
 		);
 
