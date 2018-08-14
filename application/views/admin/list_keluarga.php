@@ -15,6 +15,9 @@
 			$('.success').delay(10000).fadeOut('slow');
 		<?php } ?>
 
+		$("#ttl").datepicker({dateFormat: 'yy-mm-dd'});
+		$("#tgl_periksa").datepicker({dateFormat: 'yy-mm-dd'});
+
 		$('.delete-tab').click(function(){
 			var page = $(this).attr("href");
 			var $dialog = $('<div title="Hapus Keluarga"></div>')
@@ -263,7 +266,7 @@ if ($objkel) {
 					</li>
 					<li>
 						<label>TTL</label>
-						<input class="form-admin" id="ttl" name="ttl" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->ttl ?>" >
+						<input class="form-admin" id="ttl" name="ttl" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->ttl; else echo date('Y-m-d') ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
@@ -436,6 +439,11 @@ if ($objkel) {
 								<?php } ?>
 							<?php } ?>
 						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Tanggal Input</label>
+						<input class="form-admin" id="tgl_periksa" name="tgl_periksa" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tgl_periksa; else echo date('Y-m-d') ?>" >
 						<div class="clear"></div>
 					</li>
 				</ul>

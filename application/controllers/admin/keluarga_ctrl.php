@@ -33,14 +33,10 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->library('dao/status_hipertensi_dao');
 		$this->load->library('dao/status_imunisasi_dao');
 		$this->load->library('dao/status_tbc_dao');
-		$this->load->model('Kosts','',TRUE);
 
 		$this->logged_in();
 		$this->role_user();
-		// $this->data['permission'] = all_permission_string($this->session->userdata('user_id'));
-		// $this->data['idAccessMsg'] = $this->session->userdata(SESSION_USERMSGID);
-		// $this->data['user_id'] = '5ae977774b77e8711e0c4e92';
-		// $this->data['user_id'] = '5ae039b33e0b2a360b304585'; // p ddg
+
 		$this->data['user_id'] = $this->session->userdata('user_id');
 	}
 
@@ -166,7 +162,7 @@ class keluarga_ctrl extends CI_Controller{
 			'nik' => $this->input->post('nik'),
 			'bpjs' => $this->input->post('bpjs'),
 			'kelamin' => $this->input->post('jk'),
-			// 'ttl' => $this->input->post('ttl'),
+			'ttl' => $this->input->post('ttl'),
 			'agama' => $this->input->post('agama'),
 			'pendidikan' => $this->input->post('pendidikan'),
 			'pekerjaan' => $this->input->post('pekerjaan'),
@@ -184,6 +180,7 @@ class keluarga_ctrl extends CI_Controller{
 			'tb_hiv' => $this->input->post('tb_hiv'),
 			'imunisasi' => $this->input->post('imunisasi'),
 			'kehamilan' => $this->input->post('kehamilan'),
+			'tgl_periksa' => $this->input->post('tgl_periksa'),
 			'id_rumah' => $this->input->post('id_keluarga')
 		);
 
