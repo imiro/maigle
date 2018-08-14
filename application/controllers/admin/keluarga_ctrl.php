@@ -45,8 +45,9 @@ class keluarga_ctrl extends CI_Controller{
 	public function preload(){
 		$this->data['current_context'] = self::$CURRENT_CONTEXT;
 		$this->data['title'] = self::$TITLE;
+
 		$this->data['objkel'] = null;
-		// $this->data['kamars'] = null;
+		$this->data['individus'] = null;
 		$this->data['objanggota'] = null;
 		$this->data['keluargas'] = $this->keluarga_dao->getDaftarKeluarga();
 	}
@@ -82,8 +83,7 @@ class keluarga_ctrl extends CI_Controller{
 	}
 
 	private function fetch_input() {
-		$data = null;
-		$data = array(
+		$data = array (
 			'no_kk' => $this->input->post('no_kk'),
 			'alamat' => $this->input->post('alamat'),
 			'lat' => $this->input->post('lat'),
@@ -119,18 +119,16 @@ class keluarga_ctrl extends CI_Controller{
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
-	public function edit_kosan() {
+	public function edit_keluarga() {
 		$infoSession = ''; // added by SKM17
 
 		$obj = $this->fetch_input();
-		// $id_user = $this->input->post('user_id');
-		$id_kosan = $this->input->post('id_kosan');
-		// $kosan_judul = $this->input->post('kosan_judul');
-		// $this->Kosts->editKosan($id_user, $kosan_judul, $obj);
-		if ($this->kosan_dao->editKosan($id_kosan, $obj))
-			$infoSession .= "Data Kosan berhasil diubah. ";
+		$id_keluarga = $this->input->post('id_keluarga');
+
+		if ($this->keluarga_dao->editKeluarga($id_keluarga, $obj))
+			$infoSession .= "Data Keluarga berhasil diubah. ";
 		else
-			$infoSession .= "<font color='red'>Data Kosan gagal diubah. </font>";
+			$infoSession .= "<font color='red'>Data Keluarga gagal diubah. </font>";
 
 		$this->session->set_flashdata("info", $infoSession);
 		redirect(self::$CURRENT_CONTEXT);
