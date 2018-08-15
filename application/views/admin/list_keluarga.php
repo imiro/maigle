@@ -9,16 +9,24 @@
 
 <script>
 	$(document).ready(function(){
-		<?php if ($this->session->flashdata('info')) { ?>
-			$('.success').html("<strong> <?php echo $this->session->flashdata('info'); ?>");
-			$('.success').attr('style','');
-			$('.success').delay(10000).fadeOut('slow');
-		<?php } ?>
+		
+<?php if ($this->session->flashdata('success')) { ?>
+		$('.success').html("<strong> <?php echo $this->session->flashdata('success'); ?>");
+		$('.success').attr('style','');
+		$('.success').delay(10000).fadeOut('slow');
+<?php } else if ($this->session->flashdata('failed')) { ?>
+		$('.error').html("<strong> <?php echo $this->session->flashdata('failed'); ?>");
+		$('.error').attr('style','');
+		$('.error').delay(10000).fadeOut('slow');
+<?php } ?>
+
+		$("#ttl").datepicker({dateFormat: 'yy-mm-dd'});
+		$("#tgl_periksa").datepicker({dateFormat: 'yy-mm-dd'});
 
 		$('.delete-tab').click(function(){
 			var page = $(this).attr("href");
-			var $dialog = $('<div title="Hapus Kosan"></div>')
-			.html('Semua informasi kosan akan ikut dihapus! Hapus kosan? <div class="clear"></div>').dialog({
+			var $dialog = $('<div title="Hapus Keluarga"></div>')
+			.html('Semua informasi keluarga akan ikut dihapus! Hapus keluarga? <div class="clear"></div>').dialog({
 				autoOpen: false,
 				width: 280,
 				show: "fade",
@@ -38,62 +46,7 @@
 			$dialog.dialog('open');
 			return false;
 		});
-
-		var rowTotalKmr = <?php if ($obj) 
-									// echo sizeof($obj['kamar']);
-									echo '0;';
-								else echo '0;';
-						?>
-
-		$("#addKmr").click(function() {
-			var namaKmr = $('#nama_kmr').val();
-			var kmrFilled = $('#terisi_kmr').val();
-
-			if ($('#editNumberKmr').val() != "") {
-				var editNumberKmr = $('#editNumberKmr').val();
-				$('#kmr_' + editNumberKmr + '').val(namaKmr);
-				$('#kmr_td_' + editNumberKmr + '').text(namaKmr);
-				$('#filledKmr_' + editNumberKmr + '').val(kmrFilled);
-				$('#filledKmr_td_' + editNumberKmr + '').text(kmrFilled);
-			} else {
-				var rowCount = $('#tableKmr').find('tr').size();
-				var tableClass = (rowCount % 2 == 0) ? 'row-two' : 'row-one';
-				if (kmrFilled != '') {
-					rowTotalKmr = rowTotalKmr + 1;
-					$("#totalRowKmr").val(rowTotalKmr);
-
-					var row1 = '<tr class=' + tableClass + '><td>' + rowCount + '</td>';
-					var row2 = '<td id=kmr_td_' + rowTotalKmr + '>' + namaKmr + '</td>' + '<input type="hidden" name="kmr_' + rowTotalKmr + '" id="kmr_' + rowTotalKmr + '" value="' + namaKmr + '" />';
-					var row3 = '<input type="hidden" name="kmr_' + rowTotalKmr + '" id="kmr_' + rowTotalKmr + '" value="' + namaKmr + '" />';
-					var row4 = '<td id=filledKmr_td_' + rowTotalKmr + '>' + kmrFilled + '</td>' + '<input type="hidden" name="filledKmr_' + rowTotalKmr + '" id="filledKmr_' + rowTotalKmr + '" value="' + kmrFilled + '" />';
-					var action = '<td class="action"><a href="javascript:void(0);" onClick="editKmr(\'' + rowTotalKmr + '\',\'' + namaKmr + '\',\'' + kmrFilled + '\')" id="editKmr" ><div class="tab-edit"></div></a> <a href="javascript:void(0);" id="deleteKmr"><div class="tab-delete"></div></a></td></tr>';
-
-					$("#tableKmr").append(row1 + row2 + row3 + row4 + action);
-					$('#nama_kmr').val('');
-					$('#terisi_kmr').val('');
-				}
-			}
-		});
-
-		$("#tableKmr").on('click', '#deleteKmr', function() {
-			$(this).parent().parent().remove();
-			rowTotalKmr = rowTotalKmr - 1;
-			$("#totalRowKmr").val(rowTotalKmr);
-		});
-
-		$("#cancelKmr").click(function() {
-			$('#nama_kmr').val('');
-			$('#terisi_kmr').val('');
-			$("#addKmr").val('Tambah Kamar');
-		});
 	});
-
-	function editKmr(noKmr, namaKmr, filledKmr) {
-		$('#editNumberKmr').val(noKmr);
-		$('#nama_kmr').val(namaKmr);
-		$('#terisi_kmr').val(filledKmr);
-		$("#addKmr").val('Ubah');
-	}
 
 	function isNumberKey(evt)
 	{
@@ -114,7 +67,7 @@
 	}
 
 	function redirect(){
-		window.location = "<?php echo base_url() ?>admin/kost_ctrl";
+		window.location = "<?php echo base_url() ?>admin/keluarga_ctrl";
 	}
 
 	function deletePenghuni(id_penghuni){
@@ -156,7 +109,8 @@ document.onkeypress = stopRKey;
 
 <div id="main">
 	<div class="clear " id="notif-holder"></div>
-	<p class="notif success " style="display:none"><strong>Input Sukses</strong>. Data POI berhasil disimpan.</p>
+	<p class="notif success " style="display:none"></p>
+	<p class="notif error " style="display:none"></p>
 	
 	<p class="tit-form">Daftar Keluarga <a href="#" id="filtering-form">Table Filter <img src="<?php echo base_url() ?>assets/html/img/arrow-down-black.png" /></a></p>
 	<div class="filtering" style="display: none;">
@@ -190,7 +144,7 @@ document.onkeypress = stopRKey;
 		<tbody>
 			<?php 
 				$count=1;
-				if(!empty($keluargas)){
+				if($keluargas){
 					foreach($keluargas as $kel) {
 			?>
 						<tr class="<?php echo alternator("row-two", "row-one"); ?>">
@@ -211,277 +165,302 @@ document.onkeypress = stopRKey;
 	</table>
 	<br />  
 
-	<p class="tit-form"><?php if ($obj) echo "Edit Keluarga"; else echo "Tambah Keluarga Baru"; ?></p>
-	<form action="<?php if ($obj) echo base_url() . 'admin/keluarga_ctrl/edit_keluarga'; else echo base_url() . 'admin/keluarga_ctrl/add_keluarga'; ?>" method="post" >
+	<p class="tit-form"><?php if ($objkel) echo "Edit Keluarga"; else echo "Tambah Keluarga Baru"; ?></p>
+	<form action="<?php if ($objkel) echo base_url() . 'admin/keluarga_ctrl/edit_keluarga'; else echo base_url() . 'admin/keluarga_ctrl/add_keluarga'; ?>" method="post" >
 		<ul class="form-admin">
 			<!-- <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" /> -->
-			<?php if ($obj) { ?>
-				<input type="hidden" name="id_keluarga" value="<?php echo $obj->id_keluarga ?>" >
+			<?php if ($objkel) { ?>
+				<input type="hidden" name="id_keluarga" value="<?php echo $objkel->id_keluarga ?>" >
 			<?php } ?>
 			<li>
 				<label>No KK</label>
-				<input class="form-admin" name="no_kk" id="no_kk" type="text" class="text-medium" value="<?php if ($obj) echo $obj->no_kk ?>" >
+				<input class="form-admin" name="no_kk" id="no_kk" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->no_kk ?>" >
 				<div class="clear"></div>
 			</li>
 			<li>
 				<label>Alamat</label>
-				<input class="form-admin" name="alamat" id="alamat" type="text" class="text-medium" value="<?php if ($obj) echo $obj->alamat ?>" >	
+				<input class="form-admin" name="alamat" id="alamat" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->alamat ?>" >	
 				<div class="clear"></div>
 			</li>
 			<li>
 				<label>Latitude</label>
-				<input class="form-admin" name="lat" id="lat" type="text" class="text-medium" value="<?php if ($obj) echo $obj->lat ?>" >	
+				<input class="form-admin" name="lat" id="lat" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->lat ?>" >	
 				<div class="clear"></div>
 			</li>
 			<li>
 				<label>Longitude</label>
-				<input class="form-admin" name="lon" id="lon" type="text" class="text-medium" value="<?php if ($obj) echo $obj->lon ?>" >	
+				<input class="form-admin" name="lon" id="lon" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->lon ?>" >	
 				<div class="clear"></div>
 			</li>
 		<p class="tit-form"></p>
 		<label>&nbsp;</label>
-		<input class="button-form" type="submit" value="<?php if ($obj) echo 'Ubah'; else echo 'Tambah'; ?>">
+		<input class="button-form" type="submit" value="<?php if ($objkel) echo 'Ubah'; else echo 'Tambah'; ?>">
 		<input class="button-form" type="reset" onclick="redirect()" value="Batal">
 		<div class="clear"></div>
 		
 	</form>
 		
-<?php if ($kamars) { ?>
+<?php if ($individus) { ?>
 	<br/>
-	<p class="tit-form">Daftar Kamar</p>
+	<p class="tit-form">Daftar Anggota Keluarga</p>
 	<table id="tableKmr" class="tab-admin">
 		<tr class="tittab">
 			<td>No</td>
 			<td>Nama</td>
-			<td>Luas (m<sup>2</sup>)</td>
-			<td>Fasilitas</td>
-			<td>Harga</td>
-			<td>Terisi</td>
+			<td>NIK</td>
+			<td>Jenis Kelamin</td>
+			<td>Usia</td>
+			<td>Penyakit Saat Ini</td>
 			<td style="width: 78px;">Aksi</td>
 		</tr>
-<?php $count_kamar = 1;
-	foreach ($kamars as $kamar) {
+<?php $count_anggota = 1;
+	foreach ($individus as $anggota) {
 ?>
 		<tr class="<?php echo alternator("row-one", "row-two"); ?>">
-			<td><?php echo $count_kamar; ?></td>
-			<td><?php echo $kamar->nama_kamar ?></td>
-			<td><?php echo $kamar->luas ?></td>
-			<td><?php echo $kamar->fasilitas ?></td>
-			<td><?php echo $kamar->hargath ?></td>
-			<td><?php if ($kamar->terisi == 't') echo 'Ya'; else echo 'Tidak'; ?></td>
+			<td><?php echo $count_anggota; ?></td>
+			<td><?php echo $anggota->nama ?></td>
+			<td><?php echo $anggota->nik ?></td>
+			<td><?php echo $anggota->kelamin ?></td>
+			<td><?php echo $anggota->ttl ?></td>
+			<td><?php echo $anggota->penyakit_saat_ini ?></td>
 			<td class="action">
-				<a href="<?php echo base_url();?>admin/kost_ctrl/edit/<?php echo $obj->id_kosan . '/' . $kamar->id_kamar ?>"><div class="tab-edit"></div></a>
-				<a href="<?php echo base_url();?>admin/kost_ctrl/del_kmr/<?php echo $kamar->id_kamar ?>" class="delete-tab"><div class="tab-delete"></div></a>
+				<a href="<?php echo base_url();?>admin/keluarga_ctrl/edit/<?php echo $anggota->id_rumah . '/' . $anggota->id_individu ?>"><div class="tab-edit"></div></a>
+				<a href="<?php echo base_url();?>admin/keluarga_ctrl/del_anggota/<?php echo $anggota->id_individu . '/' . $anggota->id_rumah ?>" class="delete-tab"><div class="tab-delete"></div></a>
 			</td>
 		</tr>
 <?php
-		$count_kamar++;
+		$count_anggota++;
 	} 
 ?>
 	</table>
 <?php } 
 
-if ($obj) {
+if ($objkel) {
 ?>
 	<br />
-	<div class="baris">
-	  <div class="kolom" id="kolom1">
-	  	<p class="tit-form"><?php if ($objkamar) echo 'Ubah Kamar'; else echo 'Input Kamar Baru' ?></p>
-		<form action="<?php if ($objkamar) echo base_url() . 'admin/kost_ctrl/edit_kamar'; else echo base_url() . 'admin/kost_ctrl/add_kamar'; ?>" method="post" >
-			<input type="hidden" name="id_kosan" value="<?php echo $obj->id_kosan ?>" />
-<?php if ($objkamar) { ?>
-			<input type="hidden" name="id_kamar" value="<?php echo $objkamar->id_kamar ?>" />
+	<form action="<?php if ($objanggota) echo base_url() . 'admin/keluarga_ctrl/edit_anggota'; else echo base_url() . 'admin/keluarga_ctrl/add_anggota'; ?>" method="post" >
+		<div class="baris">
+			<div class="kolom" id="ffform">
+				<p class="tit-form"><?php if ($objanggota) echo 'Ubah Anggota'; else echo 'Input Anggota Baru' ?></p>
+				<input type="hidden" name="id_keluarga" value="<?php echo $objkel->id_keluarga ?>" />
+<?php if ($objanggota) { ?>
+				<input type="hidden" name="id_individu" value="<?php echo $objanggota->id_individu ?>" />
 <?php } ?>
-			<ul class="form-admin">
-				<li>
-					<label>Nama</label>
-					<input class="form-admin" id="nama_kmr" name="nama_kmr" type="text" class="text-medium" value="<?php if ($objkamar) echo $objkamar->nama_kamar ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Terisi</label>
-					<select id="terisi_kmr" name="terisi_kmr" class="form-admin">
-						<option value="f" <?php if ($objkamar && ($objkamar->terisi=='f')) echo 'selected' ?> >kosong</option>
-						<option value="t" <?php if ($objkamar && ($objkamar->terisi=='t')) echo 'selected' ?> >terisi</option>
-					</select>
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Luas</label>
-					<input class="form-admin" id="luas_kmr" name="luas_kmr" type="text" class="text-medium" value="<?php if ($objkamar) echo $objkamar->luas ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Fasilitas</label>
-					<input class="form-admin" id="fasilitas_kmr" name="fasilitas_kmr" type="text" class="text-medium" value="<?php if ($objkamar) echo $objkamar->fasilitas ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Harga / Thn</label>
-					<input class="form-admin" id="harga_kmr" name="harga_kmr" type="text" class="text-medium" value="<?php if ($objkamar) echo $objkamar->hargath ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Pembayaran</label>
-					<input class="form-admin" id="pmby_kmr" name="pmby_kmr" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Sisa Pembayaran</label>
-					<input class="form-admin" id="sisapmby_kmr" name="sisapmby_kmr" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Foto Kamar 1</label>
-					<input name="alamat_kosan" id="fotokamar1" type="file" class="text-medium" value="" >	
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Foto Kamar 2</label>
-					<input name="alamat_kosan" id="fotokamar2" type="file" class="text-medium" value="" >	
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label></label>
-					<input class="button-form green" type="submit" value="<?php if ($objkamar) echo 'Ubah'; else echo 'Tambah'; ?>">
-					<input class="button-form red" type="reset" onclick="redirect()" value="Batal">
-					<div class="clear"></div>
-				</li>
-			</ul>
-		</form>
-	</div>
-<?php if ($objkamar) { ?>
-	<div class="kolom" id="kolom2">
-	  	<p class="tit-form">Data Penghuni</p>
-		<form action="<?php if ($penghuni) echo base_url() . 'admin/kost_ctrl/edit_penghuni'; else echo base_url() . 'admin/kost_ctrl/add_penghuni'; ?>" method="post" >
-			<input type="hidden" name="id_kamar" value="<?php echo $objkamar->id_kamar ?>" />
-	<?php if ($penghuni) { ?>
-			<input type="hidden" name="id_penghuni" value="<?php echo $penghuni->id_penghuni ?>" />
-	<?php } ?>
-			<ul class="form-admin">
-				<li>
-					<label>Nama Penghuni</label>
-					<input class="form-admin" id="nama_penghuni" name="nama_penghuni" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->nama_penghuni ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>TTL</label>
-					<input class="form-admin" id="ttl" name="ttl" type="text" class="text-medium">
-					</select>
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Gender</label>
-					<input class="form-admin" id="gender" name="gender" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Agama</label>
-					<input class="form-admin" id="agama" name="agama" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>No KTP</label>
-					<input class="form-admin" id="noktp" name="noktp" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->no_ktp ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Alamat</label>
-					<input class="form-admin" id="alamat" name="alamat" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->alamat ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>No HP</label>
-					<input class="form-admin" id="hp" name="hp" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->hp ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Aktivitas</label>
-					<input class="form-admin" id="aktivitas" name="aktivitas" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Tgl Masuk</label>
-					<input class="form-admin" id="tglmasuk" name="tglmasuk" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->tglmasuk ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Tgl Keluar</label>
-					<input class="form-admin" id="tglkeluar" name="tglkeluar" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->tglkeluar ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Ket Ayah</label>
-					<input class="form-admin" id="ket_ayah" name="ket_ayah" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Ket Ibu</label>
-					<input class="form-admin" id="ket_ibu" name="ket_ibu" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Kontak Darurat</label>
-					<input class="form-admin" id="kontakdarurat" name="kontakdarurat" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->hpdarurat ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>No HP darurat</label>
-					<input class="form-admin" id="hpdarurat" name="hpdarurat" type="text" class="text-medium" value="<?php if ($penghuni) echo $penghuni->hpdarurat ?>" >
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Email</label>
-					<input class="form-admin" id="email" name="email" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>FB</label>
-					<input class="form-admin" id="fb" name="fb" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Instagram</label>
-					<input class="form-admin" id="ig" name="ig" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Twitter</label>
-					<input class="form-admin" id="twitter" name="twitter" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>BBM</label>
-					<input class="form-admin" id="bbm" name="bbm" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Foto KTP</label>
-					<input class="form-admin" id="fotoktp" name="fotoktp" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Foto KTM</label>
-					<input class="form-admin" id="fotoktm" name="fotoktm" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label>Foto Diri</label>
-					<input class="form-admin" id="fotodiri" name="fotodiri" type="text" class="text-medium">
-					<div class="clear"></div>
-				</li>
-				<li>
-					<label></label>
-					<input class="button-form green" type="submit" value="<?php if ($penghuni) echo 'Ubah Data Penghuni'; else echo 'Set Penghuni'; ?>">
-					<input class="button-form red" type="reset" onclick="<?php if ($penghuni) echo 'delPenghuni('.$penghuni->id_penghuni.')'; else echo 'redirect()'; ?>" value="<?php if ($penghuni) echo 'Ganti Penghuni'; else echo 'Batal'; ?>">
-					<div class="clear"></div>
-				</li>
-			</ul>
-		</form>
-	</div> <!-- kolom -->
-
-<?php 
-	}
-} ?>
+				<ul class="form-admin">
+					<li>
+						<label>Nama</label>
+						<input class="form-admin" id="nama" name="nama" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->nama ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>NIK</label>
+						<input class="form-admin" id="nik" name="nik" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->nik ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>BPJS</label>
+						<input class="form-admin" id="bpjs" name="bpjs" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bpjs ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Jenis Kelamin </label>
+						<div class="form-admin-radio">
+							<input type="radio" name="jk" value="L" <?php if ($objanggota && $objanggota->kelamin == 'L') echo 'checked'; ?> > L
+							<input type="radio" name="jk" value="P" <?php if ($objanggota && $objanggota->kelamin == 'P') echo 'checked'; ?> > P
+						</div>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>TTL</label>
+						<input class="form-admin" id="ttl" name="ttl" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->ttl; else echo date('Y-m-d') ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Agama</label>
+						<select name="agama" class="form-admin">
+							<option value="0" selected>-Pilih Agama-</option>
+							<?php foreach ($agama as $row) { ?>
+								<?php if ($objanggota && $objanggota->agama == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Pendidikan</label>
+						<select name="pendidikan" class="form-admin">
+							<option value="0" selected>-Pilih Pendidikan-</option>
+							<?php foreach ($pendidikan as $row) { ?>
+								<?php if ($objanggota && $objanggota->pendidikan == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Pekerjaan</label>
+						<select name="pekerjaan" class="form-admin">
+							<option value="0" selected>-Pilih Pekerjaan-</option>
+							<?php foreach ($pekerjaan as $row) { ?>
+								<?php if ($objanggota && $objanggota->pekerjaan == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Berat Badan (gram) </label>
+						<input class="form-admin" id="bb" name="bb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bb; else echo '0' ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Tinggi Badan (cm) </label>
+						<input class="form-admin" id="tb" name="tb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tb; else echo '0' ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Sistole </label>
+						<input class="form-admin" id="tensi_sistol" name="tensi_sistol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_sistol; else echo '0' ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Diastole </label>
+						<input class="form-admin" id="tensi_diastol" name="tensi_diastol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_diastol; else echo '0' ?>" >
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Gula Darah </label>
+						<input class="form-admin" id="gula_darah" name="gula_darah" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->gula_darah; else echo '0' ?>" >
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="kolom" id="fffooto">
+				<p class="tit-form">Data Penyakit</p>
+				<ul class="form-admin">
+					<li>
+						<label>Penyakit Saat Ini</label>
+						<textarea rows="1" cols="1" name="penyakit_saat_ini" class="form-admin"><?php if ($objanggota) echo $objanggota->penyakit_saat_ini; ?></textarea>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Diabetes Melitus</label>
+						<select name="dm" class="form-admin">
+							<option value="0" selected>-Pilih Status DM-</option>
+							<?php foreach ($dm as $row) { ?>
+								<?php if ($objanggota && $objanggota->dm == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Hipertensi</label>
+						<select name="hipertensi" class="form-admin">
+							<option value="0" selected>-Pilih Status Hipertensi-</option>
+							<?php foreach ($hipertensi as $row) { ?>
+								<?php if ($objanggota && $objanggota->hipertensi == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>TBC</label>
+						<select name="tbc" class="form-admin">
+							<option value="0" selected>-Pilih Status TBC-</option>
+							<?php foreach ($tbc as $row) { ?>
+								<?php if ($objanggota && $objanggota->tbc == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>DBD </label>
+						<div class="form-admin-radio">
+							<input type="radio" name="dbd" value="FALSE" <?php if (!$objanggota || !$objanggota->dbd) echo 'checked'; ?>> Tidak
+							<input type="radio" name="dbd" value="TRUE" <?php if ($objanggota && $objanggota->dbd) echo 'checked'; ?> > Ya
+						</div>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>HIV </label>
+						<div class="form-admin-radio">
+							<input type="radio" name="hiv" value="FALSE" <?php if (!$objanggota || !$objanggota->hiv) echo 'checked'; ?>> Tidak
+							<input type="radio" name="hiv" value="TRUE" <?php if ($objanggota && $objanggota->hiv) echo 'checked'; ?> > Ya
+						</div>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>TB HIV </label>
+						<div class="form-admin-radio">
+							<input type="radio" name="tb_hiv" value="FALSE" <?php if (!$objanggota || !$objanggota->tb_hiv) echo 'checked'; ?>> Tidak
+							<input type="radio" name="tb_hiv" value="TRUE" <?php if ($objanggota && $objanggota->tb_hiv) echo 'checked'; ?> > Ya
+							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Imunisasi</label>
+						<select name="tbc" class="form-admin">
+							<option value="0" selected>-Pilih Status Imunisasi-</option>
+							<?php foreach ($imunisasi as $row) { ?>
+								<?php if ($objanggota && $objanggota->imunisasi == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Kehamilan</label>
+						<select name="tbc" class="form-admin">
+							<option value="0" selected>-Pilih Status Kehamilan-</option>
+							<?php foreach ($hamil as $row) { ?>
+								<?php if ($objanggota && $objanggota->kehamilan == $row->id) { ?>
+									<option value="<?php echo $row->id ?>" selected><?php echo $row->desc ?></option>
+								<?php } else { ?>
+									<option value="<?php echo $row->id ?>"><?php echo $row->desc ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+						<div class="clear"></div>
+					</li>
+					<li>
+						<label>Tanggal Input</label>
+						<input class="form-admin" id="tgl_periksa" name="tgl_periksa" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tgl_periksa; else echo date('Y-m-d') ?>" >
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div> <!-- kolom -->
+		</div> <!-- baris -->
+		<p class="tit-form"></p>
+		<label>&nbsp;</label>
+		<input class="button-form" type="submit" value="<?php if ($objanggota) echo 'Ubah'; else echo 'Tambah'; ?>">
+		<input class="button-form" type="reset" onclick="redirect()" value="Batal">
+		<div class="clear"></div>
+	</form>
+<?php } ?>
 </div> <!-- div main -->
 <div class="clear"></div>

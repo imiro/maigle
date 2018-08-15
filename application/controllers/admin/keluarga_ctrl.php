@@ -24,14 +24,19 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->library('upload');
 		$this->load->library('image_lib');
 		$this->load->library('dao/keluarga_dao');
-		$this->load->model('Kosts','',TRUE);
+		$this->load->library('dao/individu_dao');
+		$this->load->library('dao/daftar_agama_dao');
+		$this->load->library('dao/daftar_pekerjaan_dao');
+		$this->load->library('dao/daftar_pendidikan_dao');
+		$this->load->library('dao/status_dm_dao');
+		$this->load->library('dao/status_hamil_dao');
+		$this->load->library('dao/status_hipertensi_dao');
+		$this->load->library('dao/status_imunisasi_dao');
+		$this->load->library('dao/status_tbc_dao');
 
 		$this->logged_in();
 		$this->role_user();
-		// $this->data['permission'] = all_permission_string($this->session->userdata('user_id'));
-		// $this->data['idAccessMsg'] = $this->session->userdata(SESSION_USERMSGID);
-		// $this->data['user_id'] = '5ae977774b77e8711e0c4e92';
-		// $this->data['user_id'] = '5ae039b33e0b2a360b304585'; // p ddg
+
 		$this->data['user_id'] = $this->session->userdata('user_id');
 	}
 
@@ -44,12 +49,10 @@ class keluarga_ctrl extends CI_Controller{
 		$this->data['current_context'] = self::$CURRENT_CONTEXT;
 		$this->data['title'] = self::$TITLE;
 
-		$this->data['obj'] = null;
-		// $this->data['kamars'] = null;
-		// $this->data['objkamar'] = null;
-		// $this->data['kosts'] = $this->Kosts->getDaftarKosan($this->data['user_id']);
+		$this->data['objkel'] = null;
+		$this->data['individus'] = null;
+		$this->data['objanggota'] = null;
 		$this->data['keluargas'] = $this->keluarga_dao->getDaftarKeluarga();
-		// $this->data['kosts'] = $this->kosan_dao->getDaftarKosan(1);
 	}
 
 	public function load_view($page, $data = null){
@@ -59,19 +62,31 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->view('template/template_footer');
 	}
 
-	public function edit($id_kosan, $id_kamar = null){
+	public function edit($id_keluarga, $id_anggota = null){
 		$this->preload();
+		$user_url = self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga;
 
-		if ($id_kosan == null) {
+		if ($id_keluarga == null) {
 			$this->load_view('admin/list_keluarga');
-		} else {
-			// $this->data['obj'] = $this->Kosts->getInfoKosan($this->data['user_id'], urldecode($kosan_judul));
-			$this->data['obj'] = $this->kosan_dao->getInfoKosan($id_kosan);
-			$this->data['kamars'] = $this->kamar_dao->getDaftarKamar($id_kosan);
-			$this->session->set_userdata('user_url', self::$CURRENT_CONTEXT . '/edit/' . $id_kosan);
-			if ($id_kamar) {
-				$this->data['objkamar'] = $this->kamar_dao->getInfoKamar($id_kamar);
-				$this->data['penghuni'] = $this->penghuni_dao->getPenghuniKamar($id_kamar);
+		} 
+		else {
+			$this->data['objkel'] = $this->keluarga_dao->getInfoKeluarga($id_keluarga);
+			$this->data['individus'] = $this->individu_dao->getDaftarAnggotaKeluarga($id_keluarga);
+
+			// ambil daftar2 opsi
+			$this->data['agama'] = $this->daftar_agama_dao->getDaftar();
+			$this->data['pekerjaan'] = $this->daftar_pekerjaan_dao->getDaftar();
+			$this->data['pendidikan'] = $this->daftar_pendidikan_dao->getDaftar();
+			$this->data['dm'] = $this->status_dm_dao->getDaftar();
+			$this->data['hamil'] = $this->status_hamil_dao->getDaftar();
+			$this->data['hipertensi'] = $this->status_hipertensi_dao->getDaftar();
+			$this->data['imunisasi'] = $this->status_imunisasi_dao->getDaftar();
+			$this->data['tbc'] = $this->status_tbc_dao->getDaftar();
+			$this->session->set_userdata('user_url', $user_url);
+
+			if ($id_anggota) {
+				$this->data['objanggota'] = $this->individu_dao->getInfoIndividu($id_anggota);
+				$this->session->set_userdata('user_url', $user_url . '/' . $id_anggota);
 			}
 
 			$this->load_view('admin/list_keluarga', $this->data);
@@ -79,8 +94,7 @@ class keluarga_ctrl extends CI_Controller{
 	}
 
 	private function fetch_input() {
-		$data = null;
-		$data = array(
+		$data = array (
 			'no_kk' => $this->input->post('no_kk'),
 			'alamat' => $this->input->post('alamat'),
 			'lat' => $this->input->post('lat'),
@@ -103,130 +117,102 @@ class keluarga_ctrl extends CI_Controller{
 	}
 
 	public function add_keluarga() {
-		$infoSession = ''; // added by SKM17
-
 		$obj = $this->fetch_input();
 		
 		if ($this->keluarga_dao->saveNewKeluarga($obj))
-			$infoSession .= "Keluarga baru berhasil disimpan. ";
+			$this->session->set_flashdata("success", "Data keluarga baru berhasil disimpan.");
 		else
-			$infoSession .= "<font color='red'>Keluarga baru gagal disimpan. </font>";
+			$this->session->set_flashdata("failed", "Data keluarga baru gagal disimpan.");
 
-		$this->session->set_flashdata("info", $infoSession);
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
-	public function edit_kosan() {
-		$infoSession = ''; // added by SKM17
-
+	public function edit_keluarga() {
 		$obj = $this->fetch_input();
-		// $id_user = $this->input->post('user_id');
-		$id_kosan = $this->input->post('id_kosan');
-		// $kosan_judul = $this->input->post('kosan_judul');
-		// $this->Kosts->editKosan($id_user, $kosan_judul, $obj);
-		if ($this->kosan_dao->editKosan($id_kosan, $obj))
-			$infoSession .= "Data Kosan berhasil diubah. ";
+		$id_keluarga = $this->input->post('id_keluarga');
+
+		if ($this->keluarga_dao->editKeluarga($id_keluarga, $obj))
+			$this->session->set_flashdata("success", "Data keluarga baru berhasil diubah.");
 		else
-			$infoSession .= "<font color='red'>Data Kosan gagal diubah. </font>";
+			$this->session->set_flashdata("failed", "Data keluarga baru gagal diubah.");
 
-		$this->session->set_flashdata("info", $infoSession);
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga);
+	}
+
+	public function delete($id_keluarga = null){
+		$obj_id = array('id_keluarga' => $id_keluarga);
+
+		if ($this->keluarga_dao->delete($obj_id))
+			$this->session->set_flashdata("success", "Hapus Keluarga berhasil.");
+		else
+			$this->session->set_flashdata("failed", "Hapus Keluarga gagal! Cek apakah data keluarga memiliki data anggota yang terhubung.");
+
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
-	public function delete($kosan_judul = null){
-		$id_user = $this->data['user_id'];
-		$this->Kosts->deleteKosan($id_user, urldecode($kosan_judul));
-		$this->session->set_flashdata("info", "Hapus Data Kosan berhasil!");
-
-		redirect(self::$CURRENT_CONTEXT);
-	}
-
-	private function fetch_input_kamar(){
-		$data = null;
-		$data = array(
-			'nama_kamar' => $this->input->post('nama_kmr'),
-			'luas' => $this->input->post('luas_kmr'),
-			'fasilitas' => $this->input->post('fasilitas_kmr'),
-			'hargath' => $this->input->post('harga_kmr'),
-			'terisi' => $this->input->post('terisi_kmr')
+	private function fetch_input_anggota(){
+		$data = array (
+			'nama' => $this->input->post('nama'),
+			'nik' => $this->input->post('nik'),
+			'bpjs' => $this->input->post('bpjs'),
+			'kelamin' => $this->input->post('jk'),
+			'ttl' => $this->input->post('ttl'),
+			'agama' => $this->input->post('agama'),
+			'pendidikan' => $this->input->post('pendidikan'),
+			'pekerjaan' => $this->input->post('pekerjaan'),
+			'bb' => $this->input->post('bb'),
+			'tb' => $this->input->post('tb'),
+			'tensi_sistol' => $this->input->post('tensi_sistol'),
+			'tensi_diastol' => $this->input->post('tensi_diastol'),
+			'gula_darah' => $this->input->post('gula_darah'),
+			'penyakit_saat_ini' => $this->input->post('penyakit_saat_ini'),
+			'dm' => $this->input->post('dm'),
+			'hipertensi' => $this->input->post('hipertensi'),
+			'tbc' => $this->input->post('tbc'),
+			'dbd' => $this->input->post('dbd'),
+			'hiv' => $this->input->post('hiv'),
+			'tb_hiv' => $this->input->post('tb_hiv'),
+			'imunisasi' => $this->input->post('imunisasi'),
+			'kehamilan' => $this->input->post('kehamilan'),
+			'tgl_periksa' => $this->input->post('tgl_periksa'),
+			'id_rumah' => $this->input->post('id_keluarga')
 		);
 
 		return $data;
 	}
 
-	public function add_kamar() {
-		$infoSession = ''; // added by SKM17
+	public function add_anggota() {
+		$objindiv = $this->fetch_input_anggota();
 
-		$objkamar = $this->fetch_input_kamar();
-		$objkamar['id_kosan'] = $this->input->post('id_kosan');
-
-		if ($this->kamar_dao->saveNewKamar($objkamar))
-			$infoSession .= "Kamar baru berhasil disimpan. ";
+		if ($this->individu_dao->saveNewIndividu($objindiv))
+			$this->session->set_flashdata("success", "Data individu baru berhasil disimpan.");
 		else
-			$infoSession .= "<font color='red'>Kamar baru gagal disimpan. </font>";
+			$this->session->set_flashdata("failed", "Data individu baru gagal disimpan.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $objindiv['id_rumah']);
 	}
 
-	public function edit_kamar() {
-		$infoSession = ''; // added by SKM17
-
-		$objkamar = $this->fetch_input_kamar();
-		$id_kamar = $this->input->post('id_kamar');
+	public function edit_anggota() {
+		$objindiv = $this->fetch_input_anggota();
+		$id_indiv = $this->input->post('id_individu');
 		
-		if ($this->kamar_dao->editKamar($id_kamar, $objkamar))
-			$infoSession .= "Data Kamar berhasil diubah. ";
+		if ($this->individu_dao->editIndividu($id_indiv, $objindiv))
+			$this->session->set_flashdata("success", "Data individu baru berhasil diubah.");
 		else
-			$infoSession .= "<font color='red'>Data Kamar gagal diubah. </font>";
+			$this->session->set_flashdata("failed", "Data individu baru gagal diubah.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $objindiv['id_rumah'] . '/' . $id_indiv);
 	}
 
-	private function fetch_input_penghuni(){
-		$data = null;
-		$data = array(
-			'nama_penghuni' => $this->input->post('nama_penghuni'),
-			'no_ktp' => $this->input->post('noktp'),
-			'alamat' => $this->input->post('alamat'),
-			'hp' => $this->input->post('hp'),
-			// 'tglmasuk' => $this->input->post('tglmasuk'),
-			// 'tglkeluar' => $this->input->post('tglkeluar'),
-			'hpdarurat' => $this->input->post('hpdarurat')
-		);
+	public function del_anggota($id_anggota, $id_keluarga = null){
+		$obj_id = array('id_individu' => $id_anggota);
 
-		return $data;
-	}
-
-	public function add_penghuni() {
-		$infoSession = ''; // added by SKM17
-
-		$objpenghuni = $this->fetch_input_penghuni();
-		$objpenghuni['id_kamar'] = $this->input->post('id_kamar');
-
-		if ($this->penghuni_dao->saveNewPenghuni($objpenghuni))
-			$infoSession .= "Penghuni baru berhasil disimpan. ";
+		if ($this->individu_dao->delete($obj_id))
+			$this->session->set_flashdata("success", "Hapus Anggota berhasil!");
 		else
-			$infoSession .= "<font color='red'>Penghuni baru gagal disimpan. </font>";
+			$this->session->set_flashdata("failed", "Hapus Anggota gagal! Cek apakah data keluarga memiliki data anggota yang terhubung.");
 
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
-	}
-
-	public function edit_penghuni() {
-		$infoSession = ''; // added by SKM17
-
-		$objpenghuni = $this->fetch_input_penghuni();
-		$id_penghuni = $this->input->post('id_penghuni');
-		
-		if ($this->penghuni_dao->editPenghuni($id_penghuni, $objpenghuni))
-			$infoSession .= "Data Penghuni berhasil diubah. ";
-		else
-			$infoSession .= "<font color='red'>Data Penghuni gagal diubah. </font>";
-
-		$this->session->set_flashdata("info", $infoSession);
-		redirect($this->session->userdata('user_url'));
+		redirect(self::$CURRENT_CONTEXT . '/edit/' . $id_keluarga);
 	}
 	
 	function role_user() {
