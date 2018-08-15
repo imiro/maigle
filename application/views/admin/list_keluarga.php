@@ -203,7 +203,7 @@ document.onkeypress = stopRKey;
 <?php if ($individus) { ?>
 	<br/>
 	<p class="tit-form">Daftar Anggota Keluarga</p>
-	<table id="tableKmr" class="tab-admin">
+	<table class="tab-admin">
 		<tr class="tittab">
 			<td>No</td>
 			<td>Nama</td>
@@ -221,7 +221,7 @@ document.onkeypress = stopRKey;
 			<td><?php echo $anggota->nama ?></td>
 			<td><?php echo $anggota->nik ?></td>
 			<td><?php echo $anggota->kelamin ?></td>
-			<td><?php echo $anggota->ttl ?></td>
+			<td><?php echo calculateAge($anggota->ttl) ?></td>
 			<td><?php echo $anggota->penyakit_saat_ini ?></td>
 			<td class="action">
 				<a href="<?php echo base_url();?>admin/keluarga_ctrl/edit/<?php echo $anggota->id_rumah . '/' . $anggota->id_individu ?>"><div class="tab-edit"></div></a>
@@ -249,17 +249,17 @@ if ($objkel) {
 				<ul class="form-admin">
 					<li>
 						<label>Nama</label>
-						<input class="form-admin" id="nama" name="nama" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->nama ?>" >
+						<input class="form-admin" name="nama" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->nama ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>NIK</label>
-						<input class="form-admin" id="nik" name="nik" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->nik ?>" >
+						<input class="form-admin" name="nik" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->nik ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>BPJS</label>
-						<input class="form-admin" id="bpjs" name="bpjs" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bpjs ?>" >
+						<input class="form-admin" name="bpjs" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bpjs ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
@@ -319,27 +319,27 @@ if ($objkel) {
 					</li>
 					<li>
 						<label>Berat Badan (gram) </label>
-						<input class="form-admin" id="bb" name="bb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bb; else echo '0' ?>" >
+						<input class="form-admin" name="bb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->bb; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Tinggi Badan (cm) </label>
-						<input class="form-admin" id="tb" name="tb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tb; else echo '0' ?>" >
+						<input class="form-admin" name="tb" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tb; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Sistole </label>
-						<input class="form-admin" id="tensi_sistol" name="tensi_sistol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_sistol; else echo '0' ?>" >
+						<input class="form-admin" name="tensi_sistol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_sistol; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Diastole </label>
-						<input class="form-admin" id="tensi_diastol" name="tensi_diastol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_diastol; else echo '0' ?>" >
+						<input class="form-admin" name="tensi_diastol" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->tensi_diastol; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 					<li>
 						<label>Gula Darah </label>
-						<input class="form-admin" id="gula_darah" name="gula_darah" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->gula_darah; else echo '0' ?>" >
+						<input class="form-admin" name="gula_darah" type="text" class="text-medium" value="<?php if ($objanggota) echo $objanggota->gula_darah; else echo '0' ?>" >
 						<div class="clear"></div>
 					</li>
 				</ul>
