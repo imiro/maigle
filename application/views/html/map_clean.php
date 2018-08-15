@@ -40,7 +40,7 @@ function includeHTML() {
 			h1 {font-family: sshh}
 	</style>
 	<meta charset=utf-8 />
-	<title>Kost Putri EDUMEDIA</title>
+	<title>HEALTH POINT</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
 <!-- klo ngambil dari luar -->
@@ -76,9 +76,9 @@ function includeHTML() {
 		<div class="container-fluid">
 			<div class="navbar-header" style="vertical-align:middle;"">
 				<!-- <img class="pull-left" style="width:41px;height:41px;margin-top:5px;z-index:999;" src="<?php echo base_url() ?>aset/img/1.png"> -->
-				<img class="pull-left" style="vertical-align:middle; width:30px;height:30px;margin-top:5px;z-index:999;" src="<?php echo base_url() ?>aset/img/1.png">
+				<img class="pull-left" style="vertical-align:middle; width:38px;height:38px;margin-top:5px;z-index:999;" src="<?php echo base_url() ?>aset/img/healthpoint2.png">
 				<!-- <a class="navbar-brand" style="font-family:sshh;font-size:30;font-weight: normal;margin-top:0px;" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-legend-btn">&nbsp;Kost Putri EDUMEDIA</a> -->
-				<a class="navbar-brand" style="vertical-align:middle; font-family:sshh;font-size:20;font-weight: normal;margin-top:0px;" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-legend-btn">&nbsp;Kost Putri EDUMEDIA&nbsp;</a>
+				<a class="navbar-brand" style="vertical-align:middle; font-family:sshh;font-size:20;font-weight: normal;margin-top:0px;" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-legend-btn">&nbsp;HEALTH POINT&nbsp;</a>
 				<ul class="nav navbar-nav pull-center">
 					<li class="btn-group btn-group-sm" style="vertical-align:middle; margin-top:10px;" role="group">
 						<button type="button" class="btn btn-success" id="peta"><i class="fa fa-map"></i>  Peta</button>
@@ -191,25 +191,22 @@ function includeHTML() {
 				<p>Some text in the Modal..</p>
 			</div>
 		</div> -->
-					<div class="modal fade" id="modalcoba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<!-- <div class="modal fade" id="modalcoba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog modal-lg" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 									<h4 class="modal-title" id="myModalLabel">Detail Kamar</h4>
 								</div>
-								<div id="modalcobabody" class="modal-body">
-									<!-- EMPTY -->
+									<div id="modalcobabody" class="modal-body">
 								</div>
-
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 
 					<!-- MODAL GALERY -->
-					<div class="modal fade" id="modalgalery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<!-- <div class="modal-dialog modal-lg" role="document"> -->
+					<!-- <div class="modal fade" id="modalgalery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -226,7 +223,77 @@ function includeHTML() {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
+
+					<div class="modal fade" id="modalcoba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			            <div class="modal-dialog" role="document">
+			              <div class="modal-content">
+			                <div class="modal-header">
+			                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                  <h4 class="modal-title" id="myModalLabel">REKAM MEDIS</h4>
+			                </div>
+			                <div class="modal-body">
+
+			                  <!-- Nav tabs -->
+			                  <ul class="nav nav-tabs" role="tablist">
+			                    <li role="presentation" class="active"><a href="#biodata" aria-controls="biodata" role="tab" data-toggle="tab">Biodata</a></li>
+			                    <li role="presentation"><a href="#puskesmas" aria-controls="puskesmas" role="tab" data-toggle="tab">Program Puskesmas</a></li>
+			                    <li role="presentation"><a href="#menular" aria-controls="menular" role="tab" data-toggle="tab">Penyakit Menular</a></li>
+			                    <li role="presentation"><a href="#tdkmenular" aria-controls="tdkmenular" role="tab" data-toggle="tab">Penyakit Tdk Menular</a></li>
+			                  </ul>
+
+			                  <!-- Tab panes -->
+			                  <div class="tab-content">
+			                    <!-- biodata -->
+			                    <div role="tabpanel" class="tab-pane active" id="biodata">
+			                      <table class="table table-hover table-striped table-condensed" id="tblbiodata" style="font-size:12px;" >
+			                        <thead>
+			                          <tr>
+			                            <!-- <th>Key</th> -->
+			                            <!-- <th>Value</th> -->
+			                          <tr>
+			                        </thead>
+			                        <tbody class="list">
+			                         <!-- <tr>
+			                            <td>Foto : </td>
+			                            <td><img src="aset/img/pasfoto.jpg" width="51" height="70"></td>
+			                          </tr> -->
+			                        </tbody>
+			                      </table>
+			                    </div>
+			                    <!-- puskesmas -->
+			                    <div role="tabpanel" class="tab-pane" id="puskesmas">
+			                      <table class="table table-hover table-striped table-condensed" id="tblpuskesmas" style="font-size:12px;" >
+			                        <tbody class="list">
+			                        </tbody>
+			                      </table>
+			                    </div>
+			                    <!-- menular -->
+			                    <div role="tabpanel" class="tab-pane" id="menular">
+			                      <table class="table table-hover table-striped table-condensed" id="tblmenular" style="font-size:12px;" >
+			                        <tbody class="list">
+			                        </tbody>
+			                      </table>
+			                    </div>
+			                    <!-- tdkmenular -->
+			                    <div role="tabpanel" class="tab-pane" id="tdkmenular">
+			                      <table class="table table-hover table-striped table-condensed" id="tbltdkmenular" style="font-size:12px;" >
+			                        <tbody class="list">
+			                        </tbody>
+			                      </table>
+			                    </div>
+			                  </div>
+			                  
+
+
+			                </div>
+			                <!-- <div class="modal-footer">
+			                  <button id="formorgbersih" type="button" class="btn btn-default" data-dismiss="modal">Reset</button>
+			                  <button id="formorgkirim" type="button" class="btn btn-primary">Tambah</button>
+			                </div> -->
+			              </div>
+			            </div>
+			          </div>
 
 	</div>
 
@@ -328,6 +395,10 @@ function includeHTML() {
 	<script src="<?php echo base_url() ?>aset/ResilientMaps.js"></script>
 	<script>
 		
+
+
+
+		// ga kepake
 <?php if ($permission) { ?>
 	function modalkamar(i,ii){
 		// console.log("bikin append");
