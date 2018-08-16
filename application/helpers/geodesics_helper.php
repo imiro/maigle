@@ -3,40 +3,38 @@
 		type = d/m/s/r
 	*/
 
-	function toGeoDec($deg, $min, $sec, $dir ){
+	function toGeoDec($deg, $min, $sec, $dir) {
 
 		$dec = $deg + ( (float) $min / 60.0) + ((float) $sec / 3600.0) ;
 
 		return $dec * $dir;
 	}
 
-	function geoComponent($d, $type, $latlon = null){
-
-		
+	function geoComponent($d, $type, $latlon = null) {
 
 		$coord = (float) $d;
-		if(strtolower($type) == 'd'){
+		if (strtolower($type) == 'd') {
 			return floor(abs($coord));
-		}else if(strtolower($type) == 'm'){
+		} else if(strtolower($type) == 'm') {
 
 			$deg = floor(abs($coord));
-	  		$coord = (abs($coord)-$deg)*60;
-	  		return floor($coord);
+			$coord = (abs($coord)-$deg)*60;
+			return floor($coord);
 
-		}else if(strtolower($type) == 's'){
+		} else if(strtolower($type) == 's') {
 
 			$deg = floor(abs($coord));
-	  		$coord = (abs($coord)-$deg)*60;
-	  		$min = floor($coord);
+			$coord = (abs($coord)-$deg)*60;
+			$min = floor($coord);
 			return round(($coord-$min)*60);
 
-		}else if(strtolower($type) == 'r'){
-			if($coord < 0){
+		} else if(strtolower($type) == 'r') {
+			if($coord < 0) {
 				return -1;
-			}else{
+			} else {
 				return 1;
 			}
-		}else if(strtolower($type) == 'a'){
+		} else if(strtolower($type) == 'a') {
 			
 			$r = null;
 			$deg = geoComponent($d,'d');
@@ -51,9 +49,14 @@
 			}
 
 			return $deg.'&deg;'.$min.'\''.$sec.'&quot;'.$r;
-		}else{
+		} else {
 			throw new Exception("second parameter values must be 'd' for degree, 'm' for minutes , 's' for second and 'r' for direction ");
-		}
+		}	
+	}
 
-		
+	function calculateAge($dateBirth) {
+		// $dateOfBirth = "17-10-1985";
+		$today = date("Y-m-d");
+		$diff = date_diff(date_create($dateBirth), date_create($today));
+		return $diff->format('%y') . ' th ' . $diff->format('%m') . ' bl';
 	}

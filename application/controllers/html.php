@@ -6,7 +6,6 @@ if (!defined('BASEPATH'))
 class Html extends CI_Controller {
 
 	public $data;
-	private $role;
 
 	function __construct() {
 		parent::__construct();
@@ -18,6 +17,7 @@ class Html extends CI_Controller {
 		$this->load->library('tank_auth');
 		// $this->load->database();
 		$this->load->model('Kosts','',TRUE);
+		$this->load->library('dao/keluarga_dao');
 
 		$this->logged_in();
 	}
@@ -34,13 +34,17 @@ class Html extends CI_Controller {
 
 	public function map() {
 		$this->role_user();
+		$this->data['keluargas'] = $this->keluarga_dao->getAllKelIndividu();
+// print_r($this->data['keluargas']); die();
 		$this->load->view('html/map_clean',$this->data);
 	}
+
 	public function tabelkost() {
 		$this->role_user();
 		$this->data['kosts'] = $this->Kosts->getAllDaftarKosan();
 		$this->load->view('html/tabelkost',$this->data);
 	}
+
 	public function about() {
 		$this->role_user();
 		$this->load->view('html/about',$this->data);

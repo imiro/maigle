@@ -1169,9 +1169,10 @@ map.addControl(legnd);
 legnd.setPrefix('<b>legend :</b>');
 
 function INITGAMBARDB(){
-  $.get("../json/puskesmas.json", function(data, status){
+    $.get("../json/puskesmas.json", function(dataa, status){
         // RUMAHS.push(data.features);
         var BINpop = [];
+        var data = dataRumah;
         for(var i=0; i<data.features.length; i++){
             var vaksin,hamil,tbc,dm,hiv;
             vaksin=0;hamil=0;tbc=0;dm=0;dbd=0;jantung=0;
@@ -1232,7 +1233,7 @@ function INITGAMBARDB(){
                       "<tr><td>Status Hipertensi : </td><td>     "+jantung+"</td></tr>"+
                     "</table></br>";
             BINpop.push(binpop);
-            var gelo = L.geoJSON(data.features[i],{color: "blue", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
+            var gelo = L.geoJSON(data.features[i],{color: "red", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
             gelo.properties = data.features[i].properties;
             // drawnItems.addLayer(gelo);
             drawnGeojson.addLayer(gelo);

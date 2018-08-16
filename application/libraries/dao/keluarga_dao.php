@@ -40,6 +40,19 @@ class keluarga_dao extends Generic_dao  {
 		return $this->update($obj, array('id_keluarga' => $id));
 	}
 
+	function getAllKelIndividu() {
+		$this->ci->db->select('keluarga.*, individu.*, daftar_agama.desc AS desc_agama, daftar_pendidikan.desc AS desc_pend, daftar_pekerjaan.desc AS desc_kerja');
+		$this->ci->db->from('keluarga LEFT JOIN individu ON (keluarga.id_keluarga = individu.id_rumah) 
+			LEFT JOIN daftar_agama ON (individu.agama = daftar_agama.id)
+			LEFT JOIN daftar_pendidikan ON (individu.pendidikan = daftar_pendidikan.id)
+			LEFT JOIN daftar_pekerjaan ON (individu.pekerjaan = daftar_pekerjaan.id)
+		');
+		
+        // $this->ci->db->where('id_keluarga = 4');
+		$q = $this->ci->db->get();
+		return $q->result();
+	}
+
 }
 
 ?>
