@@ -1098,77 +1098,77 @@ function opsipenyakit(response, popup) {
 }
 
 function INITGAMBARDB(){
-    // $.get("../json/puskesmas.json", function(data, status){
+    $.get("../json/puskesmas.json", function(dataa, status){
         // RUMAHS.push(data.features);
-        var data = dataRumah;
         var BINpop = [];
+        var data = dataRumah;
         for(var i=0; i<data.features.length; i++){
-            // var vaksin,hamil,tbc,dm;
-            // vaksin=0;hamil=0;tbc=0;dm=0;dbd=0;jantung=0;
-            // var desc="";
-            // for (var ii=0; ii<data.features[i].properties.penghuni.length; ii++){
-            //     if(data.features[i].properties.penghuni[ii].vaksin_lengkap == 'tidak'){vaksin++};
-            //     if(data.features[i].properties.penghuni[ii].hamil == 'ya'){hamil++};
-            //     if(data.features[i].properties.penghuni[ii].tbc == 'ya'){tbc++};
-            //     if(data.features[i].properties.penghuni[ii].dm == 'ya'){dm++};
-            //     if(data.features[i].properties.penghuni[ii].dbd == 'ya'){dbd++};
-            //     if(data.features[i].properties.penghuni[ii].jantung == 'ya'){jantung++};
-            //     desc = desc+"<tr><td><i class='fa fa-book'>&nbsp;<a onclick=\'mdal("+i+","+ii+")\' data-toggle='modal' href='#modalcoba'>"+data.features[i].properties.penghuni[ii].nama+"</a></i>&nbsp;</td><td></td></tr>"
-            // }
-            // data.features[i].properties.vaksin = vaksin;
-            // data.features[i].properties.hamil = hamil;
-            // data.features[i].properties.tbc = tbc;
-            // data.features[i].properties.dm = dm;
-            // data.features[i].properties.dbd = dbd;
-            // data.features[i].properties.jantung = jantung;
-            // if(vaksin < 1){vaksin = vaksin+'&nbsp;<span class="label label-success">Ok</span>'};
-            // if(vaksin ==1){vaksin = vaksin+'&nbsp;<span class="label label-warning">Warn</span>'};
-            // if(vaksin > 1){vaksin = vaksin+'&nbsp;<span class="label label-danger">Danger</span>'};
-            // if(hamil < 1){hamil = hamil+'&nbsp;<span class="label label-success">Ok</span>'};
-            // if(hamil ==1){hamil = hamil+'&nbsp;<span class="label label-warning">Warn</span>'};
-            // if(hamil > 1){hamil = hamil+'&nbsp;<span class="label label-danger">Danger</span>'};
-            // if(tbc < 1){tbc = tbc+'&nbsp;<span class="label label-success">Ok</span>'};
-            // if(tbc ==1){tbc = tbc+'&nbsp;<span class="label label-warning">Warn</span>'};
-            // if(tbc > 1){tbc = tbc+'&nbsp;<span class="label label-danger">Danger</span>'};
-            // if(dm < 1){dm = dm+'&nbsp;<span class="label label-success">Ok</span>'};
-            // if(dm ==1){dm = dm+'&nbsp;<span class="label label-warning">Warn</span>'};
-            // if(dm > 1){dm = dm+'&nbsp;<span class="label label-danger">Danger</span>'};
-            // if(dbd < 1){dbd = dbd+'&nbsp;<span class="label label-success">Ok</span>'};
-            // if(dbd ==1){dbd = dbd+'&nbsp;<span class="label label-warning">Warn</span>'};
-            // if(dbd > 1){dbd = dbd+'&nbsp;<span class="label label-danger">Danger</span>'};
-            // if(jantung < 1){jantung = jantung+'&nbsp;<span class="label label-success">Ok</span>'};
-            // if(jantung ==1){jantung = jantung+'&nbsp;<span class="label label-warning">Warn</span>'};
-            // if(jantung > 1){jantung = jantung+'&nbsp;<span class="label label-danger">Danger</span>'};
-            // var binpop = "<table style='font-size:14px'>"+
-            //           "<tr><td><b> "+data.features[i].properties.judul+"</b></td></tr>"+
-            //         "</table><br>"+
-            //           "<i>"+data.features[i].properties.desc+"</i></br>"+
-            //           "<i>Jumlah anggota keluarga :&nbsp;"+data.features[i].properties.penghuni.length+"</i>"+
-            //         "<table style='font-size:11px'>"+
-            //           "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
-            //           desc+
-            //           "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
-            //           "<tr><td>Program Puskesmas</td><td>&nbsp;</td></tr>"+
-            //           "<tr><td>Status Vaksinasi : </td><td>   "+vaksin+"</td></tr>"+
-            //           "<tr><td>Status Ibu Hamil : </td><td>   "+hamil+"</td></tr>"+
-            //           "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
-            //           "<tr><td>Penyakit menular</td><td>&nbsp;</td></tr>"+
-            //           "<tr><td>Status TBC : </td><td>         "+tbc+"</td></tr>"+
-            //           "<tr><td>Status DBD : </td><td>         "+dbd+"</td></tr>"+
-            //           "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
-            //           "<tr><td>Penyakit tdk menular</td><td>&nbsp;</td></tr>"+
-            //           "<tr><td>Status DM : </td><td>          "+dm+"</td></tr>"+
-            //           "<tr><td>Status Jantung : </td><td>     "+jantung+"</td></tr>"+
-            //         "</table></br>";
-            // BINpop.push(binpop);
-            var gelo = L.geoJSON(data.features[i],{color: "blue", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
+            var vaksin,hamil,tbc,dm;
+            vaksin=0;hamil=0;tbc=0;dm=0;dbd=0;jantung=0;
+            var desc="";
+            for (var ii=0; ii<data.features[i].properties.penghuni.length; ii++){
+                if(data.features[i].properties.penghuni[ii].vaksin_lengkap == 'tidak'){vaksin++};
+                if(data.features[i].properties.penghuni[ii].hamil == 'ya'){hamil++};
+                if(data.features[i].properties.penghuni[ii].tbc == 'ya'){tbc++};
+                if(data.features[i].properties.penghuni[ii].dm == 'ya'){dm++};
+                if(data.features[i].properties.penghuni[ii].dbd == 'ya'){dbd++};
+                if(data.features[i].properties.penghuni[ii].jantung == 'ya'){jantung++};
+                desc = desc+"<tr><td><i class='fa fa-book'>&nbsp;<a onclick=\'mdal("+i+","+ii+")\' data-toggle='modal' href='#modalcoba'>"+data.features[i].properties.penghuni[ii].nama+"</a></i>&nbsp;</td><td></td></tr>"
+            }
+            data.features[i].properties.vaksin = vaksin;
+            data.features[i].properties.hamil = hamil;
+            data.features[i].properties.tbc = tbc;
+            data.features[i].properties.dm = dm;
+            data.features[i].properties.dbd = dbd;
+            data.features[i].properties.jantung = jantung;
+            if(vaksin < 1){vaksin = vaksin+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(vaksin ==1){vaksin = vaksin+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(vaksin > 1){vaksin = vaksin+'&nbsp;<span class="label label-danger">Danger</span>'};
+            if(hamil < 1){hamil = hamil+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(hamil ==1){hamil = hamil+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(hamil > 1){hamil = hamil+'&nbsp;<span class="label label-danger">Danger</span>'};
+            if(tbc < 1){tbc = tbc+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(tbc ==1){tbc = tbc+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(tbc > 1){tbc = tbc+'&nbsp;<span class="label label-danger">Danger</span>'};
+            if(dm < 1){dm = dm+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(dm ==1){dm = dm+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(dm > 1){dm = dm+'&nbsp;<span class="label label-danger">Danger</span>'};
+            if(dbd < 1){dbd = dbd+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(dbd ==1){dbd = dbd+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(dbd > 1){dbd = dbd+'&nbsp;<span class="label label-danger">Danger</span>'};
+            if(jantung < 1){jantung = jantung+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(jantung ==1){jantung = jantung+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(jantung > 1){jantung = jantung+'&nbsp;<span class="label label-danger">Danger</span>'};
+            var binpop = "<table style='font-size:14px'>"+
+                      "<tr><td><b> "+data.features[i].properties.judul+"</b></td></tr>"+
+                    "</table><br>"+
+                      "<i>"+data.features[i].properties.desc+"</i></br>"+
+                      "<i>Jumlah anggota keluarga :&nbsp;"+data.features[i].properties.penghuni.length+"</i>"+
+                    "<table style='font-size:11px'>"+
+                      "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
+                      desc+
+                      "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
+                      "<tr><td>Program Puskesmas</td><td>&nbsp;</td></tr>"+
+                      "<tr><td>Status Vaksinasi : </td><td>   "+vaksin+"</td></tr>"+
+                      "<tr><td>Status Ibu Hamil : </td><td>   "+hamil+"</td></tr>"+
+                      "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
+                      "<tr><td>Penyakit menular</td><td>&nbsp;</td></tr>"+
+                      "<tr><td>Status TBC : </td><td>         "+tbc+"</td></tr>"+
+                      "<tr><td>Status DBD : </td><td>         "+dbd+"</td></tr>"+
+                      "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
+                      "<tr><td>Penyakit tdk menular</td><td>&nbsp;</td></tr>"+
+                      "<tr><td>Status DM : </td><td>          "+dm+"</td></tr>"+
+                      "<tr><td>Status Jantung : </td><td>     "+jantung+"</td></tr>"+
+                    "</table></br>";
+            BINpop.push(binpop);
+            var gelo = L.geoJSON(data.features[i],{color: "red", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
             gelo.properties = data.features[i].properties;
             // drawnItems.addLayer(gelo);
             drawnGeojson.addLayer(gelo);
             desc ="";
             // if(data.features[i].geometry.type == 'circle'){layer.jenis="circle"; drawnCircle.addLayer(layer)}; 
         }
-        // opsipenyakit(data.features, BINpop);
+        opsipenyakit(data.features, BINpop);
         // drawnGeojson.on("add",function(){STgeo = true;syncSidebar();});
         // drawnGeojson.on("remove",function(){STgeo = false;syncSidebar();});
       
@@ -1177,7 +1177,7 @@ function INITGAMBARDB(){
         // console.log(drawnGeojson);
         // console.log(RUMAHS);
         syncSidebar();
-    // }); //ajax
+    }); //ajax
 } //INITGAMBARDB
 
 var PENYAKIT = {
@@ -1685,7 +1685,7 @@ $("#logout").click(function() {
 });
 
 $("#backend").click(function() {
-  window.location.href = "admin/keluarga_ctrl";
+  window.location.href = "backend.html";
 });
 
 function animateSidebar() {

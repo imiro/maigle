@@ -12,7 +12,7 @@ foreach($keluargas as $data) {
 	if ($curIdKeluarga < 0) { // masih yg pertama
 		$curIdKeluarga = $data->id_keluarga;
 		echo '{"type":"Feature",';
-		echo '"geometry":{"type":"Point","coordinates":[' . $data->lat . ',' . $data->lon . ']},';
+		echo '"geometry":{"type":"Point","coordinates":[' . $data->lon . ',' . $data->lat . ']},';
 		echo '"properties": {';
 		echo '"no_kk":"' . $data->no_kk . '",';
 		echo '"alamat":"' . $data->alamat . '",';
@@ -73,7 +73,7 @@ foreach($keluargas as $data) {
 
 			// isian rumah selanjutnya
 			echo '{"type":"Feature",';
-			echo '"geometry":{"type":"Point","coordinates":[' . $data->lat . ',' . $data->lon . ']},';
+			echo '"geometry":{"type":"Point","coordinates":[' . $data->lon . ',' . $data->lat . ']},';
 			echo '"properties": {';
 			echo '"no_kk":"' . $data->no_kk . '",';
 			echo '"alamat":"' . $data->alamat . '",';
