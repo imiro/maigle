@@ -2,6 +2,115 @@
 
 <!-- include another html page -->
 <script>
+var dataRumah = null;
+<?php  // susun data dari database menjadi data dg format puskesmas.json
+echo 'dataRumah = {"type":"FeatureCollection","features":['; // bukaan pertama
+
+// mulai iterasi data, dikelompokkan per rumah
+$curIdKeluarga = -1;
+foreach($keluargas as $data) {
+	if ($curIdKeluarga < 0) { // masih yg pertama
+		$curIdKeluarga = $data->id_keluarga;
+		echo '{"type":"Feature",';
+		echo '"geometry":{"type":"Point","coordinates":[' . $data->lat . ',' . $data->lon . ']},';
+		echo '"properties": {';
+		echo '"no_kk":"' . $data->no_kk . '",';
+		echo '"alamat":"' . $data->alamat . '",';
+		echo '"penghuni":[';
+
+		if ($data->id_individu != NULL) { 
+			echo '{"nama" : "' . $data->nama . '",';
+			echo '"ttl":"' . $data->ttl . '",';
+			echo '"gender":"' . $data->kelamin . '",';
+			echo '"agama":"' . $data->desc_agama . '",';
+			echo '"bpjs":"' . $data->bpjs . '",';
+			echo '"pendidikan":"' . $data->desc_pend . '",';
+			echo '"pekerjaan":"' . $data->desc_kerja . '",';
+			echo '"bb":"' . $data->bb . '",';
+			echo '"tb":"' . $data->tb . '",';
+			echo '"gula_darah":"' . $data->gula_darah . '",';
+			echo '"sis":"' . $data->tensi_sistol . '",';
+			echo '"dias":"' . $data->tensi_diastol . '",';
+			echo '"penyakit_saat_ini":"' . $data->penyakit_saat_ini . '",';
+			echo '"dm":"' . $data->dm . '",';
+			echo '"hipertensi":"' . $data->hipertensi . '",';
+			echo '"tbc":"' . $data->tbc . '",';
+			echo '"dbd":"' . $data->dbd . '",';
+			echo '"hiv":"' . $data->hiv . '",';
+			echo '"tb_hiv":"' . $data->tb_hiv . '",';
+			echo '"imunisasi":"' . $data->imunisasi . '",';
+			echo '"kehamilan":"' . $data->kehamilan . '"}';
+		}
+	} else {
+		if ($data->id_keluarga == $curIdKeluarga) { // rumah data selanjutnya = rumah data sebelumnya
+			// lanjut data penghuni rumah
+			echo ','; // tambahin koma penutup utk penghuni sebelumnya
+				echo '{"nama" : "' . $data->nama . '",';
+				echo '"ttl":"' . $data->ttl . '",';
+				echo '"gender":"' . $data->kelamin . '",';
+				echo '"agama":"' . $data->desc_agama . '",';
+				echo '"bpjs":"' . $data->bpjs . '",';
+				echo '"pendidikan":"' . $data->desc_pend . '",';
+				echo '"pekerjaan":"' . $data->desc_kerja . '",';
+				echo '"bb":"' . $data->bb . '",';
+				echo '"tb":"' . $data->tb . '",';
+				echo '"gula_darah":"' . $data->gula_darah . '",';
+				echo '"sis":"' . $data->tensi_sistol . '",';
+				echo '"dias":"' . $data->tensi_diastol . '",';
+				echo '"penyakit_saat_ini":"' . $data->penyakit_saat_ini . '",';
+				echo '"dm":"' . $data->dm . '",';
+				echo '"hipertensi":"' . $data->hipertensi . '",';
+				echo '"tbc":"' . $data->tbc . '",';
+				echo '"dbd":"' . $data->dbd . '",';
+				echo '"hiv":"' . $data->hiv . '",';
+				echo '"tb_hiv":"' . $data->tb_hiv . '",';
+				echo '"imunisasi":"' . $data->imunisasi . '",';
+				echo '"kehamilan":"' . $data->kehamilan . '"}';
+		}
+		else { // ganti rumah, bikin data rumah baru
+			echo ']}'; // tutup dulu data penghuni sebelumnya & properties
+			echo '},';	 // tutup Feature
+
+			// isian rumah selanjutnya
+			echo '{"type":"Feature",';
+			echo '"geometry":{"type":"Point","coordinates":[' . $data->lat . ',' . $data->lon . ']},';
+			echo '"properties": {';
+			echo '"no_kk":"' . $data->no_kk . '",';
+			echo '"alamat":"' . $data->alamat . '",';
+			echo '"penghuni":[';
+
+			if ($data->id_individu != NULL) { 
+					echo '{"nama" : "' . $data->nama . '",';
+					echo '"ttl":"' . $data->ttl . '",';
+					echo '"gender":"' . $data->kelamin . '",';
+					echo '"agama":"' . $data->desc_agama . '",';
+					echo '"bpjs":"' . $data->bpjs . '",';
+					echo '"pendidikan":"' . $data->desc_pend . '",';
+					echo '"pekerjaan":"' . $data->desc_kerja . '",';
+					echo '"bb":"' . $data->bb . '",';
+					echo '"tb":"' . $data->tb . '",';
+					echo '"gula_darah":"' . $data->gula_darah . '",';
+					echo '"sis":"' . $data->tensi_sistol . '",';
+					echo '"dias":"' . $data->tensi_diastol . '",';
+					echo '"penyakit_saat_ini":"' . $data->penyakit_saat_ini . '",';
+					echo '"dm":"' . $data->dm . '",';
+					echo '"hipertensi":"' . $data->hipertensi . '",';
+					echo '"tbc":"' . $data->tbc . '",';
+					echo '"dbd":"' . $data->dbd . '",';
+					echo '"hiv":"' . $data->hiv . '",';
+					echo '"tb_hiv":"' . $data->tb_hiv . '",';
+					echo '"imunisasi":"' . $data->imunisasi . '",';
+					echo '"kehamilan":"' . $data->kehamilan . '"}';
+			}
+		}
+		$curIdKeluarga = $data->id_keluarga;
+	}
+}
+
+echo ']}}'; // kurawal penutup array penghuni & kurawal rumah
+echo ']};'; // kurawal penutup akhir
+?>
+
 var LOGINSTAT = false;
 function includeHTML() {
 	var z, i, elmnt, file, xhttp;
@@ -88,7 +197,7 @@ function includeHTML() {
 				</ul>
 			</div>
 			<ul class="pull-right">
-				<i style="vertical-align:middle; font-family:'Arial'; color:white;  font-size:15; font-weight:normal; margin-top:8px">Welcome <?php if ($username) echo $username ?>&nbsp;</i>
+				<i style="vertical-align:middle; font-family:"'Arial'; color:white;  font"-size:15; font-weight:normal; margin-top:8px">Welcome <?php if ($username) echo $username ?>&nbsp;</i>
 				<li class="btn-group btn-group-sm" style="vertical-align:middle; margin-top:10px;" role="group">
 					
 <?php if ($permission) { ?>
