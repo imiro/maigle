@@ -983,7 +983,7 @@ var drawnMarkerBulat = L.featureGroup().addTo(map);
 var drawnItems = L.featureGroup().addTo(map);
 
 INITGAMBARDB();
-var STVAK, STHAM, STTEB, STDIA, STDBD, STJAN; 
+var STVAK, STHAM, STTEB, STDIA, STDBD, STJAN, STHIV; 
 // STgeo;
 var RUMAHS = [];
 var VAKSIN=L.layerGroup();
@@ -1032,7 +1032,7 @@ function  mdal(i,ii){
 
 function opsipenyakit(response, popup) {
   console.log(response);
-  var vak,ham,teb,dia,deb,jan,warna;
+  var vak,ham,teb,dia,deb,jan,warna,hai;
   for(var i=0; i<response.length; i++){
       var a=response[i].properties.vaksin;
       var b=response[i].properties.hamil;
@@ -1040,6 +1040,8 @@ function opsipenyakit(response, popup) {
       var d=response[i].properties.dm;
       var e=response[i].properties.dbd;
       var f=response[i].properties.jantung;
+      var g=response[i].properties.hiv;
+      
       var titiktkduaP=[];
       // console.log("polygon")
       for(var ii=0; ii<response[i].geometry.coordinates[0].length; ii++){
@@ -1082,6 +1084,12 @@ function opsipenyakit(response, popup) {
       if(f > 2){warna = "#A93226"};
       jan = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       jan.properties = response[i].properties;
+      if(g < 1){warna = "#8DBAB9"};
+      if(g ==1){warna = "#ff9999"};
+      if(g ==2){warna = "#E74C3C"};
+      if(g > 2){warna = "#A93226"};
+      hai = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
+      hai.properties = response[i].properties;
       // syncSidebar();
       VAKSIN.addLayer(vak);
       HAMIL.addLayer(ham);
@@ -1089,6 +1097,8 @@ function opsipenyakit(response, popup) {
       DM.addLayer(dia);
       DBD.addLayer(deb);
       JANTUNG.addLayer(jan);
+      HIV.addLayer(hai);
+
   }
   CL.on("add",function(){
   	document.getElementById("namapeta").innerHTML="Peta .................";
@@ -1154,6 +1164,16 @@ function opsipenyakit(response, popup) {
   					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">Hipertensi tidak terkontrol</font></div>'
   	);
   });
+  HIV.on("add",function(){
+  	STHIV = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta HIV";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">sehat</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">1 org tertular</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">2 org tertular</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">>2 org tertular</font></div>'
+  	);
+  });
   
   VAKSIN.on("remove",function(){STVAK = false;syncSidebar();});
   HAMIL.on("remove",function(){STHAM = false;syncSidebar();});
@@ -1161,6 +1181,7 @@ function opsipenyakit(response, popup) {
   DM.on("remove",function(){STDIA = false;syncSidebar();});
   DBD.on("remove",function(){STDBD = false;syncSidebar();});
   JANTUNG.on("remove",function(){STJAN = false;syncSidebar();});
+  HIV.on("remove",function(){STHIV = false;syncSidebar();});
 }
 
 //LEAFLET attribution legend
@@ -1169,13 +1190,13 @@ map.addControl(legnd);
 legnd.setPrefix('<b>legend :</b>');
 
 function INITGAMBARDB(){
-    $.get("../json/puskesmas.json", function(dataa, status){
+    $.get("../json/puskesmas.json", function(data, status){
         // RUMAHS.push(data.features);
         var BINpop = [];
-        var data = dataRumah;
+        // var data = dataRumah;
         for(var i=0; i<data.features.length; i++){
             var vaksin,hamil,tbc,dm,hiv;
-            vaksin=0;hamil=0;tbc=0;dm=0;dbd=0;jantung=0;
+            vaksin=0;hamil=0;tbc=0;dm=0;dbd=0;jantung=0;hiv=0;
             var desc="";
             for (var ii=0; ii<data.features[i].properties.penghuni.length; ii++){
                 if(data.features[i].properties.penghuni[ii].vaksin_lengkap == 'tidak'){vaksin++};
@@ -1184,6 +1205,7 @@ function INITGAMBARDB(){
                 if(data.features[i].properties.penghuni[ii].dm == 'ya'){dm++};
                 if(data.features[i].properties.penghuni[ii].dbd == 'ya'){dbd++};
                 if(data.features[i].properties.penghuni[ii].jantung == 'ya'){jantung++};
+                if(data.features[i].properties.penghuni[ii].hiv == 'ya'){hiv++};
                 desc = desc+"<tr><td><i class='fa fa-book'>&nbsp;<a onclick=\'mdal("+i+","+ii+")\' data-toggle='modal' href='#modalcoba'>"+data.features[i].properties.penghuni[ii].nama+"</a></i>&nbsp;</td><td></td></tr>"
             }
             data.features[i].properties.vaksin = vaksin;
@@ -1192,6 +1214,7 @@ function INITGAMBARDB(){
             data.features[i].properties.dm = dm;
             data.features[i].properties.dbd = dbd;
             data.features[i].properties.jantung = jantung;
+            data.features[i].properties.hiv = hiv;
             if(vaksin < 1){vaksin = vaksin+'&nbsp;<span class="label label-success">Ok</span>'};
             if(vaksin ==1){vaksin = vaksin+'&nbsp;<span class="label label-warning">Warn</span>'};
             if(vaksin > 1){vaksin = vaksin+'&nbsp;<span class="label label-danger">Danger</span>'};
@@ -1210,6 +1233,9 @@ function INITGAMBARDB(){
             if(jantung < 1){jantung = jantung+'&nbsp;<span class="label label-success">Ok</span>'};
             if(jantung ==1){jantung = jantung+'&nbsp;<span class="label label-warning">Warn</span>'};
             if(jantung > 1){jantung = jantung+'&nbsp;<span class="label label-danger">Danger</span>'};
+            if(hiv < 1){hiv = hiv+'&nbsp;<span class="label label-success">Ok</span>'};
+            if(hiv ==1){hiv = hiv+'&nbsp;<span class="label label-warning">Warn</span>'};
+            if(hiv > 1){hiv = hiv+'&nbsp;<span class="label label-danger">Danger</span>'};
             var binpop = "<table style='font-size:14px'>"+
                       "<tr><td><b> "+data.features[i].properties.judul+"</b></td></tr>"+
                     "</table><br>"+
@@ -1233,7 +1259,7 @@ function INITGAMBARDB(){
                       "<tr><td>Status Hipertensi : </td><td>     "+jantung+"</td></tr>"+
                     "</table></br>";
             BINpop.push(binpop);
-            var gelo = L.geoJSON(data.features[i],{color: "red", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
+            var gelo = L.geoJSON(data.features[i],{color: "blue", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
             gelo.properties = data.features[i].properties;
             // drawnItems.addLayer(gelo);
             drawnGeojson.addLayer(gelo);
@@ -1260,7 +1286,7 @@ var PENYAKIT = {
   "TBC": TBC,
   "HIV": HIV,
   "DBD<br><br><b>Penyakit Tdk Menular :": DBD,
-  "Hipertense":JANTUNG,
+  "Hipertensi":JANTUNG,
   "DM":DM
   
   // "<font color='red'>Garis Batas</font>": pklline,
@@ -1283,7 +1309,8 @@ var gambargambar = {
     // "SEMUA" : drawnItems
   }
 };
-var layerControl5 = L.control.groupedLayers(PENYAKIT,gambargambar, {position:'topright'}).addTo(map);
+// var layerControl5 = L.control.groupedLayers(PENYAKIT,gambargambar, {position:'topright'}).addTo(map);
+var layerControl5 = L.control.groupedLayers(PENYAKIT,null, {position:'topright'}).addTo(map);
 
     
     var ldraw = new L.Control.Draw({
@@ -1408,6 +1435,11 @@ function flyto(nelat,nelng,swlat,swlng,id) {
   		layer.openPopup();	
   	}
   });
+  HIV.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
   // map.openPopup(popup);
   // layer.openPopup();
 }
@@ -1420,6 +1452,15 @@ function syncSidebar() {
   document.getElementById("myinput").value="";
   $("#feature-list tbody").empty();
   // $("#feature-lost tbody").empty();
+  if(STHIV){
+    HIV.eachLayer(function (layer) {
+      if (map.getBounds().contains(layer.getBounds())) {
+      	// console.log(layer);
+      	// console.log(layer._bounds._northEast.lat);
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      }
+    });
+  }
   if(STDBD){
     DBD.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
@@ -1466,7 +1507,7 @@ function syncSidebar() {
   }
 
   /* GEOJSON */
-  if(!STVAK && !STDIA && !STTEB && !STHAM && !STDBD && !STJAN){
+  if(!STVAK && !STDIA && !STTEB && !STHAM && !STDBD && !STJAN && !STHIV){
     drawnGeojson.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
         $("#feature-list tbody").append('<tr onclick="flyto('+layer._layers[layer._leaflet_id - 1]._bounds._northEast.lat+','+layer._layers[layer._leaflet_id - 1]._bounds._northEast.lng+','+layer._layers[layer._leaflet_id - 1]._bounds._southWest.lat+','+layer._layers[layer._leaflet_id - 1]._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer._layers[layer._leaflet_id - 1].options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer._layers[layer._leaflet_id - 1].options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
