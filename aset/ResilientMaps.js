@@ -232,6 +232,7 @@ function INITPLUGIN(){
         propertyName: 'display_name',
         propertyLoc: ['lat','lon'],
         marker: L.circleMarker([0,0],{radius:20}),
+        textPlaceholder: 'cari tempat',
         // autoCollapse: true,
         autoType: false,
         position: 'topright',
@@ -989,6 +990,7 @@ var VAKSIN=L.layerGroup();
 var HAMIL=L.layerGroup();
 var TBC=L.layerGroup();
 var DBD=L.layerGroup();
+var HIV=L.layerGroup();
 var JANTUNG=L.layerGroup();
 var DM=L.layerGroup();
 var CL=L.layerGroup();
@@ -1017,14 +1019,14 @@ function  mdal(i,ii){
                                   '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Kolesterol (mg/dL) :</td>            <td>'+RUMAHS[0][i].properties.penghuni[ii].kolesterol+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
                                   '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Asam Urat (mg/dL) :</td>             <td>'+RUMAHS[0][i].properties.penghuni[ii].asam_urat+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
                                   '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Tensi (mmHg) :</td>                 <td>'+RUMAHS[0][i].properties.penghuni[ii].tensi+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
-                                  '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Vaksin Lengkap :</td>        <td>'+RUMAHS[0][i].properties.penghuni[ii].vaksin_lengkap+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
+                                  '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Kelengkapan Imunisasi :</td>        <td>'+RUMAHS[0][i].properties.penghuni[ii].vaksin_lengkap+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
                                   '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Status Hamil :</td>          <td>'+RUMAHS[0][i].properties.penghuni[ii].hamil+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
                                   '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Diagnosis Terakhir :</td>    <td>'+RUMAHS[0][i].properties.penghuni[ii].diagnosis+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>');
   
   $("#tblmenular tbody").append('<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Status TBC :</td>            <td>'+RUMAHS[0][i].properties.penghuni[ii].tbc+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
                                 '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Status DBD :</td>            <td>'+RUMAHS[0][i].properties.penghuni[ii].tbc+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>');
   $("#tbltdkmenular tbody").append( '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Status DM :</td>             <td>'+RUMAHS[0][i].properties.penghuni[ii].dm+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'+
-                                    '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Status Jantung :</td>         <td>'+RUMAHS[0][i].properties.penghuni[ii].dm+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>');
+                                    '<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Status Hipertensi :</td>         <td>'+RUMAHS[0][i].properties.penghuni[ii].dm+'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>');
   syncSidebar();
 }
 
@@ -1044,35 +1046,41 @@ function opsipenyakit(response, popup) {
           tik = new L.LatLng(response[i].geometry.coordinates[0][ii][1], response[i].geometry.coordinates[0][ii][0]); 
           titiktkduaP.push(tik);
       }
-      if(a < 1){warna = "#00cc00"};
-      if(a ==1){warna = "orange"};
-      if(a > 1){warna = "red"};
-      vak = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.8}).bindPopup(popup[i]);//.addTo(map);
+      if(a < 1){warna = "#8DBAB9"};
+      if(a ==1){warna = "#ff9999"};
+      if(a ==2){warna = "#E74C3C"};
+      if(a > 2){warna = "#A93226"};
+      vak = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       vak.properties = response[i].properties;
-      if(b < 1){warna = "#00cc00"};
-      if(b ==1){warna = "orange"};
-      if(b > 1){warna = "red"};
-      ham = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.8}).bindPopup(popup[i]);//.addTo(map);
+      if(b < 1){warna = "#8DBAB9"};
+      if(b ==1){warna = "#ff9999"};
+      if(b ==2){warna = "#E74C3C"};
+      if(b > 2){warna = "#A93226"};
+      ham = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       ham.properties = response[i].properties;
-      if(c < 1){warna = "#00cc00"};
-      if(c ==1){warna = "orange"};
-      if(c > 1){warna = "red"};
-      teb = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.8}).bindPopup(popup[i]);//.addTo(map);
+      if(c < 1){warna = "#8DBAB9"};
+      if(c ==1){warna = "#ff9999"};
+      if(c ==2){warna = "#E74C3C"};
+      if(c > 2){warna = "#A93226"};
+      teb = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       teb.properties = response[i].properties;
-      if(d < 1){warna = "#00cc00"};
-      if(d ==1){warna = "orange"};
-      if(d > 1){warna = "red"};
-      dia = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.8}).bindPopup(popup[i]);//.addTo(map);
+      if(d < 1){warna = "#8DBAB9"};
+      if(d ==1){warna = "#ff9999"};
+      if(d ==2){warna = "#E74C3C"};
+      if(d > 2){warna = "#A93226"};
+      dia = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       dia.properties = response[i].properties;
-      if(e < 1){warna = "#00cc00"};
-      if(e ==1){warna = "orange"};
-      if(e > 1){warna = "red"};
-      deb = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.8}).bindPopup(popup[i]);//.addTo(map);
+      if(e < 1){warna = "#8DBAB9"};
+      if(e ==1){warna = "#ff9999"};
+      if(e ==2){warna = "#E74C3C"};
+      if(e > 2){warna = "#A93226"};
+      deb = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       deb.properties = response[i].properties;
-      if(f < 1){warna = "#00cc00"};
-      if(f ==1){warna = "orange"};
-      if(f > 1){warna = "red"};
-      jan = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.8}).bindPopup(popup[i]);//.addTo(map);
+      if(f < 1){warna = "#8DBAB9"};
+      if(f ==1){warna = "#ff9999"};
+      if(f ==2){warna = "#E74C3C"};
+      if(f > 2){warna = "#A93226"};
+      jan = new L.polygon(titiktkduaP, {color: warna, weight: 3, opacity: 1, fillOpacity: 0.9}).bindPopup(popup[i]);//.addTo(map);
       jan.properties = response[i].properties;
       // syncSidebar();
       VAKSIN.addLayer(vak);
@@ -1082,12 +1090,70 @@ function opsipenyakit(response, popup) {
       DBD.addLayer(deb);
       JANTUNG.addLayer(jan);
   }
-  VAKSIN.on("add",function(){STVAK = true;syncSidebar();});
-  HAMIL.on("add",function(){STHAM = true;syncSidebar();});
-  TBC.on("add",function(){STTEB = true;syncSidebar();});
-  DM.on("add",function(){STDIA = true;syncSidebar();});
-  DBD.on("add",function(){STDBD = true;syncSidebar();});
-  JANTUNG.on("add",function(){STJAN = true;syncSidebar();});
+  CL.on("add",function(){
+  	document.getElementById("namapeta").innerHTML="Peta .................";
+  	legnd.setPrefix('<b>legend :</b>');
+  });
+  VAKSIN.on("add",function(){
+  	STVAK = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta Kelengkapan Imunisasi";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">lengkap semua</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">1 org tdk lgkp</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">2 org tdk lgkp</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">>2 org tdk lgkp</font></div>'
+  	);
+  });
+  HAMIL.on("add",function(){
+  	STHAM = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta Ibu Hamil";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">tdk ada hamil</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">1 org hamil</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">2 org hamil</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white"> >2 org hamil</font></div>'
+  	);
+  });
+  TBC.on("add",function(){
+  	STTEB = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta Tuberculosis";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">sehat</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">TB extra paru</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">TB paru</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">TB resisten</font></div>'
+  	);
+  });
+  DM.on("add",function(){
+  	STDIA = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta Diabetes Mellitus";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">sehat</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">prediabetes</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">DM terkontrol</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">>DM tidak terkontrol</font></div>'
+  	);
+  });
+  DBD.on("add",function(){
+  	STDBD = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta Demam Berdarah";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">sehat</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">1 org tertular</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">2 org tertular</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">>2 org tertular</font></div>'
+  	);
+  });
+  JANTUNG.on("add",function(){
+  	STJAN = true;syncSidebar();
+  	document.getElementById("namapeta").innerHTML="Peta Hipertensi";
+  	legnd.setPrefix('<b>legend :</b>'+
+  					'<div style="text-align: center;background-color:#8DBAB9 ;padding:10px;">sehat</div>'+
+  					'<div style="text-align: center;background-color:#ff9999 ;padding:10px;">Pre Hipertensi</div>'+
+  					'<div style="text-align: center;background-color:#E74C3C ;padding:10px;">Hipertensi terkontrol</div>'+
+  					'<div style="text-align: center;background-color:#A93226 ;padding:10px;"><font color="white">Hipertensi tidak terkontrol</font></div>'
+  	);
+  });
   
   VAKSIN.on("remove",function(){STVAK = false;syncSidebar();});
   HAMIL.on("remove",function(){STHAM = false;syncSidebar();});
@@ -1097,12 +1163,17 @@ function opsipenyakit(response, popup) {
   JANTUNG.on("remove",function(){STJAN = false;syncSidebar();});
 }
 
+//LEAFLET attribution legend
+var legnd = new L.Control.Attribution;
+map.addControl(legnd); 
+legnd.setPrefix('<b>legend :</b>');
+
 function INITGAMBARDB(){
   $.get("../json/puskesmas.json", function(data, status){
         // RUMAHS.push(data.features);
         var BINpop = [];
         for(var i=0; i<data.features.length; i++){
-            var vaksin,hamil,tbc,dm;
+            var vaksin,hamil,tbc,dm,hiv;
             vaksin=0;hamil=0;tbc=0;dm=0;dbd=0;jantung=0;
             var desc="";
             for (var ii=0; ii<data.features[i].properties.penghuni.length; ii++){
@@ -1148,16 +1219,17 @@ function INITGAMBARDB(){
                       desc+
                       "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                       "<tr><td>Program Puskesmas</td><td>&nbsp;</td></tr>"+
-                      "<tr><td>Status Vaksinasi : </td><td>   "+vaksin+"</td></tr>"+
+                      "<tr><td>Status Imunisasi : </td><td>   "+vaksin+"</td></tr>"+
                       "<tr><td>Status Ibu Hamil : </td><td>   "+hamil+"</td></tr>"+
                       "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                       "<tr><td>Penyakit menular</td><td>&nbsp;</td></tr>"+
                       "<tr><td>Status TBC : </td><td>         "+tbc+"</td></tr>"+
                       "<tr><td>Status DBD : </td><td>         "+dbd+"</td></tr>"+
+                      "<tr><td>Status HIV : </td><td>         "+hiv+"</td></tr>"+
                       "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                       "<tr><td>Penyakit tdk menular</td><td>&nbsp;</td></tr>"+
                       "<tr><td>Status DM : </td><td>          "+dm+"</td></tr>"+
-                      "<tr><td>Status Jantung : </td><td>     "+jantung+"</td></tr>"+
+                      "<tr><td>Status Hipertensi : </td><td>     "+jantung+"</td></tr>"+
                     "</table></br>";
             BINpop.push(binpop);
             var gelo = L.geoJSON(data.features[i],{color: "blue", weight: 1, opacity: 0.5}).bindPopup(binpop)//.addTo(map);
@@ -1182,11 +1254,12 @@ function INITGAMBARDB(){
 var PENYAKIT = {
   // "AAAAAA": VAKSIN,
   "clear<hr style='margin-top: 0.3em; margin-bottom: 0.3em;'><b>Program Puskesmas :": CL,
-  "Vaksin": VAKSIN,
+  "Imunisasi": VAKSIN,
   "Hamil<br><br><b>Penyakit Menular :": HAMIL,
   "TBC": TBC,
+  "HIV": HIV,
   "DBD<br><br><b>Penyakit Tdk Menular :": DBD,
-  "Jantung":JANTUNG,
+  "Hipertense":JANTUNG,
   "DM":DM
   
   // "<font color='red'>Garis Batas</font>": pklline,
@@ -1274,7 +1347,7 @@ function myBindPopUp(objek) {
                         // "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                         "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                         "<tr><td>Program Puskesmas</td><td>&nbsp;</td></tr>"+
-                        "<tr><td>Status Vaksinasi : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
+                        "<tr><td>Status Imunisasi : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
                         "<tr><td>Status Ibu Hamil : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
                         "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                         "<tr><td>Penyakit menular</td><td>&nbsp;</td></tr>"+
@@ -1283,7 +1356,7 @@ function myBindPopUp(objek) {
                         "<tr><td>&nbsp;</td><td>&nbsp;</td></tr>"+
                         "<tr><td>Penyakit tdk menular</td><td>&nbsp;</td></tr>"+
                         "<tr><td>Status DM : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
-                        "<tr><td>Status Jantung : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
+                        "<tr><td>Status Hipertensi : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
 
                         // "<tr><td>Status Vaksinasi : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
                         // "<tr><td>Status Ibu Hamil : </td><td>0&nbsp;<span class='label label-success'>Ok</span></td></tr>"+
@@ -1296,8 +1369,46 @@ function myBindPopUp(objek) {
     }
 }
 //window prompt, asking bindpopup!
-function flyto(nelat,nelng,swlat,swlng) {
+function flyto(nelat,nelng,swlat,swlng,id) {
   map.flyToBounds(L.latLngBounds(L.latLng(nelat,nelng),L.latLng(swlat,swlng)));
+  console.log()
+  drawnGeojson.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  DBD.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  JANTUNG.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  VAKSIN.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  HAMIL.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  TBC.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  DM.eachLayer(function (layer) {
+  	if(layer._leaflet_id == id){
+  		layer.openPopup();	
+  	}
+  });
+  // map.openPopup(popup);
+  // layer.openPopup();
 }
 function panto(lat,lng) {
   map.panTo(L.latLng(lat,lng));
@@ -1305,47 +1416,50 @@ function panto(lat,lng) {
 
 function syncSidebar() {
   /* Empty sidebar features */
+  document.getElementById("myinput").value="";
   $("#feature-list tbody").empty();
   // $("#feature-lost tbody").empty();
   if(STDBD){
     DBD.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      	console.log(layer);
+      	console.log(layer._bounds._northEast.lat);
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
   if(STJAN){
     JANTUNG.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
   if(STVAK){
     VAKSIN.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
   if(STHAM){
     HAMIL.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
   if(STTEB){
     TBC.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
   if(STDIA){
     DM.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
@@ -1354,7 +1468,7 @@ function syncSidebar() {
   if(!STVAK && !STDIA && !STTEB && !STHAM && !STDBD && !STJAN){
     drawnGeojson.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._layers[layer._leaflet_id - 1]._bounds._northEast.lat+','+layer._layers[layer._leaflet_id - 1]._bounds._northEast.lng+','+layer._layers[layer._leaflet_id - 1]._bounds._southWest.lat+','+layer._layers[layer._leaflet_id - 1]._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer._layers[layer._leaflet_id - 1].options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer._layers[layer._leaflet_id - 1].options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._layers[layer._leaflet_id - 1]._bounds._northEast.lat+','+layer._layers[layer._leaflet_id - 1]._bounds._northEast.lng+','+layer._layers[layer._leaflet_id - 1]._bounds._southWest.lat+','+layer._layers[layer._leaflet_id - 1]._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer._layers[layer._leaflet_id - 1].options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer._layers[layer._leaflet_id - 1].options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
   }
@@ -1364,7 +1478,7 @@ function syncSidebar() {
     // if (map.hasLayer(drawnPolyline)) {
       // console.log(layer._bounds);
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polyline.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.judul+"</font>"+'</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polyline.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.judul+"</font>"+'</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     // }
   });
@@ -1373,7 +1487,7 @@ function syncSidebar() {
     // if (map.hasLayer(drawnPolygon)) {
       // console.log(layer);
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     // }
   });
@@ -1382,7 +1496,7 @@ function syncSidebar() {
     // if (map.hasLayer(drawnRectangle)) {
       // console.log(layer);
       if (map.getBounds().contains(layer.getBounds())) {
-        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/kotak.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/kotak.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     // }
   });
@@ -1635,6 +1749,29 @@ function INITTABELLAPORAN(){
   
 
 // LEFTBAR
+function ngefilter() {
+  // Declare variables 
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myinput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("feature-list");
+  tr = table.getElementsByTagName("tr");
+  
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    for (z = 0; z < 3; z++) { //3 kalo searchnya ampe 3 kolom/row jenis,judul,deskripsi
+	    td = tr[i].getElementsByTagName("td")[z];
+	    if (td) {
+	      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+	        tr[i].style.display = "";
+	      } else {
+	        tr[i].style.display = "none";
+	      }
+	    } 
+	}
+  }
+}
+
 $("#download-btn").click(function() {
   // console.log(drawnItems);
   var namafile = "gambar.json";
@@ -1678,13 +1815,27 @@ $("#tutupS").click(function() {
   animateSidebar();
   return false;
 });
-
+$("#tabel").click(function() {
+	window.location.href = "../html/tabelkost";
+});
+$("#about").click(function() {
+	window.location.href = "../html/about";
+});
 $("#logout").click(function() {
   window.location.href = "login.html";
 });
 
+// $("#backend").click(function() {
+//   window.location.href = "backend.html";
+// });
 $("#backend").click(function() {
-  window.location.href = "backend.html";
+	window.location.href = "../admin/pemilik_ctrl";
+});
+$("#login").click(function() {
+	window.location.href = "../home/login";
+});
+$("#logout").click(function() {
+	window.location.href = "../home/logout";
 });
 
 function animateSidebar() {
