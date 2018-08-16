@@ -136,8 +136,8 @@ document.onkeypress = stopRKey;
 				<td class="header" style="width: 20px;">No</th>                     
 				<td class="header">No KK</td>
 				<td class="header">Alamat</td>
-				<td class="header">Lat</td>
-				<td class="header">Lon</td>
+				<td class="header">Lintang</td>
+				<td class="header">Bujur</td>
 				<td class="header delete" style="width: 52px;">Aksi</td>
 			</tr>
 		</thead>
@@ -174,23 +174,27 @@ document.onkeypress = stopRKey;
 			<?php } ?>
 			<li>
 				<label>No KK</label>
-				<input class="form-admin" name="no_kk" id="no_kk" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->no_kk ?>" >
+				<input class="form-admin" name="no_kk" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->no_kk ?>" >
 				<div class="clear"></div>
 			</li>
 			<li>
 				<label>Alamat</label>
-				<input class="form-admin" name="alamat" id="alamat" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->alamat ?>" >	
+				<input class="form-admin" name="alamat" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->alamat ?>" >	
 				<div class="clear"></div>
 			</li>
 			<li>
-				<label>Latitude</label>
-				<input class="form-admin" name="lat" id="lat" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->lat ?>" >	
+				<label>Lintang</label>
+				<input class="form-admin" name="lat" id="inputlat" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->lat ?>" >	
 				<div class="clear"></div>
 			</li>
 			<li>
-				<label>Longitude</label>
-				<input class="form-admin" name="lon" id="lon" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->lon ?>" >	
+				<label>Bujur</label>
+				<input class="form-admin" name="lon" id="inputlon" type="text" class="text-medium" value="<?php if ($objkel) echo $objkel->lon ?>" >	
 				<div class="clear"></div>
+			</li>
+			<li>
+				<label>Map</label>
+				<div id="map" style="width: 800px; height: 300px"></div>
 			</li>
 		<p class="tit-form"></p>
 		<label>&nbsp;</label>
@@ -464,3 +468,75 @@ if ($objkel) {
 <?php } ?>
 </div> <!-- div main -->
 <div class="clear"></div>
+
+<script type="text/javascript">
+	var configMap = {
+		latCenter : -6.187638065886,
+		lonCenter : 106.886608600,
+		zoom :18,
+		mapUrl : '<?php echo $this->config->item('map_url') ?>',
+		mapStyleId : 22677
+	};
+	var minimal   = L.tileLayer(configMap.mapUrl, {styleId: configMap.mapStyleId});
+	var southWest = new L.LatLng(85, -180);
+	var northEast = new L.LatLng(-85, 180);
+	var bounds = new L.LatLngBounds(southWest, northEast);
+	var bounds_area_input = $("#bounds_area_input");
+
+	//fixation for pan inside bounds
+
+	L.Map.include({panInsideBounds: function(bounds) {
+		bounds = L.latLngBounds(bounds);
+
+		var viewBounds = this.getBounds(),
+			viewSw = this.project(viewBounds.getSouthWest()),
+			viewNe = this.project(viewBounds.getNorthEast()),
+			sw = this.project(bounds.getSouthWest()),
+			ne = this.project(bounds.getNorthEast()),
+			dx = 0,
+			dy = 0;
+
+		if (viewNe.y < ne.y) { // north
+			dy = ne.y - viewNe.y + Math.max(0, this.latLngToContainerPoint([85.05112878, 0]).y); // + extra vertical scroll
+		}
+		if (viewNe.x > ne.x) { // east
+			dx = ne.x - viewNe.x;
+		}
+		if (viewSw.y > sw.y) { // south
+			dy = sw.y - viewSw.y + Math.min(0, this.latLngToContainerPoint([-85.05112878, 0]).y - this.getSize().y); // + extra vertical scroll
+		}
+		if (viewSw.x < sw.x) { // west
+			dx = sw.x - viewSw.x;
+		}
+
+		return this.panBy(new L.Point(dx, dy, true));
+	}});
+
+	//fixation for pan inside bounds
+	var map = new L.map('map', {
+		center: [configMap.latCenter, configMap.lonCenter],
+		zoom: configMap.zoom,
+		layers: [minimal],
+		maxZoom : 19,
+		minZoom : 3
+	});
+
+	var drawnItems = new L.FeatureGroup();
+	map.addLayer(drawnItems);
+
+	//View for Longitude and Latitude topright in the map
+	var attrib = new L.Control.Attribution({position: 'topright'});
+	map.addControl(attrib);
+	attrib.setPrefix('Koordinat : ');
+	map.on('mousemove', function(e) {
+		var latlng = e.latlng;
+		attrib.setPrefix('Koordinat : '+viewableCoordinate(latlng.lat,'lat') + ", " + viewableCoordinate(latlng.lng,'lng'));
+	});
+
+	map.on('click', function(e) {
+		document.getElementById("inputlat").value = e.latlng.lat;
+		document.getElementById("inputlon").value = e.latlng.lng; 
+	});
+
+</script>
+	

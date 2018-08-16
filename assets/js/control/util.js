@@ -35,7 +35,6 @@ function calculate_bearing(start_pos,stop_pos){
 	var p2 = new LatLon(lat2, lon2);
 	lat1=null;lat2=null;lon1=null;lon2=null;
 	return Geo.toBrng(p1.bearingTo(p2),'dm');
-	p1=null;p2=null;
 }
 
 function viewableCoordinate(deg,type){
@@ -47,7 +46,6 @@ function viewableCoordinate(deg,type){
 	}
 
 	return sign+result;
-	sign=null;result=null;
 }
 
 function checkContainLatlngCircleArea(marker,i){
@@ -204,5 +202,4 @@ function find(arr) {
 	}
 
 	return result;
-	result = null;
 }
