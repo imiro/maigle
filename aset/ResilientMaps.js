@@ -1422,8 +1422,8 @@ function syncSidebar() {
   if(STDBD){
     DBD.eachLayer(function (layer) {
       if (map.getBounds().contains(layer.getBounds())) {
-      	console.log(layer);
-      	console.log(layer._bounds._northEast.lat);
+      	// console.log(layer);
+      	// console.log(layer._bounds._northEast.lat);
         $("#feature-list tbody").append('<tr onclick="flyto('+layer._bounds._northEast.lat+','+layer._bounds._northEast.lng+','+layer._bounds._southWest.lat+','+layer._bounds._southWest.lng+','+layer._leaflet_id+')" class="feature-row" id="' + L.stamp(layer) + '"><td style="text-align: center; vertical-align: middle;"><img src="../aset/img/polygon.png" width="20" height="20""></td><td style="vertical-align: middle;" class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.judul+"</font>" + '</td><td class="feature-name">' + "<font color="+layer.options.color+">"+layer.properties.desc+"</font>"+'</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     });
@@ -1858,9 +1858,33 @@ function IsJsonString(str) {try {JSON.parse(str)}catch (e) {return false}return 
 
 
 // animateSidebar();
-animateRightbar();
+// animateRightbar();
 
 
+
+
+
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['level', 'jml'],
+  ['Sehat', 8],
+  ['TB Extra Paru', 3],
+  ['TB Paru', 2],
+  ['TB Resisten', 1]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Status TBC', 'width':500, 'height':300};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
 
 
 // PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR PR

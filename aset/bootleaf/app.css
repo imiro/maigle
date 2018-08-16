@@ -89,9 +89,11 @@ input[type="radio"], input[type="checkbox"] {
 }
 .rightbar-table {
   /*position: absolute;*/
+  margin-left: 5px;
   position: relative;
   width: 100%;
   top: 0px;
+  /*top: 50%;*/
   bottom: 0px;
   overflow: auto;
 }
@@ -224,6 +226,8 @@ input[type="radio"], input[type="checkbox"] {
 }
 .right-panel-body{
   width: 500px;
+  padding:15px 20px 15px 15px;
+  height:50%;
   /*width: 250px;*/
 }
 .right-feature-row {
@@ -233,12 +237,9 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 /*PANEL BODY & HEADING*/
-.right-panel-body{
-    /*padding:15px*/
+/*.right-panel-body{
     padding:15px 20px 15px 15px; 
-    /*yg kanan yg beda sendiri gr2 ada scroll*/
-    /*top right bottom left */
-}
+}*/
 .panel>.right-panel-body+.table,.panel>.right-panel-body+.table-responsive,.panel>.table+.right-panel-body,.panel>.table-responsive+.right-panel-body{
     border-top:1px solid #ddd
 }

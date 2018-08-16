@@ -87,7 +87,7 @@ function includeHTML() {
 					<!-- <button type="button" class="btn btn-primary" id="tabel"><i class="fa fa-table"></i>  Lihat Tabel</button> -->
 					<button type="button" class="btn btn-warning" id="about"><i class="fa fa-info-circle"></i> About</button>
 				</li>
-				<li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-form-btn"><i class="fa fa-pencil "></i>&nbsp;&nbsp;Form</a></li>
+				<li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-form-btn"><i class="fa fa-pencil "></i>&nbsp;&nbsp;Detail Penyakit</a></li>
 			</ul>
 			<center>
 				<p class="navbar-text" id="namapeta" style="padding-left:5%;color: white;margin-top:10px;margin-bottom:0px;font-size:23;">Peta ........&nbsp;</p>
@@ -160,6 +160,7 @@ function includeHTML() {
 									<th>Jenis</th>
 									<th>Judul</th>
 									<th>Deskripsi</th>
+									<th style="display: none;">orang</th>
 								<tr>
 							</thead>
 							<tbody class="list">
@@ -196,14 +197,14 @@ function includeHTML() {
 
 		<div id="rightbar">
 	      <div class="rightbar-wrapper">
-	        <div class="panel panel-default" style="max-height: 100%; overflow-y: scroll; overflow-x: hidden;" id="features">
+	        <!-- <div class="panel panel-default" style="max-height: 100%; overflow-y: scroll; overflow-x: hidden;" id="features"> -->
+	        <div class="panel panel-default" style="max-height: 100%;" id="features">
 	          
 	          <!-- FORM INPUT LAPORAN -->
-	          <div class="right-panel-heading">
+	          <!-- <div class="right-panel-heading">
 	            <a data-toggle="collapse" href="#formlaporan">
 	              <h3 class="panel-title">
 	                <button type="button" class="btn btn-xs btn-default pull-right" id="tutupR"><i class="fa fa-chevron-right"></i></button>
-	                <!-- <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#formlaporan"><i class="fa fa-sort"></i></button> -->
 	                <i class="fa fa-sort"></i>&nbsp;&nbsp;Form Input Laporan
 	              </h3>
 	            </a>
@@ -240,7 +241,7 @@ function includeHTML() {
 	                <div class="col-md-2" style="vertical-align: middle;"><i>Tanggal : </i></div>
 	                <div class="col-md-10">
 	                  <input id="formtanggal" type="date" placeholder="tanggal">
-	                  <!-- <input id="formtanggal" type="datetime-local" placeholder="jam & tgl"> -->
+	                  <input id="formtanggal" type="datetime-local" placeholder="jam & tgl">
 	                </div>
 	              </div>
 	            </div>
@@ -276,7 +277,7 @@ function includeHTML() {
 	            <i class="fa fa-user"></i>&nbsp;ORANG TERLIBAT :
 	            <a data-toggle="modal" href="#nambahorang"><i class="fa fa-user-plus pull-right"> &nbsp;ORANG</i></a>
 	            
-	            <!-- Modal -->
+	            
 	            <div class="modal fade" id="nambahorang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	              <div class="modal-dialog" role="document">
 	                <div class="modal-content">
@@ -326,7 +327,7 @@ function includeHTML() {
 	                <tr>
 	              </thead>
 	              <tbody class="list">
-	                <!-- <tr>
+	                <tr>
 	                  <td>Gopal</td>
 	                  <td>17</td>
 	                  <td>Saksi</td>
@@ -343,81 +344,118 @@ function includeHTML() {
 	                  <td>Islam</td>
 	                  <td>Jl hahaha no1</td>
 	                  <td><a href><i class="fa fa-file"></i></a></td>
-	                </tr> -->
+	                </tr>
 	              </tbody>
 	            </table>
 	            </br>
 	            <button type="submit" id="formkirim" class="btn btn-success"><i class="fa fa-send-o"></i>&nbsp;&nbsp;Submit</button>
 	            <button type="reset" id="formbersih" class="btn btn-warning"><i class="fa fa-undo"></i>&nbsp;&nbsp;Reset Form</button>
 	          </form>                        
-	          </div> <!-- tutup id formlaporan -->
+	          </div>  -->
 	          <!-- FORM INPUT LAPORAN -->
 	          
 	          <!-- TABEL LAPORAN -->
-	          <div class="right-panel-heading">
+	          <!-- <div class="right-panel-heading">
 	            <a data-toggle="collapse" href="#tabellaporan">
 	              <h3 class="panel-title">
 	                <button type="button" class="btn btn-xs btn-default pull-right" id="tutupR"><i class="fa fa-chevron-right"></i></button>
-	                <!-- <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#formlaporan"><i class="fa fa-sort"></i></button> -->
 	                <i class="fa fa-sort"></i>&nbsp;&nbsp;Tabel Laporan
 	              </h3>
 	            </a>
-	          </div>
-	          <div class="right-panel-body collapse" id="tabellaporan" >
-	            <div class="rightbar-table">
+	          </div> -->
+
+      		  <div class="right-panel-body">
+			  	<div class="row">
+					<div class="col-xs-12 col-md-12">
+						<!-- <input type="text" class="form-control search" id="myinput" onkeyup="ngefilter()" placeholder="cari nama / alamat" /> -->
+						<div id="piechart"></div>
+					</div>
+					<div class="rightbar-table">
+		              <table class="table table-hover table-striped table-condensed" id="tabellap" style="font-size:12px;">
+		                <thead>
+		                  <tr>
+		                    <th>Nama</th>
+		                    <th>Alamat</th>
+		                    <th>Gender</th>
+		                    <th>TTL</th>
+		                    <th>Keterangan Penyakit</th>
+		                    <th></th>
+		                  <tr>
+		                </thead>
+		                <tbody class="list">
+		                  	<tr>
+				                  <td>Dani</td>
+				                  <td>Jl Angkur no4</td>
+				                  <td>L</td>
+				                  <td>Bandung, 12 Agustus 1977</td>
+				                  <td>TB Resisten</td>
+				                  <td><a href><i class="fa fa-file"></i></a></td>
+			                </tr>
+			                <tr>
+				                  <td>Indro</td>
+				                  <td>Jl Angkur no2</td>
+				                  <td>L</td>
+				                  <td>Bandung, 11 Agustus 1977</td>
+				                  <td>TB Paru</td>
+				                  <td><a href><i class="fa fa-file"></i></a></td>
+			                </tr>
+			                <tr>
+				                  <td>Kasino</td>
+				                  <td>Jl Angkur no1</td>
+				                  <td>L</td>
+				                  <td>Bandung, 10 Agustus 1977</td>
+				                  <td>TB Paru</td>
+				                  <td><a href><i class="fa fa-file"></i></a></td>
+			                </tr>
+			                <tr>
+				                  <td>Izul</td>
+				                  <td>Jl Angkur no3</td>
+				                  <td>L</td>
+				                  <td>Bandung, 23 Agustus 1977</td>
+				                  <td>TB Extra Paru</td>
+				                  <td><a href><i class="fa fa-file"></i></a></td>
+			                </tr>
+			                <tr>
+				                  <td>Angga</td>
+				                  <td>Jl Angkur no5</td>
+				                  <td>L</td>
+				                  <td>Bandung, 21 Agustus 1977</td>
+				                  <td>TB Extra Paru</td>
+				                  <td><a href><i class="fa fa-file"></i></a></td>
+			                </tr>
+			                <tr>
+				                  <td>Budi</td>
+				                  <td>Jl Angkur no6</td>
+				                  <td>L</td>
+				                  <td>Bandung, 20 Agustus 1977</td>
+				                  <td>TB Extra Paru</td>
+				                  <td><a href><i class="fa fa-file"></i></a></td>
+			                </tr>
+		                </tbody>
+		              </table>
+		            </div>
+				</div>
+			  </div>
+
+	          <!-- <div class="right-panel-body" id="tabellaporan" > -->
+	            <!-- <div class="rightbar-table">
 	              <table class="table table-hover table-striped table-condensed" id="tabellap" style="font-size:12px;">
 	                <thead>
 	                  <tr>
-	                    <th>Judul</th>
-	                    <th>Kategori</th>
-	                    <th>Tgl</th>
-	                    <th>Lokasi</th>
-	                    <th>Laporan</th>
-	                    <th>Org trlbt</th>
-	                    <th>Foto</th>
+	                    <th>Nama</th>
+	                    <th>Alamat</th>
+	                    <th>Gender</th>
+	                    <th>TTL</th>
+	                    <th>Keterangan Penyakit</th>
 	                  <tr>
 	                </thead>
 	                <tbody class="list">
-	                  <!-- <tr>
-	                    <td>Pembajakan Kapal Nelayan</td>
-	                    <td>Terorisme, High</td>
-	                    <td>28-02-2018</td>
-	                    <td>Sulut</td>
-	                    <td>ada 3 kapal nelayan dibajak dan disandra oleh kelompok teroris</td>
-	                    <td><a href><i class="fa fa-user"></i></a></td>
-	                    <td><a href><i class="fa fa-photo"></i></a></td>
-	                  </tr>
-	                  <tr>
-	                    <td>Pembajakan Kapal Nelayan</td>
-	                    <td>Terorisme, High</td>
-	                    <td>28-02-2018</td>
-	                    <td>Sulut</td>
-	                    <td>ada 3 kapal nelayan dibajak dan disandra oleh kelompok teroris</td>
-	                    <td><a href><i class="fa fa-user"></i></a></td>
-	                    <td><a href><i class="fa fa-photo"></i></a></td>
-	                  </tr>
-	                  <tr>
-	                    <td>Pembajakan Kapal Nelayan</td>
-	                    <td>Terorisme, High</td>
-	                    <td>28-02-2018</td>
-	                    <td>Sulut</td>
-	                    <td>ada 3 kapal nelayan dibajak dan disandra oleh kelompok teroris</td>
-	                    <td><a href><i class="fa fa-user"></i></a></td>
-	                    <td><a href><i class="fa fa-photo"></i></a></td>
-	                  </tr>
-	                  <tr>
-	                    <td>Pembajakan Kapal Nelayan</td>
-	                    <td>Terorisme, High</td>
-	                    <td>28-02-2018</td>
-	                    <td>Sulut</td>
-	                    <td>ada 3 kapal nelayan dibajak dan disandra oleh kelompok teroris</td>
-	                    <td><a href><i class="fa fa-user"></i></a></td>
-	                    <td><a href><i class="fa fa-photo"></i></a></td>
-	                  </tr> -->
+	                  
 	                </tbody>
 	              </table>
-	            </div>
-	          </div>
+	            </div> -->
+
+	          <!-- </div> --> <!-- right panel body -->
 	        
 	        </div>
 	      </div>
@@ -628,6 +666,8 @@ function includeHTML() {
 	<!-- <script src="https://unpkg.com/esri-leaflet-vector@1.0.5"></script> -->
 	<!-- <script src="https://unpkg.com/esri-leaflet-cluster@2.0.0"></script> -->
 
+	<!-- piechar -->
+	<script src="<?php echo base_url() ?>aset/piechartloader.js"></script>
 
 	<!-- bootstrap -->
 	<script src="<?php echo base_url() ?>aset/bootstrap.min.js"></script>
