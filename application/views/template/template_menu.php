@@ -22,6 +22,11 @@
 				<i class='fa fa-history'></i>&nbsp;KELUARGA
 			</a>
 		</li>
+		<li>
+			<a href="<?php echo base_url() . 'admin/csv_ctrl' ?>" <?php if (isset($current_context) && $current_context == '/admin/csv_ctrl') echo 'class="current"' ?>>
+				<i class='fa fa-history'></i>&nbsp;CSV Upload
+			</a>
+		</li>
 
 		</ul>
 
