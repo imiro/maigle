@@ -1,11 +1,13 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/js/leaflet/leaflet.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/js/leaflet/leaflet.draw.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/js/leaflet/leaflet.label.css" />
+<link rel="stylesheet" href="<?php echo base_url() ?>aset/leaflet-search.css" />
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/leaflet/leaflet.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/leaflet/leaflet.draw.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/leaflet/leaflet.label.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/control/util.js"> </script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/geo.js"></script>
+<script src="<?php echo base_url() ?>aset/leaflet-search.js"></script>
 
 <script>
 	$(document).ready(function(){
@@ -148,7 +150,7 @@ document.onkeypress = stopRKey;
 					foreach($keluargas as $kel) {
 			?>
 						<tr class="<?php echo alternator("row-two", "row-one"); ?>">
-							<td><?php echo ($count++) ?></td>
+							<td><?php echo ($count++)+$offset ?></td>
 							<td><?php echo $kel->no_kk ?></td>
 							<td><?php echo $kel->alamat ?></td>
 							<td><?php echo $kel->lat ?></td>
@@ -163,7 +165,11 @@ document.onkeypress = stopRKey;
 
 		</tbody>
 	</table>
-	<br />  
+	<br />
+	<div class="pagination">
+		<?php echo $pagination?>
+	</div>
+	<br />
 
 	<p class="tit-form"><?php if ($objkel) echo "Edit Keluarga"; else echo "Tambah Keluarga Baru"; ?></p>
 	<form action="<?php if ($objkel) echo base_url() . 'admin/keluarga_ctrl/edit_keluarga'; else echo base_url() . 'admin/keluarga_ctrl/add_keluarga'; ?>" method="post" >
@@ -525,7 +531,7 @@ if ($objkel) {
 	map.addLayer(drawnItems);
 
 	//View for Longitude and Latitude topright in the map
-	var attrib = new L.Control.Attribution({position: 'topright'});
+	var attrib = new L.Control.Attribution();
 	map.addControl(attrib);
 	attrib.setPrefix('Koordinat : ');
 	map.on('mousemove', function(e) {
@@ -537,6 +543,21 @@ if ($objkel) {
 		document.getElementById("inputlat").value = e.latlng.lat;
 		document.getElementById("inputlon").value = e.latlng.lng; 
 	});
+
+	map.addControl( new L.Control.Search({
+		url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+		jsonpParam: 'json_callback',
+		propertyName: 'display_name',
+		propertyLoc: ['lat','lon'],
+		marker: L.circleMarker([0,0],{radius:20}),
+		// autoCollapse: true,
+		autoType: false,
+		position: 'topright',
+		collapsed: false,
+		// autoCollapse: false,
+		// hideMarkerOnCollapse: true,
+		minLength: 2
+	}));
 
 </script>
 	
