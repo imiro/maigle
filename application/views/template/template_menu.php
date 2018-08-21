@@ -1,9 +1,9 @@
 <body>
 	<div id="container">
 		<ul id="side-menu">
-			<li class="category">Kost Edumedia</li>
+			<li class="category">HEALTH POINT</li>
 			<li id="logo">
-			<img src="<?php echo base_url() ?>aset/img/1.png"  />
+			<img src="<?php echo base_url() ?>aset/img/healthpoint2.png"  />
 			</li>
 			
 			<!-- <li class="sub-category"> -->

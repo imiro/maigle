@@ -37,7 +37,7 @@ $captcha = array(
 ?>
 <html>
     <head>
-        <title>Kost Edumedia - Login</title>
+        <title>HEALTH POINT - Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>assets/css/960.css" />
@@ -50,12 +50,12 @@ $captcha = array(
             <div class="grid_12">
                 <div id="logo">
                     <!-- <img src="<?php echo base_url() ?>assets/img/logo-new-lite.png" /> -->
-                    <img src="<?php echo base_url() ?>aset/img/1.png" width="226" height="226" />
+                    <img src="<?php echo base_url() ?>aset/img/healthpoint2.png" width="226" height="226" />
                 </div>
                 <div id="login">
                     <?php echo form_open($this->uri->uri_string()); ?>
                     <div id="title">
-                        Login Kost Edumedia
+                        Login HEALTH POINT
                     </div>
                     <ul style="width: 312px;">
                         <li>
