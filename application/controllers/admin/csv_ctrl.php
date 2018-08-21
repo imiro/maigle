@@ -86,54 +86,54 @@ class csv_ctrl extends CI_Controller{
 				$lastIdKeluarga = 0;
 				$objKel = null;
 				$objIndiv = null;
-				// while (($row = fgetcsv($handle, 10000, ";")) != FALSE) //get row vales
-				// {
+				while (($row = fgetcsv($handle, 10000, ";")) != FALSE) //get row vales
+				{
 					// print_r($row); //rows in array
 
-					//here you can manipulate the values by accessing the array
-					// if ($row[0] != "NO") { 
-					// 	if ($row[4] == $lastAddress) { // alamat sama, tgl tambahkan individu baru
-					// 		// $objIndiv = getDataIndividu($row, $lastIdKeluarga);
-					// 	$objIndiv = null;
-					// 	$objIndiv = array(
-					// 		'nama' => $row[1],
-					// 		'kelamin' => ($row[2] == "Perempuan") ? "P" : "L",
-					// 		'ttl' => $row[3],
-					// 		'id_rumah' => $lastIdKeluarga
-					// 	);
-					// 		$this->individu_dao->saveNewIndividu($objIndiv);
-					// 	}
-					// 	else { // alamat baru
-					// 		// $objKel = getDataRumah($row);
-					// 	$objKel = null;
-					// 	$objKel = array(
-					// 		'alamat' => $row[4]
-					// 	);
-					// 		$this->keluarga_dao->saveNewKeluarga($objKel);
-					// 		$lastIdKeluarga = $this->keluarga_dao->insert_id();
+					// here you can manipulate the values by accessing the array
+					if ($row[0] != "NO") { 
+						if (trim($row[4]) == $lastAddress) { // alamat sama, tgl tambahkan individu baru
+							// $objIndiv = getDataIndividu($row, $lastIdKeluarga);
+						$objIndiv = null;
+						$objIndiv = array(
+							'nama' => $row[1],
+							'kelamin' => ($row[2] == "Perempuan") ? "P" : "L",
+							'ttl' => $row[3],
+							'id_rumah' => $lastIdKeluarga
+						);
+							$this->individu_dao->saveNewIndividu($objIndiv);
+						}
+						else { // alamat baru
+							// $objKel = getDataRumah($row);
+						$objKel = null;
+						$objKel = array(
+							'alamat' => trim($row[4])
+						);
+							$this->keluarga_dao->saveNewKeluarga($objKel);
+							$lastIdKeluarga = $this->keluarga_dao->insert_id();
 
-					// 		// $objIndiv = getDataIndividu($row, $lastIdKeluarga);
-					// 	$objIndiv = null;
-					// 	$objIndiv = array(
-					// 		'nama' => $row[1],
-					// 		'kelamin' => ($row[2] == "Perempuan") ? "P" : "L",
-					// 		'ttl' => $row[3],
-					// 		'id_rumah' => $lastIdKeluarga
-					// 	);
-					// 		$this->individu_dao->saveNewIndividu($objIndiv);
-					// 	}
-					// }
-					// $lastAddress = $row[4];
-				// }
-				$this->load->library('curl');
-				$result = $this->curl->simple_get('https://nominatim.openstreetmap.org/search?format=json&q={india}');
-				var_dump($result);
-				// Errors
-echo 'error_code ' . $this->curl->error_code; // int
-echo 'error_string ' . $this->curl->error_string;
+							// $objIndiv = getDataIndividu($row, $lastIdKeluarga);
+						$objIndiv = null;
+						$objIndiv = array(
+							'nama' => $row[1],
+							'kelamin' => ($row[2] == "Perempuan") ? "P" : "L",
+							'ttl' => $row[3],
+							'id_rumah' => $lastIdKeluarga
+						);
+							$this->individu_dao->saveNewIndividu($objIndiv);
+						}
+					}
+					$lastAddress = trim($row[4]);
+				}
+// 				$this->load->library('curl');
+// 				$result = $this->curl->simple_get('https://nominatim.openstreetmap.org/search?format=json&q={india}');
+// 				var_dump($result);
+// 				// Errors
+// echo 'error_code ' . $this->curl->error_code; // int
+// echo 'error_string ' . $this->curl->error_string;
 
-// Information
-echo 'info ' . $this->curl->info; // array
+// // Information
+// echo 'info ' . $this->curl->info; // array
 		// 	} else {
 		// 		$this->data['error_main_image'] = TRUE;
 		// 		$this->data['msg_error_main_image'] = strip_tags($this->upload->display_errors());
@@ -143,7 +143,7 @@ echo 'info ' . $this->curl->info; // array
 		// } else {
 		// 	// $infoSession.="<font color='red'>Ikon Jenis Pesawat tidak diubah.</font>";
 		// }
-		die();
+		// die();
 		redirect(self::$CURRENT_CONTEXT);
 	}
 
