@@ -93,9 +93,11 @@ if ( ! function_exists('create_captcha'))
 			{
 				$name = str_replace(".jpg", "", $filename);
 
-				if (($name + $expiration) < $now)
-				{
-					@unlink($img_path.$filename);
+				if (is_numeric($name)) {
+					if (($name + $expiration) < $now)
+					{
+						@unlink($img_path.$filename);
+					}
 				}
 			}
 		}

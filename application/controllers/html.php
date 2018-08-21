@@ -16,7 +16,7 @@ class Html extends CI_Controller {
 		$this->load->library('session');
 		$this->load->library('tank_auth');
 		// $this->load->database();
-		$this->load->model('Kosts','',TRUE);
+//		$this->load->model('Kosts','',TRUE);
 		$this->load->library('dao/keluarga_dao');
 
 		$this->logged_in();
@@ -41,7 +41,7 @@ class Html extends CI_Controller {
 
 	public function tabelkost() {
 		$this->role_user();
-		$this->data['kosts'] = $this->Kosts->getAllDaftarKosan();
+//		$this->data['kosts'] = $this->Kosts->getAllDaftarKosan();
 		$this->load->view('html/tabelkost',$this->data);
 	}
 
