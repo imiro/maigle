@@ -481,6 +481,8 @@ function includeHTML() {
 					<div class="col-xs-12 col-md-12">
 						<!-- <input type="text" class="form-control search" id="myinput" onkeyup="ngefilter()" placeholder="cari nama / alamat" /> -->
 						<div id="piechart"></div>
+						<canvas id="myChart" width="500" height="200"></canvas>
+
 					</div>
 					<div class="rightbar-table">
 		              <table class="table table-hover table-striped table-condensed" id="tabellap" style="font-size:12px;">
@@ -822,8 +824,10 @@ function includeHTML() {
 	<!-- <script src="https://unpkg.com/esri-leaflet-vector@1.0.5"></script> -->
 	<!-- <script src="https://unpkg.com/esri-leaflet-cluster@2.0.0"></script> -->
 
-	<!-- piechar -->
-	<script src="<?php echo base_url() ?>aset/piechartloader.js"></script>
+	<!-- piechart -->
+	<!-- <script src="<?php echo base_url() ?>aset/piechartloader.js"></script> -->
+	<script src="<?php echo base_url() ?>aset/chartjs/Chart.bundle.js"></script>
+	<script src="<?php echo base_url() ?>aset/chartjs/Chart.bundle.min.js"></script>
 
 	<!-- bootstrap -->
 	<script src="<?php echo base_url() ?>aset/bootstrap.min.js"></script>
@@ -1782,6 +1786,6 @@ window.chatRoomClient = new ChatRoomClient();
 
 
 
-	
+
 </body>
 </html>
