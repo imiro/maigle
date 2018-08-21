@@ -111,7 +111,7 @@ $captcha = array(
                     <?php echo form_close(); ?>
                 </div>
                 <p id="footer">
-                    Copyrights &copy; 2018 <a target="_blank" href="https://www.youtube.com/c/resilientonamission"><strong>Gopal & Sesdika</strong></a>. All Rights Reserved.
+                    Copyrights &copy; 2018 <a target="_blank" href="http://sembadakaryamandiri.co.id/"><strong>PT SKM</strong></a>. All Rights Reserved.
                 </p>
             </div>
             <div class="clear"></div>
