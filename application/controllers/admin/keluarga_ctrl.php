@@ -33,6 +33,7 @@ class keluarga_ctrl extends CI_Controller{
 		$this->load->library('dao/status_hipertensi_dao');
 		$this->load->library('dao/status_imunisasi_dao');
 		$this->load->library('dao/status_tbc_dao');
+		$this->load->library('pagination');
 
 		$this->logged_in();
 		$this->role_user();
@@ -40,8 +41,9 @@ class keluarga_ctrl extends CI_Controller{
 		$this->data['user_id'] = $this->session->userdata('user_id');
 	}
 
-	public function index($offset=0 ,$limit=16){
+	public function index($offset=0, $limit=16){
 		$this->preload();
+		$this->get_list($this->limit, $offset);
 		$this->load_view('admin/list_keluarga', $this->data);
 	}
 
@@ -52,7 +54,31 @@ class keluarga_ctrl extends CI_Controller{
 		$this->data['objkel'] = null;
 		$this->data['individus'] = null;
 		$this->data['objanggota'] = null;
-		$this->data['keluargas'] = $this->keluarga_dao->getDaftarKeluarga();
+		// $this->data['keluargas'] = $this->keluarga_dao->getDaftarKeluarga();
+	}
+
+	public function get_list($limit = 16, $offset = 0) {
+		// $obj = $this->filter_param();
+		// $filter = (!empty($obj)) ? $obj : null;
+		#generate pagination
+		if ($this->uri->segment(3) == 'edit') {
+			$base_url = self::$CURRENT_CONTEXT . '/edit/' . $this->uri->segment(4);
+			$uri = 5;
+		} else {
+			$base_url = self::$CURRENT_CONTEXT . '/index/';
+			$uri = 4;
+		}
+		$config['base_url'] = site_url($base_url);
+		$config['total_rows'] = $this->keluarga_dao->count_all(); // harusnya count sesuai filter
+		$config['per_page'] = $limit;
+		$config['uri_segment'] = $uri;
+		$config['filter_param'] = $_SERVER['QUERY_STRING'];
+		$this->pagination->initialize($config);
+		$this->data['pagination'] = $this->pagination->create_links();
+		$this->data['offset'] = $offset;
+
+		// $this->fetch_data(16, $offset, $filter);
+		$this->data['keluargas'] = $this->keluarga_dao->getDaftarKeluarga($limit, $offset);
 	}
 
 	public function load_view($page, $data = null){

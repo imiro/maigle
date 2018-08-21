@@ -22,9 +22,7 @@ class keluarga_dao extends Generic_dao  {
 		parent::__construct();
 	}
 
-	function getDaftarKeluarga() {
-		$limit = 100;
-		$offset = 0;
+	function getDaftarKeluarga($limit = 100, $offset = 0) {
 		return $this->fetch($limit, $offset, 'alamat');
 	}
 

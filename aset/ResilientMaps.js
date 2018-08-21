@@ -2130,7 +2130,7 @@ $("#logout").click(function() {
 //   window.location.href = "backend.html";
 // });
 $("#backend").click(function() {
-	window.location.href = "../admin/pemilik_ctrl";
+	window.location.href = "../admin/keluarga_ctrl";
 });
 $("#login").click(function() {
 	window.location.href = "../home/login";
