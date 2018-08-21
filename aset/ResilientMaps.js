@@ -250,6 +250,34 @@ function INITPLUGIN(){
       attrib.setPrefix('Koordinat : '+e.latlng.lat+", "+e.latlng.lng+'. Zoom:'+map.getZoom()+'. Created by Gopal, 2017');
     });
 
+    //LEAFLET attribution
+    // var chat = new L.Control.Attribution;
+    // map.addControl(chat); 
+    // chat.setPrefix('<div id="pusherChat"><div id="pusherChat"> <div id="membersContent"> <span id="expand"><span class="close">&#x25BC;</span><span class="open">&#x25B2;</span></span> <h2><span id="count">0</span> online</h2> <div class="scroll"> <div id="members-list"></div> </div> </div> <div id="templateChatBox"> <div class="pusherChatBox"> <span class="state"> <span class="pencil"> <img src="../aset/pusherchat/assets/pencil.gif" /> </span> <span class="quote"> <img src="../aset/pusherchat/assets/quote.gif" /> </span> </span> <span class="expand"><span class="close">&#x25BC;</span><span class="open">&#x25B2;</span></span> <span class="closeBox">x</span> <h2><a href="#" title="go to profile"><img src="" class="imgFriend" /></a> <span class="userName"></span></h2> <div class="slider"> <div class="logMsg"> <div class="msgTxt"> </div> </div> <form method="post" name="#123"> <textarea name="msg" rows="3" ></textarea> <input type="hidden" name="from" class="from" /> <input type="hidden" name="to" class="to"/> <input type="hidden" name="typing" class="typing" value="false"/> </form> </div> </div> </div> <div class="chatBoxWrap"> <div class="chatBoxslide"></div> <span id="slideLeft"> <img src="../aset/pusherchat/assets/quote.gif" />&#x25C0;</span> <span id="slideRight">&#x25B6; <img src="../aset/pusherchat/assets/quote.gif" /></span> </div> </div>');
+    // $.fn.pusherChat({
+    //             'pusherKey':'a2a7b26db09c1c02403d',
+    //             'authPath':'../aset/pusherchat/server/pusher_auth.php?user_id=2&name=Roger',
+    //             'friendsList' : '../aset/pusherchat/ajax/friends-list.json',
+    //             'serverPath' : '../aset/pusherchat/server/server.php',
+    //             'profilePage': true,
+    //             'onFriendConnect': function(member){
+    //                 if (member.id) $('#user_'+member.id).hide();  
+    //                 if (!$('.account a:visible').html()) $('.hide').show();
+    //             },
+    //             'onFriendLogOut': function(member){
+    //                 if (member.id) $('#user_'+member.id).show();  
+    //                 if ($('.account a:visible').html()) $('.hide').hide();
+    //             },
+    //             'onSubscription':function(members){
+    //                 if ($('.account a:visible').html()) $('.hide').hide();
+    //                 $.each(members._members_map, function(val){
+    //                     $('#user_'+val).hide();
+    //                 });            
+    //             }
+    //         });
+
+    // "../aset/pusherchat/server/server.php"
+
     //LEAFLET scale nautica
     map.addControl(new L.Control.ScaleNautic({
         // position: 'bottomleft',
