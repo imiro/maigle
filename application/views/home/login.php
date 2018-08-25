@@ -48,14 +48,14 @@ $captcha = array(
     <body>
         <div class="container_12">
             <div class="grid_12">
-                <div id="logo">
+                <div id="logo" style="text-align: center;">
                     <!-- <img src="<?php echo base_url() ?>assets/img/logo-new-lite.png" /> -->
-                    <img src="<?php echo base_url() ?>aset/img/healthpoint2.png" width="226" height="226" />
+                    <img src="<?php echo base_url(); ?>assets/img/hp/crop1.jpg" height="226" />
                 </div>
                 <div id="login">
                     <?php echo form_open($this->uri->uri_string()); ?>
                     <div id="title">
-                        Login HEALTH POINT
+                        Login healthpoint
                     </div>
                     <ul style="width: 312px;">
                         <li>
@@ -86,13 +86,13 @@ $captcha = array(
 							</td>
 							<td><input type="text" id="recaptcha_response_field" name="recaptcha_response_field" /></td>
 							<td style="color: red;"><?php echo form_error('recaptcha_response_field'); ?></td>
-							<?php echo $captcha_html; ?>							
+							<?php echo $captcha_html; ?>
 						</tr>
-					
+
 					<?php } else { ?>
 							<li>
 							    <label>Enter the code exactly as it appears:</label><br />
-							    <?php echo $captcha_html; ?>							    
+							    <?php echo $captcha_html; ?>
 							</li>
 							<li>
 							    <label><?php echo form_label('Confirmation Code', $captcha['id']); ?></label>

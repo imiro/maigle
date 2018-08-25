@@ -3,7 +3,7 @@
 require_once('generic_dao.php');
 
 class pengguna_dao extends Generic_dao  {
-	
+
 	public function table_name(){
 		return 'pengguna';
 	}
@@ -28,13 +28,14 @@ class pengguna_dao extends Generic_dao  {
 		$this->ci->db->select($this->field_query());
 		$this->ci->db->where($obj_id_o);
 		$q = $this->ci->db->get($this->table_name());
+		// var_dump($q);
 		return $q->row();
 	}
 
 	function getUserById($id) {
 		$user = $this->by_id(array('id_pengguna' => $id));
 		if ($user) return $user;
-		
+
 		return false;
 	}
 
@@ -45,7 +46,7 @@ class pengguna_dao extends Generic_dao  {
 	function change_password($id, $new_pass) {
 		return $this->update(array('password' => $new_pass), array('id_pengguna' => $id));
 	}
-	
+
 }
 
 ?>

@@ -17,6 +17,7 @@ class Home extends CI_Controller {
 	}
 
 	public function index() {
+
 		$this->is_logged_in();
 
 		$this->load->view('home/home');
@@ -79,10 +80,10 @@ class Home extends CI_Controller {
 	public function roleUserRedirect() {
 		$user_id = $this->tank_auth->get_user_id();
 		$user = $this->pengguna_dao->getUserById($user_id);
-		
+
 		if($user == null)
 			$this->logout();
-		
+
 		redirect('html/map');
 	}
 
@@ -98,8 +99,9 @@ class Home extends CI_Controller {
 
 	private function is_logged_in() {
 		$sess = $this->session->userdata('user_login');
+		// echo "HALO! " . var_dump($sess); exit;
 		if (!isset($sess) || $sess == false) {
-			redirect('html/map');
+			redirect(base_url('html/map'));
 		}
 	}
 

@@ -18,7 +18,7 @@ foreach($keluargas as $data) {
 		echo '"alamat":"' . $data->alamat . '",';
 		echo '"penghuni":[';
 
-		if ($data->id_individu != NULL) { 
+		if ($data->id_individu != NULL) {
 			echo '{"nama" : "' . $data->nama . '",';
 			echo '"ttl":"' . $data->ttl . '",';
 			echo '"gender":"' . $data->kelamin . '",';
@@ -79,7 +79,7 @@ foreach($keluargas as $data) {
 			echo '"alamat":"' . $data->alamat . '",';
 			echo '"penghuni":[';
 
-			if ($data->id_individu != NULL) { 
+			if ($data->id_individu != NULL) {
 					echo '{"nama" : "' . $data->nama . '",';
 					echo '"ttl":"' . $data->ttl . '",';
 					echo '"gender":"' . $data->kelamin . '",';
@@ -131,7 +131,7 @@ function includeHTML() {
 					elmnt.removeAttribute("w3-include-html");
 					includeHTML();
 				}
-			}      
+			}
 			xhttp.open("GET", file, true);
 			xhttp.send();
 			/*exit the function:*/
@@ -145,11 +145,11 @@ function includeHTML() {
 
 <head>
 	<style>
-			@font-face { font-family: sshh; src: url('../aset/fonts/sshh.ttf'); } 
+			@font-face { font-family: sshh; src: url('../aset/fonts/sshh.ttf'); }
 			h1 {font-family: sshh}
 	</style>
 	<meta charset=utf-8 />
-	<title>HEALTH POINT</title>
+	<title>healthpoint</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
 <!-- klo ngambil dari luar -->
@@ -157,6 +157,9 @@ function includeHTML() {
 	<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet-src.js"></script>
 	<script src="https://unpkg.com/esri-leaflet@2.0.6"></script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+	<!-- FONT!! -->
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 
 	<!-- bootstrap dan font awesome -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
@@ -188,9 +191,8 @@ function includeHTML() {
 		<div class="container-fluid">
 			<div class="navbar-header" style="vertical-align:middle;">
 				<!-- <img class="pull-left" style="width:41px;height:41px;margin-top:5px;z-index:999;" src="<?php echo base_url() ?>aset/img/1.png"> -->
-				<img class="pull-left" style="vertical-align:middle; width:38px;height:38px;margin-top:5px;z-index:999;" src="<?php echo base_url() ?>aset/img/healthpoint2.png">
-				<!-- <a class="navbar-brand" style="font-family:sshh;font-size:30;font-weight: normal;margin-top:0px;" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-legend-btn">&nbsp;Kost Putri EDUMEDIA</a> -->
-				<a class="navbar-brand" style="vertical-align:middle; font-family:sshh;font-size:22;font-weight: normal;margin-bottom:0px;" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-legend-btn">&nbsp;HEALTH POINT&nbsp;</a>
+				<img class="pull-left" style="vertical-align:middle; height:45px;margin-top:5px;z-index:999;" src="<?php echo base_url() ?>assets/img/hp/logo1.png">
+				<a class="navbar-brand" style="vertical-align:middle; font-family: 'Montserrat';font-size:22;font-weight: normal;margin-bottom:0px;" href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-legend-btn">&nbsp;healthpoint&nbsp;</a>
 			</div>
 
 			<ul class="nav navbar-nav">
@@ -202,19 +204,19 @@ function includeHTML() {
 				<li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-form-btn"><i class="fa fa-pencil "></i>&nbsp;&nbsp;Detail Penyakit</a></li>
 			</ul>
 			<center>
-				<p class="navbar-text" id="namapeta" style="padding-left:5%;color: white;margin-top:10px;margin-bottom:0px;font-size:23;">Peta ........&nbsp;</p>
+				<p class="navbar-text" id="namapeta" style="padding-left:5%;color: white;margin-top:10px;margin-bottom:0px;font-size:23;font-family: 'Raleway'">Puskesmas Kelurahan Kayu Putih&nbsp;</p>
 			</center>
 			<ul class="nav navbar-nav navbar-right">
 				<!-- <p class="navbar-text" id="namapeta" style="color: white;margin-top:10px;margin-bottom:0px;font-size:23;">Peta .................&nbsp;</p> -->
 				<li><a style="color: white;"><span class="fa fa-user"></span> Welcome <?php if ($username) echo $username ?>&nbsp;</a></li>
 				<li class="btn-group btn-group-sm" style="vertical-align:middle; margin-top:10px;" role="group">
-					
+
 <?php if ($permission) { ?>
 					<button type="button" class="btn btn-info" id="backend"><i class="fa fa-gears"></i>  Halaman Admin</button>
 					<button type="button" class="btn btn-danger" id="logout" onclick="location.href='http://google.com';"><i class="fa fa-sign-out"></i>  Logout</button>
-<?php } else { ?>       
+<?php } else { ?>
 					<button type="button" class="btn btn-info" id="login"><i class="fa fa-gears"></i>  Login</button>
-<?php } ?> 
+<?php } ?>
 				</li>
 				<!-- <form class="navbar-form navbar-left" role="search">
 				  <div class="form-group">
@@ -223,7 +225,7 @@ function includeHTML() {
 				  <button type="submit" class="btn btn-default">Submit</button>
 				</form> -->
 			</ul>
-				
+
 			<!-- </div> /.navbar-collapse  -->
 		</div>
 	</div>
@@ -233,20 +235,20 @@ function includeHTML() {
 			<div style="font-size:24;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TPAS </b>
 				<l style="font-size:13;">- Theatre Planning Analysis System</l>
 						<button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn">KANAN</button>
-						<button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn">KIRI</button>      
+						<button type="button" class="btn btn-xs btn-default pull-right" id="sidebar-hide-btn">KIRI</button>
 			</div>
 	</div>  -->
-	
+
 	<!-- <div id="infokiri">sdgdfgdfgdfg</div> -->
 	<!-- <div id="infokanan"></div> -->
-	
+
 
 	<div id="container">
 		<div id="sidebar">
 			<div class="sidebar-wrapper">
 				<!-- <div class="panel panel-default" style="max-height: 100%; overflow-y: scroll; overflow-x: hidden;" id="features"> -->
 				<div class="panel panel-default" style="max-height: 100%; " id="features">
-					
+
 					<!-- <div class="panel-heading">
 						<h3 class="panel-title">Legend Draw Map
 						<button type="button" class="btn btn-xs btn-default pull-right" id="tutupS"><i class="fa fa-chevron-left"></i></button></h3>
@@ -263,7 +265,7 @@ function includeHTML() {
 							</div> -->
 						</div>
 					</div>
-					
+
 					<div class="sidebar-table">
 						<table class="table table-hover table-striped table-condensed" id="feature-list" style="font-size:12px;" >
 							<!-- <thead class="hidden"> -->
@@ -302,7 +304,7 @@ function includeHTML() {
 							</tbody>
 						</table>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -311,7 +313,7 @@ function includeHTML() {
 	      <div class="rightbar-wrapper">
 	        <!-- <div class="panel panel-default" style="max-height: 100%; overflow-y: scroll; overflow-x: hidden;" id="features"> -->
 	        <div class="panel panel-default" style="max-height: 100%;" id="features">
-	          
+
 	          <!-- FORM INPUT LAPORAN -->
 	          <!-- <div class="right-panel-heading">
 	            <a data-toggle="collapse" href="#formlaporan">
@@ -384,12 +386,12 @@ function includeHTML() {
 	                  <input type="file" id="formfotokjadian2">
 	                </div>
 	              </div>
-	            </div> 
+	            </div>
 
 	            <i class="fa fa-user"></i>&nbsp;ORANG TERLIBAT :
 	            <a data-toggle="modal" href="#nambahorang"><i class="fa fa-user-plus pull-right"> &nbsp;ORANG</i></a>
-	            
-	            
+
+
 	            <div class="modal fade" id="nambahorang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	              <div class="modal-dialog" role="document">
 	                <div class="modal-content">
@@ -462,10 +464,10 @@ function includeHTML() {
 	            </br>
 	            <button type="submit" id="formkirim" class="btn btn-success"><i class="fa fa-send-o"></i>&nbsp;&nbsp;Submit</button>
 	            <button type="reset" id="formbersih" class="btn btn-warning"><i class="fa fa-undo"></i>&nbsp;&nbsp;Reset Form</button>
-	          </form>                        
+	          </form>
 	          </div>  -->
 	          <!-- FORM INPUT LAPORAN -->
-	          
+
 	          <!-- TABEL LAPORAN -->
 	          <!-- <div class="right-panel-heading">
 	            <a data-toggle="collapse" href="#tabellaporan">
@@ -564,24 +566,24 @@ function includeHTML() {
 	                  <tr>
 	                </thead>
 	                <tbody class="list">
-	                  
+
 	                </tbody>
 	              </table>
 	            </div> -->
 
 	          <!-- </div> --> <!-- right panel body -->
-	        
+
 	        </div>
 	      </div>
 	    </div>
-		
+
 
 
 
 		<div id="map"></div>
 
 			  <!-- <div id="pusherChat">
-			  <div id="membersContent"> 
+			  <div id="membersContent">
 			  <span id="expand"><span class="close">&#x25BC;</span><span class="open">&#x25B2;</span></span>
 			  <h2><span id="count">0</span> online</h2>
 			  <div class="scroll">
@@ -617,7 +619,7 @@ function includeHTML() {
 			  </div>
 			  <div class="chatBoxWrap">
 			  <div class="chatBoxslide"></div>
-			  <span id="slideLeft"> <img src="assets/quote.gif" />&#x25C0;</span> 
+			  <span id="slideLeft"> <img src="assets/quote.gif" />&#x25C0;</span>
 			  <span id="slideRight">&#x25B6; <img src="assets/quote.gif" /></span>
 			  </div>
 			  </div> -->
@@ -654,7 +656,7 @@ function includeHTML() {
 									<h4 class="modal-title" id="myModalLabel">GALERY</h4>
 								</div>
 								<div class="modal-body" style="text-align: center;">
-									
+
 									<a id="goleft" style="position:absolute; left:10px;" class="fa fa-chevron-left"></a>
 									<div style="position:absolute; left:50%;" id="modalgaleryinfo"> </div>
 									<a id="goright" style="position:absolute; right:10px;" class="fa fa-chevron-right"></a><br>
@@ -723,7 +725,7 @@ function includeHTML() {
 			                      </table>
 			                    </div>
 			                  </div>
-			                  
+
 
 
 			                </div>
@@ -779,7 +781,7 @@ function includeHTML() {
 
 	<!-- measurement -->
 	<script src="<?php echo base_url() ?>aset/leaflet-measure-path.js"></script>
-	
+
 	<!-- draw -->
 	<script src="<?php echo base_url() ?>aset/leafletdraw/Leaflet.draw.js"></script>
 	<script src="<?php echo base_url() ?>aset/leafletdraw/Leaflet.Draw.Event.js"></script>
@@ -819,7 +821,7 @@ function includeHTML() {
 	<!-- <script src="<?php echo base_url() ?>aset/easy-button.js"></script> -->
 	<!-- <link rel="stylesheet" href="<?php echo base_url() ?>aset/easy-button.css" /> -->
 	<script src="<?php echo base_url() ?>aset/Leaflet.Control.Custom.js"></script>
-	
+
 	<!-- ESRI -->
 	<!-- <script src="https://unpkg.com/esri-leaflet-vector@1.0.5"></script> -->
 	<!-- <script src="https://unpkg.com/esri-leaflet-cluster@2.0.0"></script> -->
@@ -836,7 +838,7 @@ function includeHTML() {
 	<script src="<?php echo base_url() ?>aset/JSONjs/json2.js"></script>
 
 	<!-- pusherchat -->
-	<script src="http://js.pusher.com/1.12/pusher.min.js" type="text/javascript"></script> 
+	<script src="http://js.pusher.com/1.12/pusher.min.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url() ?>aset/pusherchat/js/jquery.pusherchat.js" type="text/javascript"></script>
 	<script src="<?php echo base_url() ?>aset/pusherchat/js/jquery.playSound.js" type="text/javascript"></script>
@@ -844,7 +846,7 @@ function includeHTML() {
 	<!-- MAP ASLI -->
 	<script src="<?php echo base_url() ?>aset/ResilientMaps.js"></script>
 	<script>
-		
+
 
 
 
@@ -854,7 +856,7 @@ function includeHTML() {
 		// console.log("bikin append");
 		// console.log(KOSANS);
 		$("#modalcobabody").empty();
-		
+
 		$("#modalcobabody").append(
 			'<ul class="nav nav-tabs" role="tablist">'+
 				'<li role="presentation" class="active"><a href="#ketdetail" aria-controls="ketdetail" role="tab" data-toggle="tab">Keterangan</a></li>'+
@@ -865,7 +867,7 @@ function includeHTML() {
 				'<div role="tabpanel" class="tab-pane active" id="ketdetail">'+
 					'<table class="table table-hover table-striped table-condensed" style="font-size:12px;" >'+
 						'<tbody class="list">'+
-							'<tr><td>Nama :</td>                  <td>'+KOSANS[i].properties.kamar[ii].nama+'</td></tr>'+ 
+							'<tr><td>Nama :</td>                  <td>'+KOSANS[i].properties.kamar[ii].nama+'</td></tr>'+
 							'<tr><td>Luas :</td>                  <td>'+KOSANS[i].properties.kamar[ii].luas+'</td></tr>'+
 							'<tr><td>Fasilitas :</td>             <td>'+KOSANS[i].properties.kamar[ii].fasilitas+'</td></tr>'+
 							'<tr><td>Harga /thn :</td>            <td>'+KOSANS[i].properties.kamar[ii].hargath+'</td></tr>'+
@@ -883,7 +885,7 @@ function includeHTML() {
 					'<table class="table table-hover table-striped table-condensed" style="font-size:12px;" >'+
 						'<tbody class="list">'+
 							'<tr><td>Foto :</td>             <td>'+KOSANS[i].properties.kamar[ii].penghunifoto+'</td></tr>'+
-							'<tr><td>Nama Penghuni :</td>     <td>'+KOSANS[i].properties.kamar[ii].penghuninama+'</td></tr>'+ 
+							'<tr><td>Nama Penghuni :</td>     <td>'+KOSANS[i].properties.kamar[ii].penghuninama+'</td></tr>'+
 							'<tr><td>No HP :</td>            <td>'+KOSANS[i].properties.kamar[ii].penghunihp+'</td></tr>'+
 							'<tr><td>No HP darurat :</td>    <td>'+KOSANS[i].properties.kamar[ii].penghunihpdarurat+'</td></tr>'+
 							'<tr><td>Alamat :</td>           <td>'+KOSANS[i].properties.kamar[ii].penghunialamat+'</td></tr>'+
@@ -899,7 +901,7 @@ function includeHTML() {
 					'</table>'+
 				'</div>'+
 			'</div>');
-		
+
 		syncSidebar();
 	}
 <?php } else { ?>
@@ -907,7 +909,7 @@ function includeHTML() {
 		// console.log("bikin append");
 		// console.log(KOSANS);
 		$("#modalcobabody").empty();
-		
+
 		$("#modalcobabody").append(
 			'<ul class="nav nav-tabs" role="tablist">'+
 				'<li role="presentation" class="active"><a href="#ketdetail" aria-controls="ketdetail" role="tab" data-toggle="tab">Keterangan</a></li>'+
@@ -917,7 +919,7 @@ function includeHTML() {
 				'<div role="tabpanel" class="tab-pane active" id="ketdetail">'+
 					'<table class="table table-hover table-striped table-condensed" style="font-size:12px;" >'+
 						'<tbody class="list">'+
-							'<tr><td>Nama :</td>                  <td>'+KOSANS[i].properties.kamar[ii].nama+'</td></tr>'+ 
+							'<tr><td>Nama :</td>                  <td>'+KOSANS[i].properties.kamar[ii].nama+'</td></tr>'+
 							'<tr><td>Luas :</td>                  <td>'+KOSANS[i].properties.kamar[ii].luas+'</td></tr>'+
 							'<tr><td>Fasilitas :</td>             <td>'+KOSANS[i].properties.kamar[ii].fasilitas+'</td></tr>'+
 							'<tr><td>Harga /thn :</td>            <td>'+KOSANS[i].properties.kamar[ii].hargath+'</td></tr>'+
@@ -932,7 +934,7 @@ function includeHTML() {
 					'<img id="modalkamarviewer" src="" width="80%" />'+
 				'</div>'+
 			'</div>');
-		
+
 		syncSidebar();
 	}
 <?php } ?>
@@ -973,7 +975,7 @@ ChatRoomClient.prototype.init = function() {
 
 ChatRoomClient.prototype.startup = function() {
   var xtpl = [
-    '<div class="chatroom">',
+    '<div class="chatroom chatroom-fold">',
       // '<div class="chatroom-feedback"><a href="https://github.com/barretlee/blogChat" target="_blank">aagithub</a> | <a href="https://github.com/barretlee/blogChat/issues/new" target="_blank">github</a></div>',
       '<div class="chatroom-info"></div>',
       '<ul class="chatroom-tribes">',

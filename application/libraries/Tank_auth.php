@@ -60,10 +60,10 @@ class Tank_auth
 				// Does password match hash in database?
 				$hasher = new PasswordHash(
 						$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
-						$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+						$this->ci->config->item('phpass_hash_portable', 'tank_auth')); //var_dump($user);
 
-				// if ($hasher->CheckPassword($password, $user['password'])) 
-				if ($hasher->CheckPassword($password, $user->password))
+				if ($hasher->CheckPassword($password, $user['password']))
+				// if ($hasher->CheckPassword($password, $user->password))
 				{		// password ok
 					$this->ci->session->set_userdata(array(
 						// 'user_id'	=> $user['id'],
@@ -105,7 +105,7 @@ class Tank_auth
 	 * @return	bool
 	 */
 	function is_logged_in($activated = TRUE)
-	{ 
+	{
 		return $this->ci->session->userdata('status') === ($activated ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED);
 	}
 
