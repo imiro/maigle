@@ -199,7 +199,7 @@ function includeHTML() {
 				<li class="btn-group btn-group-sm" style="vertical-align:middle; margin-top:10px;" role="group">
 					<button type="button" class="btn btn-success" id="peta"><i class="fa fa-map"></i>  Peta</button>
 					<!-- <button type="button" class="btn btn-primary" id="tabel"><i class="fa fa-table"></i>  Lihat Tabel</button> -->
-					<button type="button" class="btn btn-warning" id="about"><i class="fa fa-info-circle"></i> About</button>
+					<!-- <button type="button" class="btn btn-warning" id="about"><i class="fa fa-info-circle"></i> About</button> -->
 				</li>
 				<li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="sidebar-form-btn"><i class="fa fa-pencil "></i>&nbsp;&nbsp;Detail Penyakit</a></li>
 			</ul>
